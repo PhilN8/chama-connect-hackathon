@@ -1,16 +1,19 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
+  PaginationState,
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
 import type { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
+import type { ChamaMember } from "@/lib/types";
 
 type MemberRole = "Admin" | "Treasurer" | "Member";
 
@@ -24,124 +27,62 @@ interface MemberRow {
   status: "Active" | "Invited";
 }
 
-const fakeMembers: MemberRow[] = [
-  {
-    id: "M-001",
-    fullName: "Amina Wanjiru",
-    email: "amina@chama.co.ke",
-    role: "Admin",
-    contributionKes: 25000,
-    joinDate: "2025-08-02",
-    status: "Active",
-  },
-  {
-    id: "M-002",
-    fullName: "Brian Otieno",
-    email: "brian@chama.co.ke",
-    role: "Treasurer",
-    contributionKes: 18500,
-    joinDate: "2025-09-14",
-    status: "Active",
-  },
-  {
-    id: "M-003",
-    fullName: "Caroline Njeri",
-    email: "caroline@chama.co.ke",
-    role: "Member",
-    contributionKes: 14500,
-    joinDate: "2025-10-01",
-    status: "Active",
-  },
-  {
-    id: "M-004",
-    fullName: "David Kiptoo",
-    email: "david@chama.co.ke",
-    role: "Member",
-    contributionKes: 9800,
-    joinDate: "2025-10-18",
-    status: "Invited",
-  },
-  {
-    id: "M-005",
-    fullName: "Esther Mwende",
-    email: "esther@chama.co.ke",
-    role: "Treasurer",
-    contributionKes: 16800,
-    joinDate: "2025-11-03",
-    status: "Active",
-  },
-  {
-    id: "M-006",
-    fullName: "Felix Ochieng",
-    email: "felix@chama.co.ke",
-    role: "Member",
-    contributionKes: 7300,
-    joinDate: "2025-11-25",
-    status: "Active",
-  },
-  {
-    id: "M-007",
-    fullName: "Grace Wambui",
-    email: "grace@chama.co.ke",
-    role: "Member",
-    contributionKes: 12100,
-    joinDate: "2025-12-10",
-    status: "Active",
-  },
-  {
-    id: "M-008",
-    fullName: "Hassan Abdi",
-    email: "hassan@chama.co.ke",
-    role: "Member",
-    contributionKes: 6600,
-    joinDate: "2026-01-06",
-    status: "Invited",
-  },
-  {
-    id: "M-009",
-    fullName: "Irene Atieno",
-    email: "irene@chama.co.ke",
-    role: "Treasurer",
-    contributionKes: 22000,
-    joinDate: "2026-01-22",
-    status: "Active",
-  },
-  {
-    id: "M-010",
-    fullName: "John Kamau",
-    email: "john@chama.co.ke",
-    role: "Member",
-    contributionKes: 5400,
-    joinDate: "2026-02-03",
-    status: "Active",
-  },
-  {
-    id: "M-011",
-    fullName: "Kevin Maina",
-    email: "kevin@chama.co.ke",
-    role: "Admin",
-    contributionKes: 27500,
-    joinDate: "2026-02-18",
-    status: "Active",
-  },
-  {
-    id: "M-012",
-    fullName: "Linet Chebet",
-    email: "linet@chama.co.ke",
-    role: "Member",
-    contributionKes: 8800,
-    joinDate: "2026-03-04",
-    status: "Invited",
-  },
-];
+interface DashboardMembersTableProps {
+  members: ChamaMember[];
+  chamaName?: string;
+}
 
-export function DashboardMembersTable() {
+function formatRole(role: ChamaMember["role"]): MemberRole {
+  if (role === "admin") {
+    return "Admin";
+  }
+
+  if (role === "treasurer") {
+    return "Treasurer";
+  }
+
+  return "Member";
+}
+
+function deriveNameFromEmail(email: string): string {
+  const localPart = email.split("@")[0] ?? "Member";
+  return localPart
+    .replace(/[._-]+/g, " ")
+    .trim()
+    .split(" ")
+    .filter(Boolean)
+    .map((part) => part[0].toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+export function DashboardMembersTable({
+  members,
+  chamaName,
+}: DashboardMembersTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRole, setSelectedRole] = useState<"All" | MemberRole>("All");
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
+
+  const tableData = useMemo<MemberRow[]>(() => {
+    return members.map((member, index) => ({
+      id: member.id ?? `M-${String(index + 1).padStart(3, "0")}`,
+      fullName: member.fullName?.trim().length
+        ? member.fullName
+        : deriveNameFromEmail(member.email),
+      email: member.email,
+      role: formatRole(member.role),
+      contributionKes: member.contributionKes ?? 0,
+      joinDate: member.joinedAt ?? "-",
+      status: member.status === "invited" ? "Invited" : "Active",
+    }));
+  }, [members]);
 
   const filteredData = useMemo(() => {
-    return fakeMembers.filter((member) => {
+    return tableData.filter((member) => {
       const matchesRole =
         selectedRole === "All" || member.role === selectedRole;
       const search = searchQuery.toLowerCase().trim();
@@ -157,6 +98,15 @@ export function DashboardMembersTable() {
 
       return matchesRole && matchesSearch;
     });
+  }, [searchQuery, selectedRole, tableData]);
+
+  const totalContributions = useMemo(
+    () => tableData.reduce((sum, member) => sum + member.contributionKes, 0),
+    [tableData],
+  );
+
+  useEffect(() => {
+    setPagination((previous) => ({ ...previous, pageIndex: 0 }));
   }, [searchQuery, selectedRole]);
 
   const columns = useMemo<ColumnDef<MemberRow>[]>(
@@ -229,11 +179,14 @@ export function DashboardMembersTable() {
     columns,
     state: {
       sorting,
+      pagination,
     },
     onSortingChange: setSorting,
+    onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   });
 
   return (
@@ -242,7 +195,12 @@ export function DashboardMembersTable() {
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Members</h1>
           <p className="text-sm text-zinc-600 dark:text-zinc-400">
-            Manage admins, treasurers, and members in one place.
+            {tableData.length > 0
+              ? `Manage admins, treasurers, and members in ${chamaName ?? "your chama"}.`
+              : "This account has no members yet. Login with the test user to view preloaded members."}
+          </p>
+          <p className="mt-1 text-xs font-medium text-zinc-500 dark:text-zinc-400">
+            Total contributions: KES {totalContributions.toLocaleString()}
           </p>
         </div>
         <div className="flex flex-col gap-2 sm:flex-row">
@@ -313,6 +271,48 @@ export function DashboardMembersTable() {
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div className="mt-4 flex flex-col gap-3 text-sm text-zinc-600 dark:text-zinc-400 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          Showing {table.getRowModel().rows.length} of {filteredData.length}
+          {searchQuery || selectedRole !== "All" ? " filtered" : ""} members
+        </div>
+        <div className="flex items-center gap-2">
+          <label htmlFor="pageSize" className="text-xs font-medium">
+            Rows
+          </label>
+          <select
+            id="pageSize"
+            value={table.getState().pagination.pageSize}
+            onChange={(event) => table.setPageSize(Number(event.target.value))}
+            className="rounded-md border border-zinc-300 bg-white px-2 py-1 text-xs outline-none ring-emerald-500 transition focus:ring-2 dark:border-zinc-700 dark:bg-zinc-950"
+          >
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+          </select>
+          <button
+            type="button"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+            className="rounded-md border border-zinc-300 px-3 py-1.5 text-xs font-semibold transition-colors hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-700 dark:hover:bg-zinc-800"
+          >
+            Previous
+          </button>
+          <span className="text-xs font-medium">
+            Page {table.getState().pagination.pageIndex + 1} of{" "}
+            {Math.max(1, table.getPageCount())}
+          </span>
+          <button
+            type="button"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+            className="rounded-md border border-zinc-300 px-3 py-1.5 text-xs font-semibold transition-colors hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-700 dark:hover:bg-zinc-800"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </section>
   );

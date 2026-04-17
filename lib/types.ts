@@ -21,9 +21,16 @@ export interface Chama {
     createdAt: Date;
 }
 
+export type ChamaMemberRole = 'admin' | 'treasurer' | 'member';
+
 export interface ChamaMember {
+    id?: string;
+    fullName?: string;
     email: string;
-    role: 'admin' | 'member';
+    role: ChamaMemberRole;
+    contributionKes?: number;
+    joinedAt?: string;
+    status?: 'active' | 'invited';
 }
 
 export interface ExistingSacco {

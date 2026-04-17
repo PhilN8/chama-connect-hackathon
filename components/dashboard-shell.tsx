@@ -68,10 +68,10 @@ export function DashboardShell({
 
   return (
     <div className="min-h-screen bg-linear-to-br from-emerald-50 via-white to-cyan-50 dark:from-emerald-950 dark:via-zinc-950 dark:to-cyan-950">
-      <div className="flex min-h-screen w-full">
+      <div className="flex h-screen w-full overflow-hidden">
         <aside
           className={cn(
-            "fixed inset-y-0 left-0 z-40 w-72 border-r border-zinc-200 bg-white/95 p-5 backdrop-blur-sm transition-transform dark:border-zinc-800 dark:bg-zinc-950/95 md:static md:translate-x-0",
+            "fixed inset-y-0 left-0 z-40 w-72 border-r border-zinc-200 bg-white/95 p-5 backdrop-blur-sm transition-transform dark:border-zinc-800 dark:bg-zinc-950/95 md:sticky md:top-0 md:h-screen md:shrink-0 md:translate-x-0 md:overflow-y-auto",
             sidebarOpen ? "translate-x-0" : "-translate-x-full",
           )}
         >
@@ -141,7 +141,7 @@ export function DashboardShell({
           </div>
         </aside>
 
-        <div className="flex min-h-screen flex-1 flex-col md:pl-0">
+        <div className="flex min-h-screen flex-1 flex-col overflow-hidden md:pl-0">
           <header className="sticky top-0 z-30 border-b border-zinc-200/70 bg-white/80 backdrop-blur-sm dark:border-zinc-800 dark:bg-zinc-950/70">
             <div className="flex h-16 items-center gap-3 px-4 md:px-6">
               <button
@@ -163,7 +163,7 @@ export function DashboardShell({
             </div>
           </header>
 
-          <main className="flex-1 p-4 md:p-6">{children}</main>
+          <main className="flex-1 overflow-y-auto p-4 md:p-6">{children}</main>
         </div>
 
         {sidebarOpen && (

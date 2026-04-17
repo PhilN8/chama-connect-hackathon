@@ -26,6 +26,9 @@ export default async function LoginPage() {
             Need an account? Register
           </Link> */}
         </div>
+        <p className="rounded-lg border border-emerald-200 bg-white/80 px-3 py-2 text-xs text-emerald-800 dark:border-emerald-900/40 dark:bg-emerald-950/30 dark:text-emerald-200">
+          This login includes a prefilled test account for demo purposes.
+        </p>
         <LoginForm />
       </div>
     </div>
