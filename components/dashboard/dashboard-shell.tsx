@@ -6,6 +6,7 @@ import { useState } from "react";
 import {
   ChartNoAxesCombined,
   Home,
+  PiggyBank,
   LogOut,
   Menu,
   Users,
@@ -30,6 +31,11 @@ const navigationItems = [
     href: "/dashboard/members",
     label: "Members",
     icon: Users,
+  },
+  {
+    href: "/dashboard/contributions",
+    label: "Contributions",
+    icon: PiggyBank,
   },
   {
     href: "/onboard-chama",

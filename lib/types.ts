@@ -21,6 +21,16 @@ export interface Chama {
     createdAt: Date;
 }
 
+export interface ContributionRecord {
+    id: string;
+    chamaId: string;
+    contributorName: string;
+    contributorEmail: string;
+    amountKes: number;
+    contributedAt: string;
+    reference: string;
+}
+
 export type ChamaMemberRole = 'admin' | 'treasurer' | 'member';
 
 export interface ChamaMember {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DashboardMembersTable } from "@/components/dashboard-members-table";
+import { DashboardMembersTable } from "@/components/dashboard/dashboard-members-table";
 import { getSessionFromCookiesStore } from "@/lib/auth-server";
 import { apiStore } from "@/lib/api-store";
 

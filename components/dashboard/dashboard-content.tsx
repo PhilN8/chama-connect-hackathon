@@ -7,6 +7,7 @@ import {
   PiggyBank,
   Settings,
   TrendingUp,
+  Wallet,
   Users,
 } from "lucide-react";
 import { motion } from "framer-motion";
@@ -173,6 +174,17 @@ export function DashboardContent({ user, chama }: DashboardContentProps) {
               <span>Group Settings</span>
               <Settings className="size-4" />
             </button>
+
+            <Link
+              href="/dashboard/contributions"
+              className={cn(
+                "flex w-full items-center justify-between rounded-lg p-3 text-center font-semibold transition-all",
+                "bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-700",
+              )}
+            >
+              <span>View Contributions</span>
+              <Wallet className="size-4" />
+            </Link>
 
             <Link
               href="/onboard-chama"

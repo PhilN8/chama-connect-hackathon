@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { DashboardShell } from "@/components/dashboard-shell";
+import { DashboardShell } from "@/components/dashboard/dashboard-shell";
 import { getSessionFromCookiesStore } from "@/lib/auth-server";
 
 export default async function DashboardLayout({

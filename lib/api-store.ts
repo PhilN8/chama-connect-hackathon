@@ -4,7 +4,7 @@
  */
 
 import { hashSync } from 'bcryptjs';
-import { User, Chama, ExistingSacco } from './types';
+import { User, Chama, ExistingSacco, ContributionRecord } from './types';
 import { getMockSaccos } from './mock-saccos';
 import { DEMO_USER_EMAIL, DEMO_USER_FULL_NAME, DEMO_USER_PASSWORD } from './demo-auth';
 
@@ -38,6 +38,7 @@ const DEMO_MEMBERS = [
 class ApiStore {
     private users: Map<string, User> = new Map();
     private chamas: Map<string, Chama> = new Map();
+    private contributionsByChama: Map<string, ContributionRecord[]> = new Map();
     private userIdCounter: number = 1000;
     private chamaIdCounter: number = 1;
 
@@ -96,8 +97,42 @@ class ApiStore {
 
         this.chamas.set(demoChamaId, demoChama);
 
+        const demoContributions = this.buildDemoContributions(demoChamaId, members);
+        this.contributionsByChama.set(demoChamaId, demoContributions);
+
         this.userIdCounter = 1001;
         this.chamaIdCounter = 2;
+    }
+
+    private buildDemoContributions(chamaId: string, members: Chama['members']): ContributionRecord[] {
+        const entries: ContributionRecord[] = [];
+        const timelineStart = new Date('2023-04-01T00:00:00.000Z');
+
+        for (let monthOffset = 0; monthOffset < 36; monthOffset++) {
+            for (let contributionIndex = 0; contributionIndex < 2; contributionIndex++) {
+                const sequence = monthOffset * 2 + contributionIndex;
+                const member = members[sequence % members.length];
+                const contributionDate = new Date(timelineStart);
+                contributionDate.setMonth(timelineStart.getMonth() + monthOffset);
+                contributionDate.setDate(contributionIndex === 0 ? 7 : 22);
+
+                const baseAmount = 18000;
+                const variance = (monthOffset * 1975 + contributionIndex * 4325) % 42000;
+                const amountKes = baseAmount + variance;
+
+                entries.push({
+                    id: `CTR-${String(sequence + 1).padStart(4, '0')}`,
+                    chamaId,
+                    contributorName: member.fullName ?? this.deriveDisplayNameFromEmail(member.email),
+                    contributorEmail: member.email,
+                    amountKes,
+                    contributedAt: contributionDate.toISOString().slice(0, 10),
+                    reference: `MPESA-${contributionDate.getFullYear()}${String(contributionDate.getMonth() + 1).padStart(2, '0')}-${String(sequence + 1001).padStart(5, '0')}`,
+                });
+            }
+        }
+
+        return entries;
     }
 
     /**
@@ -164,6 +199,7 @@ class ApiStore {
         };
 
         this.chamas.set(chamaId, chama);
+        this.contributionsByChama.set(chamaId, []);
         return chama;
     }
 
@@ -177,6 +213,26 @@ class ApiStore {
     getMembersForUser(userId: string) {
         const primaryChama = this.getChamasForUser(userId)[0];
         return primaryChama?.members ?? [];
+    }
+
+    getContributionsForChama(chamaId: string): ContributionRecord[] {
+        return this.contributionsByChama.get(chamaId) ?? [];
+    }
+
+    getContributionsForUser(userId: string): ContributionRecord[] {
+        const primaryChama = this.getChamasForUser(userId)[0];
+        if (!primaryChama) {
+            return [];
+        }
+
+        return this.getContributionsForChama(primaryChama.id);
+    }
+
+    getTotalContributionsForUser(userId: string): number {
+        return this.getContributionsForUser(userId).reduce(
+            (sum, contribution) => sum + contribution.amountKes,
+            0
+        );
     }
 
     /**
@@ -221,6 +277,7 @@ class ApiStore {
     clear(): void {
         this.users.clear();
         this.chamas.clear();
+        this.contributionsByChama.clear();
         this.userIdCounter = 1000;
         this.chamaIdCounter = 1;
     }
