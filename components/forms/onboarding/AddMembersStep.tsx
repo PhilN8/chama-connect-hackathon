@@ -71,9 +71,19 @@ export function AddMembersStep({ state, dispatch }: AddMembersStepProps) {
       </div>
 
       <div className="space-y-3">
+        <div className="grid gap-1 text-xs font-medium text-emerald-900/80 dark:text-emerald-200/80 sm:grid-cols-[1fr_auto_auto]">
+          <label htmlFor="newMemberEmail">
+            Member Email <span className="text-red-500">*</span>
+          </label>
+          <label htmlFor="newMemberRole" className="sm:justify-self-start">
+            Role <span className="text-red-500">*</span>
+          </label>
+          <span className="sr-only">Add member action</span>
+        </div>
         <div className="flex flex-col sm:flex-row gap-2">
           <div className="flex-1 flex flex-col gap-1.5">
             <input
+              id="newMemberEmail"
               type="email"
               value={newMemberEmail}
               onChange={(e) => {
@@ -101,6 +111,7 @@ export function AddMembersStep({ state, dispatch }: AddMembersStepProps) {
             )}
           </div>
           <select
+            id="newMemberRole"
             value={newMemberRole}
             onChange={(e) =>
               setNewMemberRole(e.target.value as "admin" | "member")

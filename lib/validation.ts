@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const chamaTypeSchema = z.enum(['SACCO', 'TableBanking', 'MerryGoRound']);
 
 export const registerRequestSchema = z.object({
-    fullName: z.string().trim().min(2, 'Full name is required and must be at least 2 characters'),
+    fullName: z.string().trim().min(2, 'Full name must be at least 2 characters').optional(),
     email: z.email('Valid email address is required').trim().toLowerCase(),
     phone: z
         .string()
@@ -24,7 +24,6 @@ export const chamaMemberSchema = z.object({
 
 export const createChamaRequestSchema = z
     .object({
-        userId: z.string().trim().min(1, 'User ID is required'),
         chamaName: z.string().trim().min(2, 'Chama name is required and must be at least 2 characters'),
         chamaType: chamaTypeSchema,
         members: z.array(chamaMemberSchema).min(1, 'At least one member (admin) is required'),
@@ -37,4 +36,15 @@ export const createChamaRequestSchema = z
 
 export const searchQuerySchema = z.object({
     q: z.string().trim().max(100, 'Search query is too long'),
+});
+
+export const contactRequestSchema = z.object({
+    fullName: z.string().trim().min(2, 'Full name must be at least 2 characters').optional(),
+    email: z.email('Valid email address is required').trim().toLowerCase(),
+    subject: z.string().trim().min(2, 'Subject is required').max(120, 'Subject is too long'),
+    message: z.string().trim().min(10, 'Message should be at least 10 characters').max(2000, 'Message is too long'),
+});
+
+export const newsletterSubscribeSchema = z.object({
+    email: z.email('Valid email address is required').trim().toLowerCase(),
 });

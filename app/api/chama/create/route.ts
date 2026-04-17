@@ -2,9 +2,21 @@ import { NextRequest, NextResponse } from 'next/server';
 import { apiStore } from '@/lib/api-store';
 import type { ApiResponse, CreateChamaResponse } from '@/lib/types';
 import { createChamaRequestSchema } from '@/lib/validation';
+import { getSessionFromRequest } from '@/lib/auth';
 
 export async function POST(request: NextRequest): Promise<NextResponse<ApiResponse<CreateChamaResponse>>> {
     try {
+        const session = await getSessionFromRequest(request);
+        if (!session) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: 'Unauthorized',
+                },
+                { status: 401 }
+            );
+        }
+
         const parseResult = createChamaRequestSchema.safeParse(await request.json());
         if (!parseResult.success) {
             const issue = parseResult.error.issues[0];
@@ -17,33 +29,10 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
             );
         }
 
-        const { userId, chamaName, chamaType, members, description } = parseResult.data;
-
-        // Verify user exists; if not, create a demo user for onboarding-only flow.
-        let resolvedUserId = userId;
-        const user = apiStore.getUserById(userId);
-        if (!user) {
-            const fallbackAdminEmail =
-                members.find((member) => member.role === 'admin')?.email ??
-                `demo_${Date.now()}@demo.chamaconnect.local`;
-            const existingByEmail = apiStore.getUserByEmail(fallbackAdminEmail);
-
-            if (existingByEmail) {
-                resolvedUserId = existingByEmail.id;
-            } else {
-                const demoUser = apiStore.registerUser(
-                    'Demo User',
-                    fallbackAdminEmail,
-                    '0700000000',
-                    'demo-password'
-                );
-
-                resolvedUserId = demoUser.id;
-            }
-        }
+        const { chamaName, chamaType, members, description } = parseResult.data;
 
         // Create chama
-        const chama = apiStore.createChama(resolvedUserId, chamaName, chamaType, members, description);
+        const chama = apiStore.createChama(session.userId, chamaName, chamaType, members, description);
 
         return NextResponse.json(
             {

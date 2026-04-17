@@ -1,17 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Search,
-  Plus,
-  Building2,
-  MapPin,
-  ArrowRight,
-  Loader2,
-} from "lucide-react";
+import { Search, Plus, ArrowRight, Loader2, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import type { OnboardingState, OnboardingAction } from "@/lib/onboarding-store";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 interface SearchStepProps {
   state: OnboardingState;
@@ -19,11 +25,19 @@ interface SearchStepProps {
   onNext: () => void;
 }
 
+interface SaccoSearchResult {
+  id: string;
+  name: string;
+  location: string;
+  memberCount: number;
+}
+
 export function SearchStep({ state, dispatch, onNext }: SearchStepProps) {
   const [searchLoading, setSearchLoading] = useState(false);
-  const [searchResults, setSearchResults] = useState<
-    Array<{ id: string; name: string; location: string; memberCount: number }>
-  >([]);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchResults, setSearchResults] = useState<Array<SaccoSearchResult>>(
+    [],
+  );
 
   const handleSearch = async (query: string) => {
     dispatch({ type: "SET_SEARCH_QUERY", payload: query });
@@ -42,7 +56,7 @@ export function SearchStep({ state, dispatch, onNext }: SearchStepProps) {
 
       if (result.success) {
         setSearchResults(
-          result.data.results.map((sacco: any) => ({
+          result.data.results.map((sacco: SaccoSearchResult) => ({
             id: sacco.id,
             name: sacco.name,
             location: sacco.location,
@@ -50,7 +64,7 @@ export function SearchStep({ state, dispatch, onNext }: SearchStepProps) {
           })),
         );
       }
-    } catch (error) {
+    } catch {
       dispatch({
         type: "SET_ERROR",
         payload: "Search failed. Please try again.",
@@ -60,7 +74,7 @@ export function SearchStep({ state, dispatch, onNext }: SearchStepProps) {
     }
   };
 
-  const handleSelectSacco = (sacco: any) => {
+  const handleSelectSacco = (sacco: SaccoSearchResult) => {
     dispatch({
       type: "SET_SELECTED_SACCO",
       payload: { id: sacco.id, name: sacco.name, location: sacco.location },
@@ -73,6 +87,11 @@ export function SearchStep({ state, dispatch, onNext }: SearchStepProps) {
     });
     dispatch({ type: "SET_ACTION", payload: "create" });
     onNext();
+  };
+
+  const handleSelectExisting = (sacco: SaccoSearchResult) => {
+    setSearchOpen(false);
+    handleSelectSacco(sacco);
   };
 
   const handleCreateNew = () => {
@@ -95,89 +114,88 @@ export function SearchStep({ state, dispatch, onNext }: SearchStepProps) {
         </p>
       </div>
 
-      <div className="relative group">
-        <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-          {searchLoading ? (
-            <Loader2 className="size-5 text-emerald-500 animate-spin" />
-          ) : (
-            <Search className="size-5 text-emerald-500/70 group-focus-within:text-emerald-700 dark:group-focus-within:text-emerald-300 transition-colors" />
-          )}
-        </div>
-        <input
+      <Popover open={searchOpen} onOpenChange={setSearchOpen}>
+        <PopoverTrigger
           disabled={state.action === "create"}
-          value={state.searchQuery}
-          onChange={(e) => handleSearch(e.target.value)}
-          placeholder="Search for an existing SACCO record..."
           className={cn(
-            "w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-emerald-100 dark:border-emerald-800/50 bg-white/90 dark:bg-emerald-950/25 outline-none focus:border-emerald-700 dark:focus:border-emerald-300 transition-all text-lg shadow-sm",
-            state.action === "create" && "opacity-50 cursor-not-allowed",
+            "w-full rounded-2xl border-2 border-emerald-100 bg-white/90 px-4 py-4 text-left shadow-sm transition-all dark:border-emerald-800/50 dark:bg-emerald-950/25",
+            "flex items-center justify-between",
+            "hover:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-600/50 focus-visible:outline-none",
+            state.action === "create" && "cursor-not-allowed opacity-50",
           )}
-        />
-      </div>
+        >
+          <span className="flex items-center gap-3">
+            {searchLoading ? (
+              <Loader2 className="size-5 animate-spin text-emerald-500" />
+            ) : (
+              <Search className="size-5 text-emerald-500/70" />
+            )}
+            <span className="text-base text-emerald-900/80 dark:text-emerald-200/80">
+              {state.searchQuery.length > 0
+                ? state.searchQuery
+                : "Search for an existing SACCO record..."}
+            </span>
+          </span>
+          <ChevronDown className="size-4 text-emerald-700/70 dark:text-emerald-300/70" />
+        </PopoverTrigger>
 
-      <AnimatePresence mode="wait">
-        {state.searchQuery.length > 0 &&
-        searchResults.length === 0 &&
-        state.action !== "create" ? (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            className="p-8 rounded-2xl border-2 border-dashed border-emerald-200 dark:border-emerald-800/50 bg-emerald-50/60 dark:bg-emerald-900/20 text-center space-y-4"
-          >
-            <div className="size-12 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center mx-auto">
-              <Plus className="size-6 text-emerald-700 dark:text-emerald-300" />
-            </div>
-            <div className="space-y-1">
-              <h3 className="font-semibold text-lg">
-                No record found for "{state.searchQuery}"
-              </h3>
-              <p className="text-emerald-900/70 dark:text-emerald-200/70 text-sm">
-                Don't worry! You can start fresh and create your digital Chama
-                in seconds.
-              </p>
-            </div>
-            <button
-              onClick={handleCreateNew}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-linear-to-r from-emerald-600 to-teal-500 text-white font-bold hover:scale-105 transition-transform shadow-lg shadow-emerald-700/30"
-            >
-              Create "{state.searchQuery}" Chama{" "}
-              <ArrowRight className="size-4" />
-            </button>
-          </motion.div>
-        ) : searchResults.length > 0 && state.action !== "create" ? (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="space-y-3"
-          >
-            <p className="text-xs font-bold uppercase tracking-widest text-emerald-700/70 dark:text-emerald-300/70 px-2">
-              Matches Found ({searchResults.length})
-            </p>
-            {searchResults.map((sacco) => (
-              <button
-                key={sacco.id}
-                onClick={() => handleSelectSacco(sacco)}
-                className="w-full p-4 rounded-xl border border-emerald-100 dark:border-emerald-800/50 bg-white/95 dark:bg-emerald-950/25 flex items-center justify-between hover:border-emerald-500 transition-colors group shadow-sm text-left"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="size-10 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center">
-                    <Building2 className="size-5 text-emerald-700 dark:text-emerald-300" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold">{sacco.name}</h4>
-                    <div className="flex items-center gap-1 text-emerald-900/70 dark:text-emerald-200/70 text-sm">
-                      <MapPin className="size-3" /> {sacco.location} •{" "}
-                      {sacco.memberCount} members
-                    </div>
-                  </div>
+        <PopoverContent
+          align="start"
+          className="w-[min(44rem,90vw)] border border-emerald-200/80 p-1 dark:border-emerald-800/50"
+        >
+          <Command>
+            <CommandInput
+              value={state.searchQuery}
+              onValueChange={handleSearch}
+              placeholder="Type SACCO name or location..."
+            />
+            <CommandList className="max-h-64">
+              {searchLoading && (
+                <div className="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground">
+                  <Loader2 className="size-4 animate-spin" /> Searching
+                  SACCOs...
                 </div>
-                <ArrowRight className="size-5 text-emerald-500/70 group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors" />
-              </button>
-            ))}
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+              )}
+              {!searchLoading && state.searchQuery.length < 2 && (
+                <CommandEmpty>
+                  Type at least 2 characters to search.
+                </CommandEmpty>
+              )}
+              {!searchLoading && state.searchQuery.length >= 2 && (
+                <CommandEmpty>
+                  <button
+                    type="button"
+                    onClick={handleCreateNew}
+                    className="mx-auto inline-flex items-center gap-2 rounded-full bg-linear-to-r from-emerald-600 to-teal-500 px-4 py-2 text-xs font-bold text-white"
+                  >
+                    Create "{state.searchQuery}" Chama
+                    <ArrowRight className="size-3.5" />
+                  </button>
+                </CommandEmpty>
+              )}
+              <CommandGroup heading="SACCO Matches">
+                {searchResults.map((sacco) => (
+                  <CommandItem
+                    key={sacco.id}
+                    value={`${sacco.name} ${sacco.location}`}
+                    onSelect={() => handleSelectExisting(sacco)}
+                    className="py-2"
+                  >
+                    <div className="flex min-w-0 flex-col">
+                      <span className="truncate font-semibold">
+                        {sacco.name}
+                      </span>
+                      <span className="truncate text-xs text-muted-foreground">
+                        {sacco.location} • {sacco.memberCount} members
+                      </span>
+                    </div>
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
 
       {state.action === null && state.searchQuery.length === 0 && (
         <motion.button

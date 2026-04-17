@@ -1,31 +1,13 @@
 import Link from "next/link";
 import { ArrowRight, Zap, Shield, TrendingUp, Users } from "lucide-react";
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
+import { NewsletterForm } from "@/components/forms/NewsletterForm";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-linear-to-br from-emerald-50 via-white to-cyan-50 text-emerald-950 dark:from-emerald-950 dark:via-zinc-950 dark:to-cyan-950 dark:text-emerald-100">
-      {/* Navigation */}
-      <nav className="border-b border-emerald-100/70 dark:border-emerald-900/40 bg-white/70 dark:bg-black/40 backdrop-blur-sm sticky top-0 z-30">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="text-xl font-extrabold tracking-tight">
-            ChamaConnect
-          </div>
-          <div className="flex gap-4">
-            <Link
-              href="/login"
-              className="px-4 py-2 rounded-lg text-emerald-700 dark:text-emerald-300 hover:text-emerald-900 dark:hover:text-emerald-100 transition-colors"
-            >
-              Login
-            </Link>
-            <Link
-              href="/register"
-              className="px-6 py-2 rounded-lg bg-linear-to-r from-emerald-600 to-teal-500 text-white font-semibold hover:opacity-90 transition-opacity shadow-md shadow-emerald-600/30"
-            >
-              Get Started
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <SiteHeader />
 
       {/* Hero Section */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center space-y-8">
@@ -165,12 +147,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-emerald-100 dark:border-emerald-900/40 bg-white/80 dark:bg-emerald-950/25 py-8">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-emerald-800/70 dark:text-emerald-200/70">
-          <p>© 2025 ChamaConnect. All rights reserved.</p>
+      <section className="border-t border-emerald-100/60 bg-emerald-900 py-14 text-emerald-50 dark:border-emerald-800/50 dark:bg-emerald-950">
+        <div className="mx-auto w-full max-w-5xl px-4 text-center sm:px-6 lg:px-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-200/90">
+            Newsletter
+          </p>
+          <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
+            Stay updated with ChamaConnect releases
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-emerald-100/85">
+            Get product updates, hackathon progress highlights, and early access
+            invites delivered to your inbox.
+          </p>
+          <div className="mx-auto mt-5 max-w-xl text-left text-xs text-emerald-100/75">
+            Email <span className="text-red-300">*</span>
+          </div>
+          <NewsletterForm />
         </div>
-      </footer>
+      </section>
+
+      <SiteFooter />
     </div>
   );
 }

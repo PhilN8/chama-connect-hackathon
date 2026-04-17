@@ -1,7 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { hash } from 'bcryptjs';
 import { apiStore } from '@/lib/api-store';
 import type { ApiResponse, RegisterResponse } from '@/lib/types';
 import { registerRequestSchema } from '@/lib/validation';
+import { createSessionToken, setSessionCookie } from '@/lib/auth';
+
+function deriveDisplayName(fullName: string | undefined, email: string): string {
+    if (fullName && fullName.trim().length > 0) {
+        return fullName.trim();
+    }
+
+    const localPart = email.split('@')[0] ?? 'Member';
+    const cleaned = localPart.replace(/[._-]+/g, ' ').trim();
+    if (!cleaned) {
+        return 'Member';
+    }
+
+    return cleaned
+        .split(' ')
+        .filter(Boolean)
+        .map((part) => part[0].toUpperCase() + part.slice(1))
+        .join(' ');
+}
 
 export async function POST(request: NextRequest): Promise<NextResponse<ApiResponse<RegisterResponse>>> {
     try {
@@ -30,9 +50,9 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
             );
         }
 
-        // In real app, hash password here with bcrypt
-        // For now, store plaintext (demo only!)
-        const user = apiStore.registerUser(fullName, email, phone, password);
+        const hashedPassword = await hash(password, 10);
+        const resolvedFullName = deriveDisplayName(fullName, email);
+        const user = apiStore.registerUser(resolvedFullName, email, phone, hashedPassword);
 
         const response = NextResponse.json(
             {
@@ -47,13 +67,13 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
             { status: 201 }
         );
 
-        response.cookies.set('cc_user_id', user.id, {
-            httpOnly: true,
-            sameSite: 'lax',
-            secure: process.env.NODE_ENV === 'production',
-            path: '/',
-            maxAge: 60 * 60 * 24 * 7,
+        const sessionToken = await createSessionToken({
+            userId: user.id,
+            email: user.email,
+            fullName: user.fullName,
         });
+
+        setSessionCookie(response, sessionToken);
 
         return response;
     } catch (error) {

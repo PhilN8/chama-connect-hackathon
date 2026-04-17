@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, Loader2 } from "lucide-react";
 import { z } from "zod";
+import { toast } from "sonner";
 import {
   initialOnboardingState,
   onboardingReducer,
@@ -26,28 +27,6 @@ const createChamaApiResponseSchema = z.object({
     })
     .optional(),
 });
-
-function getOrCreateDemoUserId(): string {
-  const existing = localStorage.getItem("userId");
-  if (existing) {
-    return existing;
-  }
-
-  const generated = `demo_user_${Date.now()}`;
-  localStorage.setItem("userId", generated);
-  return generated;
-}
-
-function getUserEmailOrFallback(userId: string): string {
-  const existingEmail = localStorage.getItem("userEmail");
-  if (existingEmail) {
-    return existingEmail;
-  }
-
-  const fallbackEmail = `${userId}@demo.chamaconnect.local`;
-  localStorage.setItem("userEmail", fallbackEmail);
-  return fallbackEmail;
-}
 
 export function OnboardingFlow() {
   const router = useRouter();
@@ -80,15 +59,11 @@ export function OnboardingFlow() {
   };
 
   const handleSubmit = async () => {
-    const userId = getOrCreateDemoUserId();
-    const userEmail = getUserEmailOrFallback(userId);
-
     dispatch({ type: "SET_SUBMITTING", payload: true });
     dispatch({ type: "SET_ERROR", payload: null });
 
     try {
       const payload = {
-        userId,
         chamaName: state.chamaName,
         chamaType: state.chamaType,
         description: state.chamaDescription,
@@ -97,7 +72,7 @@ export function OnboardingFlow() {
             ? state.members
             : [
                 {
-                  email: userEmail,
+                  email: "admin@demo.chamaconnect.local",
                   role: "admin" as const,
                 },
               ],
@@ -112,6 +87,9 @@ export function OnboardingFlow() {
       const rawResult = await response.json();
       const parsedResult = createChamaApiResponseSchema.safeParse(rawResult);
       if (!parsedResult.success) {
+        toast.error("Unexpected server response", {
+          description: "Please try again in a moment.",
+        });
         dispatch({
           type: "SET_ERROR",
           payload: "Received an unexpected response from server.",
@@ -122,6 +100,7 @@ export function OnboardingFlow() {
       const result = parsedResult.data;
 
       if (!response.ok || !result.success || !result.data) {
+        toast.error(result.message || "Failed to create chama");
         dispatch({
           type: "SET_ERROR",
           payload: result.message || "Failed to create chama",
@@ -134,8 +113,15 @@ export function OnboardingFlow() {
       localStorage.setItem("memberCount", result.data.memberCount.toString());
       localStorage.setItem("chamaType", state.chamaType);
 
+      toast.success("Chama created successfully", {
+        description: `${result.data.chamaName} is ready on your dashboard.`,
+      });
+
       router.push(`/dashboard?chamaId=${result.data.chamaId}`);
     } catch {
+      toast.error("Network error", {
+        description: "Please check your connection and try again.",
+      });
       dispatch({
         type: "SET_ERROR",
         payload: "Network error. Please try again.",

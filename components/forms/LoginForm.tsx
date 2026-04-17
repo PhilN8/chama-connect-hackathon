@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import Link from "next/link";
 import { AlertCircle, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 const loginSchema = z.object({
   email: z.email("Invalid email address"),
@@ -18,6 +20,7 @@ type LoginValues = z.infer<typeof loginSchema>;
 
 export function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [apiError, setApiError] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -45,19 +48,23 @@ export function LoginForm() {
       const result = await response.json();
       if (!response.ok || !result.success) {
         setApiError(result.message || "Login failed");
+        toast.error(result.message || "Login failed");
         return;
       }
 
-      localStorage.setItem("userId", result.data.userId);
-      localStorage.setItem("userEmail", result.data.email);
-      localStorage.setItem("userFullName", result.data.fullName);
-
       setIsSuccess(true);
+      toast.success("Signed in", {
+        description: "Welcome back. Redirecting to your dashboard.",
+      });
       setTimeout(() => {
-        router.push("/onboard-chama");
+        const nextPath = searchParams.get("next") || "/dashboard";
+        router.push(nextPath);
       }, 800);
     } catch {
       setApiError("Network error. Please try again.");
+      toast.error("Network error", {
+        description: "Please check your connection and try again.",
+      });
     }
   };
 
@@ -69,7 +76,7 @@ export function LoginForm() {
       <div className="space-y-2">
         <h2 className="text-2xl font-bold tracking-tight">Welcome Back</h2>
         <p className="text-emerald-900/70 dark:text-emerald-200/70 text-sm">
-          Sign in to continue onboarding and managing your chama.
+          Sign in to continue managing your chama.
         </p>
       </div>
 
@@ -90,7 +97,7 @@ export function LoginForm() {
       <div className="space-y-3">
         <div className="space-y-1.5">
           <label htmlFor="email" className="text-sm font-medium">
-            Email Address
+            Email Address <span className="text-red-500">*</span>
           </label>
           <input
             id="email"
@@ -113,7 +120,7 @@ export function LoginForm() {
 
         <div className="space-y-1.5">
           <label htmlFor="password" className="text-sm font-medium">
-            Password
+            Password <span className="text-red-500">*</span>
           </label>
           <input
             id="password"

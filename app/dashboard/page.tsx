@@ -1,15 +1,37 @@
-import { Metadata } from "next";
-import { DashboardContent } from "@/components/DashboardContent";
+import type { Metadata } from "next";
+import { DashboardContent } from "@/components/dashboard-content";
+import { getSessionFromCookiesStore } from "@/lib/auth-server";
+import { apiStore } from "@/lib/api-store";
 
 export const metadata: Metadata = {
   title: "Dashboard | ChamaConnect",
   description: "Manage your chama",
 };
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const session = await getSessionFromCookiesStore();
+  if (!session) {
+    return null;
+  }
+
+  const chamas = apiStore.getChamasForUser(session.userId);
+  const primaryChama = chamas[0];
+
   return (
-    <div className="min-h-screen bg-linear-to-br from-emerald-50 via-white to-cyan-50 dark:from-emerald-950 dark:via-zinc-950 dark:to-cyan-950">
-      <DashboardContent />
-    </div>
+    <DashboardContent
+      user={{
+        fullName: session.fullName,
+        email: session.email,
+      }}
+      chama={
+        primaryChama
+          ? {
+              name: primaryChama.name,
+              type: primaryChama.type,
+              memberCount: primaryChama.members.length,
+            }
+          : null
+      }
+    />
   );
 }

@@ -41,7 +41,7 @@ export interface ApiResponse<T> {
 }
 
 export interface RegisterRequest {
-    fullName: string;
+    fullName?: string;
     email: string;
     phone: string;
     password: string;
@@ -65,7 +65,6 @@ export interface LoginResponse {
 }
 
 export interface CreateChamaRequest {
-    userId: string;
     chamaName: string;
     chamaType: 'SACCO' | 'TableBanking' | 'MerryGoRound';
     description?: string;
@@ -76,4 +75,15 @@ export interface CreateChamaResponse {
     chamaId: string;
     chamaName: string;
     memberCount: number;
+}
+
+export interface ContactRequest {
+    fullName?: string;
+    email: string;
+    subject: string;
+    message: string;
+}
+
+export interface NewsletterSubscribeRequest {
+    email: string;
 }

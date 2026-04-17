@@ -29,7 +29,7 @@ export function NewChamaStep({ state, dispatch }: NewChamaStepProps) {
       <div className="space-y-4">
         <div className="flex flex-col gap-1.5">
           <label className="text-sm font-medium" htmlFor="chamaName">
-            Chama Name
+            Chama Name <span className="text-red-500">*</span>
           </label>
           <input
             id="chamaName"
@@ -51,7 +51,7 @@ export function NewChamaStep({ state, dispatch }: NewChamaStepProps) {
 
         <div className="flex flex-col gap-1.5">
           <label className="text-sm font-medium" htmlFor="chamaType">
-            Chama Type
+            Chama Type <span className="text-red-500">*</span>
           </label>
           <select
             id="chamaType"
@@ -79,7 +79,7 @@ export function NewChamaStep({ state, dispatch }: NewChamaStepProps) {
 
         <div className="flex flex-col gap-1.5">
           <label className="text-sm font-medium" htmlFor="chamaDescription">
-            Description (optional)
+            Description <span className="text-zinc-500">(optional)</span>
           </label>
           <textarea
             id="chamaDescription"

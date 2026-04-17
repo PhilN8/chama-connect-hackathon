@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { compare } from 'bcryptjs';
 import { apiStore } from '@/lib/api-store';
 import type { ApiResponse, LoginResponse } from '@/lib/types';
 import { loginRequestSchema } from '@/lib/validation';
+import { createSessionToken, setSessionCookie } from '@/lib/auth';
 
 export async function POST(request: NextRequest): Promise<NextResponse<ApiResponse<LoginResponse>>> {
     try {
@@ -20,7 +22,18 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
         const { email, password } = parseResult.data;
         const user = apiStore.getUserByEmail(email);
 
-        if (!user || user.password !== password) {
+        if (!user) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: 'Invalid email or password',
+                },
+                { status: 401 }
+            );
+        }
+
+        const isPasswordValid = await compare(password, user.password);
+        if (!isPasswordValid) {
             return NextResponse.json(
                 {
                     success: false,
@@ -43,13 +56,13 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
             { status: 200 }
         );
 
-        response.cookies.set('cc_user_id', user.id, {
-            httpOnly: true,
-            sameSite: 'lax',
-            secure: process.env.NODE_ENV === 'production',
-            path: '/',
-            maxAge: 60 * 60 * 24 * 7,
+        const sessionToken = await createSessionToken({
+            userId: user.id,
+            email: user.email,
+            fullName: user.fullName,
         });
+
+        setSessionCookie(response, sessionToken);
 
         return response;
     } catch (error) {

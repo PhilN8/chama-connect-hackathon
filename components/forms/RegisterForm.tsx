@@ -8,10 +8,13 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { CheckCircle2, AlertCircle, CheckCircle } from "lucide-react";
 import Link from "next/link";
+import { toast } from "sonner";
 
 const registerSchema = z
   .object({
-    fullName: z.string().min(2, "Name is too short"),
+    fullName: z
+      .union([z.string().trim().min(2, "Name is too short"), z.literal("")])
+      .optional(),
     email: z.string().email("Invalid email address"),
     phone: z
       .string()
@@ -25,11 +28,6 @@ const registerSchema = z
   });
 
 type RegisterValues = z.infer<typeof registerSchema>;
-
-interface ApiErrorResponse {
-  success: false;
-  message: string;
-}
 
 export function RegisterForm() {
   const router = useRouter();
@@ -56,7 +54,7 @@ export function RegisterForm() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          fullName: data.fullName,
+          fullName: data.fullName?.trim() || undefined,
           email: data.email,
           phone: data.phone,
           password: data.password,
@@ -69,27 +67,31 @@ export function RegisterForm() {
         // Handle specific API errors
         if (response.status === 409) {
           setFieldErrors({ email: "Email is already registered" });
+          toast.error("Email already registered");
         } else {
           setApiError(
             result.message || "Registration failed. Please try again.",
           );
+          toast.error(result.message || "Registration failed");
         }
         return;
       }
 
-      // Success: store userId and show success state
-      localStorage.setItem("userId", result.data.userId);
-      localStorage.setItem("userEmail", result.data.email);
-      localStorage.setItem("userFullName", result.data.fullName);
-
+      // Success: session cookie is set by the server; show success state
       setShowSuccess(true);
+      toast.success("Account created", {
+        description: "Welcome to ChamaConnect. Redirecting to dashboard.",
+      });
 
-      // Redirect to onboarding after brief delay
+      // Redirect to dashboard after brief delay
       setTimeout(() => {
-        router.push("/onboard-chama");
+        router.push("/dashboard");
       }, 1500);
-    } catch (error) {
+    } catch {
       setApiError("Network error. Please check your connection and try again.");
+      toast.error("Network error", {
+        description: "Please check your connection and try again.",
+      });
     }
   };
 
@@ -104,12 +106,11 @@ export function RegisterForm() {
             Welcome to ChamaConnect!
           </h2>
           <p className="text-emerald-900/70 dark:text-emerald-200/70 text-sm">
-            Your account has been created successfully. Let&lsquo;s onboard your
-            chama.
+            Your account has been created successfully. Your dashboard is ready.
           </p>
         </div>
         <div className="pt-2 text-xs text-emerald-800/60 dark:text-emerald-200/60">
-          Redirecting to onboarding...
+          Redirecting to dashboard...
         </div>
       </div>
     );
@@ -140,30 +141,35 @@ export function RegisterForm() {
             label: "Full Name",
             type: "text",
             placeholder: "John Doe",
+            required: false,
           },
           {
             name: "email",
             label: "Email Address",
             type: "email",
             placeholder: "john@example.com",
+            required: true,
           },
           {
             name: "phone",
             label: "Phone Number",
             type: "text",
             placeholder: "0712345678",
+            required: true,
           },
           {
             name: "password",
             label: "Password",
             type: "password",
             placeholder: "••••••••",
+            required: true,
           },
           {
             name: "passwordConfirm",
             label: "Confirm Password",
             type: "password",
             placeholder: "••••••••",
+            required: true,
           },
         ].map((field) => {
           const fieldError =
@@ -176,7 +182,12 @@ export function RegisterForm() {
           return (
             <div key={field.name} className="flex flex-col gap-1.5">
               <label className="text-sm font-medium" htmlFor={field.name}>
-                {field.label}
+                {field.label}{" "}
+                {field.required ? (
+                  <span className="text-red-500">*</span>
+                ) : (
+                  <span className="text-zinc-500">(optional)</span>
+                )}
               </label>
               <div className="relative">
                 <input
@@ -232,7 +243,7 @@ export function RegisterForm() {
       <p className="text-xs text-center text-emerald-900/70 dark:text-emerald-200/70">
         Already have an account?{" "}
         <Link
-          href="/register"
+          href="/login"
           className="font-semibold underline-offset-2 hover:underline"
         >
           Sign in
