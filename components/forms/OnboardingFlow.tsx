@@ -1,90 +1,236 @@
 "use client";
 
-import { useState } from "react";
-import { Search, Plus, Building2, MapPin, ArrowRight } from "lucide-react";
+import { useReducer, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, Loader2 } from "lucide-react";
+import {
+  initialOnboardingState,
+  onboardingReducer,
+} from "@/lib/onboarding-store";
+import { SearchStep } from "./onboarding/SearchStep";
+import { NewChamaStep } from "./onboarding/NewChamaStep";
+import { AddMembersStep } from "./onboarding/AddMembersStep";
+import { ConfirmationStep } from "./onboarding/ConfirmationStep";
+import type { OnboardingState } from "@/lib/onboarding-store";
 
 export function OnboardingFlow() {
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState<{ id: string; name: string; county: string }[]>([]);
+  const router = useRouter();
+  const [state, dispatch] = useReducer(
+    onboardingReducer,
+    initialOnboardingState,
+  );
 
-  const handleSearch = (val: string) => {
-    setQuery(val);
-    // Simulate search logic
-    if (val.length > 2 && "stima sacco".includes(val.toLowerCase())) {
-      setResults([{ id: "1", name: "Stima SACCO", county: "Nairobi" }]);
-    } else {
-      setResults([]);
+  // Verify user is logged in
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      router.push("/register");
+    }
+  }, [router]);
+
+  const handleNext = () => {
+    if (state.step < 4) {
+      dispatch({
+        type: "SET_STEP",
+        payload: (state.step + 1) as 1 | 2 | 3 | 4,
+      });
     }
   };
 
+  const handleBack = () => {
+    if (state.step === 1) {
+      // Reset to initial search state
+      if (state.action !== null) {
+        dispatch({ type: "SET_ACTION", payload: "search" });
+      }
+    } else if (state.step > 1) {
+      dispatch({
+        type: "SET_STEP",
+        payload: (state.step - 1) as 1 | 2 | 3 | 4,
+      });
+    }
+  };
+
+  const handleSubmit = async () => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      dispatch({
+        type: "SET_ERROR",
+        payload: "User session expired. Please register again.",
+      });
+      return;
+    }
+
+    dispatch({ type: "SET_SUBMITTING", payload: true });
+    dispatch({ type: "SET_ERROR", payload: null });
+
+    try {
+      const payload =
+        state.action === "search"
+          ? {
+              userId,
+              chamaName: state.selectedSacco?.name || "",
+              chamaType: "SACCO",
+              members: [
+                {
+                  email: localStorage.getItem("userEmail"),
+                  role: "member" as const,
+                },
+              ],
+            }
+          : {
+              userId,
+              chamaName: state.chamaName,
+              chamaType: state.chamaType,
+              description: state.chamaDescription,
+              members:
+                state.members.length > 0
+                  ? state.members
+                  : [
+                      {
+                        email: localStorage.getItem("userEmail"),
+                        role: "admin" as const,
+                      },
+                    ],
+            };
+
+      const response = await fetch("/api/chama/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        dispatch({
+          type: "SET_ERROR",
+          payload: result.message || "Failed to create chama",
+        });
+        return;
+      }
+
+      localStorage.setItem("chamaId", result.data.chamaId);
+      localStorage.setItem("chamaName", result.data.chamaName);
+      localStorage.setItem("memberCount", result.data.memberCount.toString());
+      localStorage.setItem("chamaType", state.chamaType);
+
+      router.push(`/dashboard?chamaId=${result.data.chamaId}`);
+    } catch (error) {
+      dispatch({
+        type: "SET_ERROR",
+        payload: "Network error. Please try again.",
+      });
+    } finally {
+      dispatch({ type: "SET_SUBMITTING", payload: false });
+    }
+  };
+
+  const canGoBack = state.step > 1 || state.action !== null;
+  const canGoNext =
+    (state.step === 1 && state.action !== null) ||
+    (state.step === 2 && state.chamaName.trim().length >= 2) ||
+    (state.step === 3 && state.members.some((m) => m.role === "admin"));
+
   return (
-    <div className="w-full max-w-2xl mx-auto space-y-8 p-6">
-      <div className="space-y-2 text-center">
-        <h1 className="text-3xl font-bold tracking-tight">Onboard your Chama</h1>
-        <p className="text-zinc-500">Connect your group to the blockchain-powered future.</p>
-      </div>
-
-      <div className="relative group">
-        <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-          <Search className="size-5 text-zinc-400 group-focus-within:text-zinc-900 dark:group-focus-within:text-zinc-50 transition-colors" />
+    <div className="w-full max-w-2xl mx-auto p-4 sm:p-6">
+      {/* Progress indicator */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-2">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
+            Onboard Your Chama
+          </h1>
+          <div className="text-sm font-medium text-zinc-500">
+            Step {state.step} of 4
+          </div>
         </div>
-        <input
-          value={query}
-          onChange={(e) => handleSearch(e.target.value)}
-          placeholder="Search for an existing SACCO record..."
-          className="w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 outline-none focus:border-zinc-900 dark:focus:border-zinc-50 transition-all text-lg shadow-sm"
-        />
+        <div className="w-full bg-zinc-200 dark:bg-zinc-800 rounded-full h-2">
+          <motion.div
+            initial={{ width: "25%" }}
+            animate={{ width: `${(state.step / 4) * 100}%` }}
+            transition={{ duration: 0.3 }}
+            className="h-full bg-zinc-900 dark:bg-zinc-50 rounded-full"
+          />
+        </div>
       </div>
 
+      {/* Error message */}
+      {state.error && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-4 p-3 rounded-lg bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/30"
+        >
+          <p className="text-sm text-red-700 dark:text-red-300">
+            {state.error}
+          </p>
+        </motion.div>
+      )}
+
+      {/* Content */}
       <AnimatePresence mode="wait">
-        {query.length > 0 && results.length === 0 ? (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            className="p-8 rounded-2xl border-2 border-dashed border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-center space-y-4"
-          >
-            <div className="size-12 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mx-auto">
-              <Plus className="size-6 text-zinc-600 dark:text-zinc-400" />
-            </div>
-            <div className="space-y-1">
-              <h3 className="font-semibold text-lg">No record found for "{query}"</h3>
-              <p className="text-zinc-500 text-sm">Don't worry! You can start fresh and create your digital Chama in seconds.</p>
-            </div>
-            <button className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-bold hover:scale-105 transition-transform shadow-lg">
-              Create "{query}" Chama <ArrowRight className="size-4" />
-            </button>
-          </motion.div>
-        ) : results.length > 0 ? (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="space-y-3"
-          >
-            <p className="text-xs font-bold uppercase tracking-widest text-zinc-400 px-2">Matches Found</p>
-            {results.map((sacco) => (
-              <div key={sacco.id} className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex items-center justify-between hover:border-zinc-900 dark:hover:border-zinc-50 transition-colors cursor-pointer group shadow-sm">
-                <div className="flex items-center gap-4">
-                  <div className="size-10 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
-                    <Building2 className="size-5 text-zinc-600 dark:text-zinc-400" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold">{sacco.name}</h4>
-                    <div className="flex items-center gap-1 text-zinc-500 text-sm">
-                      <MapPin className="size-3" /> {sacco.county}
-                    </div>
-                  </div>
-                </div>
-                <button className="p-2 rounded-full bg-zinc-50 dark:bg-zinc-800 group-hover:bg-zinc-900 dark:group-hover:bg-zinc-50 group-hover:text-zinc-50 dark:group-hover:text-zinc-900 transition-colors">
-                  <ArrowRight className="size-5" />
-                </button>
-              </div>
-            ))}
-          </motion.div>
-        ) : null}
+        <div
+          key={state.step}
+          className="bg-white dark:bg-zinc-900 rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-800 p-6 sm:p-8"
+        >
+          {state.step === 1 && (
+            <SearchStep state={state} dispatch={dispatch} onNext={handleNext} />
+          )}
+          {state.step === 2 && state.action === "create" && (
+            <NewChamaStep state={state} dispatch={dispatch} />
+          )}
+          {state.step === 3 && (
+            <AddMembersStep state={state} dispatch={dispatch} />
+          )}
+          {state.step === 4 && <ConfirmationStep state={state} />}
+        </div>
       </AnimatePresence>
+
+      {/* Navigation buttons */}
+      <div className="mt-6 flex items-center justify-between gap-3">
+        <button
+          onClick={handleBack}
+          disabled={!canGoBack || state.isSubmitting}
+          className={cn(
+            "flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all",
+            canGoBack && !state.isSubmitting
+              ? "bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 hover:opacity-90"
+              : "opacity-50 cursor-not-allowed bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50",
+          )}
+        >
+          <ChevronLeft className="size-4" /> Back
+        </button>
+
+        <button
+          onClick={state.step === 4 ? handleSubmit : handleNext}
+          disabled={!canGoNext || state.isSubmitting}
+          className={cn(
+            "flex items-center gap-2 px-6 py-2 rounded-lg font-semibold transition-all",
+            canGoNext && !state.isSubmitting
+              ? "bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 hover:opacity-90"
+              : "opacity-50 cursor-not-allowed bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900",
+          )}
+          aria-busy={state.isSubmitting}
+        >
+          {state.isSubmitting && <Loader2 className="size-4 animate-spin" />}
+          {state.step === 4
+            ? state.isSubmitting
+              ? "Completing..."
+              : "Complete Onboarding"
+            : state.isSubmitting
+              ? "Loading..."
+              : "Next"}
+        </button>
+      </div>
+
+      {/* Help text */}
+      {state.action === "search" && state.step === 2 && (
+        <p className="mt-4 text-xs text-zinc-500 text-center">
+          You'll be added as a member to {state.selectedSacco?.name}
+        </p>
+      )}
     </div>
   );
 }
