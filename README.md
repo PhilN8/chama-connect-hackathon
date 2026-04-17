@@ -28,6 +28,17 @@ We redesigned these core journeys to make them clearer, safer, and demo-ready:
 - Strengthen auth handling with signed session cookies and server-side checks.
 - Provide realistic seeded data so the improved flows can be demonstrated end-to-end.
 
+## Future Recommendations
+
+- Add login verification codes (email OTP) for step-up verification before issuing a full session.
+- Add optional 2FA (TOTP authenticator apps) for admin and treasurer-level accounts.
+- Add rate limiting and account lockout rules on repeated failed login attempts.
+- Replace in-memory demo store with PostgreSQL plus Prisma for durable user, chama, and contribution records.
+- Move auth to a production-grade provider flow (for example Better-Auth) while preserving cookie security controls.
+- Introduce audit logging for sensitive actions (member role changes, contribution edits, auth events).
+- Add server-side analytics summaries for large contribution datasets to reduce client-side filtering load.
+- Add end-to-end tests for registration, login, and form-validation paths using Playwright.
+
 ## 2. Fully Implemented Fixes and Improvements
 
 ### Core Product and Flow Improvements
@@ -42,7 +53,7 @@ We redesigned these core journeys to make them clearer, safer, and demo-ready:
 
 - Seeded a test user account for judge-friendly demo walkthroughs.
 - Seeded SACCO discovery data using the current SASRA SACCO list.
-- SACCO source document included in this repository: `SASRA-LICENSED-AND-AUTHORISED-SACCO-SOCIETIES-IN-KENYA-2025.pdf`.
+- SACCO source document included in this repository: SASRA-LICENSED-AND-AUTHORISED-SACCO-SOCIETIES-IN-KENYA-2025.pdf.
 - Seeded a realistic chama with member roles and varied member contribution values.
 - Added 3-year contributions history with totals above KES 2,000,000 for analytics realism.
 - Added explicit empty states for non-demo users with no member data.
@@ -93,7 +104,7 @@ We redesigned these core journeys to make them clearer, safer, and demo-ready:
 
 ## Primary Routes
 
-- Landing page: / 
+- Landing page: /
 - Register: /register
 - Login: /login
 - Onboard Chama: /onboard-chama
@@ -144,14 +155,3 @@ npm run build
 - Sign in with the demo user to view fully populated members and contributions experiences.
 - Sign in with a newly registered user to verify empty-state handling and onboarding-first behavior.
 - Contributions totals and dashboard KPIs are derived from the seeded contributions dataset.
-
-## Future Recommendations
-
-- Add login verification codes (email OTP) for step-up verification before issuing a full session.
-- Add optional 2FA (TOTP authenticator apps) for admin and treasurer-level accounts.
-- Add rate limiting and account lockout rules on repeated failed login attempts.
-- Replace in-memory demo store with PostgreSQL plus Prisma for durable user, chama, and contribution records.
-- Move auth to a production-grade provider flow (for example Better-Auth) while preserving cookie security controls.
-- Introduce audit logging for sensitive actions (member role changes, contribution edits, auth events).
-- Add server-side analytics summaries for large contribution datasets to reduce client-side filtering load.
-- Add end-to-end tests for registration, login, and form-validation paths using Playwright.

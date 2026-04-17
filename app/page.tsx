@@ -2,10 +2,13 @@
 
 import Link from "next/link";
 import { ArrowRight, Zap, Shield, TrendingUp, Users } from "lucide-react";
+import { SiteHeader } from "@/components/site/site-header";
+import { SiteFooter } from "@/components/site/site-footer";
+import { NewsletterForm } from "@/components/forms/NewsletterForm";
 import { motion } from "framer-motion";
 
 const sectionReveal = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
@@ -20,135 +23,173 @@ const staggerContainer = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.08,
+      staggerChildren: 0.1,
+      delayChildren: 0.06,
     },
   },
 };
 
 const cardReveal = {
-  hidden: { opacity: 0, y: 22 },
+  hidden: { opacity: 0, y: 18 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.45 },
+    transition: {
+      duration: 0.45,
+    },
   },
 };
 
 export default function Home() {
-  return (
-    <div className="min-h-screen bg-linear-to-br from-zinc-50 to-zinc-100 dark:from-black dark:to-zinc-900">
-      {/* Navigation */}
-      <motion.nav
-        initial={{ opacity: 0, y: -12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45 }}
-        className="border-b border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-black/50 backdrop-blur-sm sticky top-0"
-      >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="text-xl font-bold">ChamaConnect</div>
-          <div className="flex gap-4">
-            <Link
-              href="/register"
-              className="px-4 py-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 transition-colors"
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/register"
-              className="px-6 py-2 rounded-lg bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-semibold hover:opacity-90 transition-opacity"
-            >
-              Get Started
-            </Link>
-          </div>
-        </div>
-      </motion.nav>
+  const features = [
+    {
+      icon: Shield,
+      title: "Secure & Transparent",
+      description: "Blockchain-verified transactions with immutable records.",
+    },
+    {
+      icon: Zap,
+      title: "Instant Setup",
+      description: "Create or join a chama in minutes, then invite members.",
+    },
+    {
+      icon: TrendingUp,
+      title: "Smart Analytics",
+      description:
+        "Real-time visibility into goals, contributions, and health.",
+    },
+    {
+      icon: Users,
+      title: "Easy Collaboration",
+      description:
+        "Assign roles and keep every member aligned and accountable.",
+    },
+  ];
 
-      {/* Hero Section */}
+  const groupTypes = [
+    {
+      title: "SACCO Groups",
+      description:
+        "Built for structured savings, loans, and disciplined growth.",
+    },
+    {
+      title: "Table Banking",
+      description:
+        "Perfect for recurring meetings and community accountability.",
+    },
+    {
+      title: "Merry-Go-Round",
+      description: "Manage rotating payouts with a transparent digital record.",
+    },
+  ];
+
+  return (
+    <div className="min-h-screen bg-[radial-gradient(circle_at_15%_0%,#8ee8c420,transparent_40%),radial-gradient(circle_at_85%_10%,#6ee7d850,transparent_42%),linear-gradient(180deg,#f2fbf6_0%,#eaf7ef_36%,#e2f4ea_100%)] text-emerald-950 dark:bg-[radial-gradient(circle_at_20%_0%,#2dd4bf30,transparent_35%),radial-gradient(circle_at_80%_15%,#10b98140,transparent_30%),linear-gradient(180deg,#052c23_0%,#04271f_36%,#031e18_100%)] dark:text-emerald-100">
+      <SiteHeader />
+
       <motion.section
         initial="hidden"
         animate="visible"
-        variants={staggerContainer}
-        className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center space-y-8"
+        variants={sectionReveal}
+        className="relative overflow-hidden"
       >
-        <motion.div variants={sectionReveal} className="space-y-4">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
-            The Future of African Savings Groups
-          </h1>
-          <p className="text-lg sm:text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
-            Digitize your chama with blockchain-powered transparency, automated
-            contributions, and real-time financial insights.
-          </p>
-        </motion.div>
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-linear-to-b from-white/50 to-transparent dark:from-emerald-950/40" />
+        <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-10 lg:px-8 lg:py-24">
+          <div className="space-y-7">
+            <p className="inline-flex items-center rounded-full border border-emerald-300/70 bg-white/80 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.24em] text-emerald-700 shadow-sm backdrop-blur-sm dark:border-emerald-500/40 dark:bg-emerald-950/40 dark:text-emerald-200">
+              Financial Trust, Digitized
+            </p>
 
-        <motion.div
-          variants={sectionReveal}
-          className="flex flex-col sm:flex-row gap-4 justify-center pt-4"
-        >
-          <Link
-            href="/register"
-            className="px-8 py-3 rounded-lg bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-bold hover:opacity-90 transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2"
-          >
-            Create Account <ArrowRight className="size-5" />
-          </Link>
-          <Link
-            href="/onboard-chama"
-            className="px-8 py-3 rounded-lg border-2 border-zinc-900 dark:border-zinc-50 text-zinc-900 dark:text-zinc-50 font-bold hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
-          >
-            Onboard Chama
-          </Link>
-        </motion.div>
+            <div className="space-y-5">
+              <h1 className="max-w-xl text-4xl font-black leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+                The savings OS built for African chama communities.
+              </h1>
+              <p className="max-w-xl text-base leading-relaxed text-emerald-900/80 sm:text-lg dark:text-emerald-100/80">
+                From weekly contributions to emergency loans, ChamaConnect gives
+                your group one secure ledger, one source of truth, and one clear
+                path to growth.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center">
+              <Link
+                href="/register"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-800 px-7 py-3 text-sm font-bold uppercase tracking-[0.08em] text-white! shadow-lg shadow-emerald-900/25 transition-all hover:-translate-y-0.5 hover:bg-emerald-900 hover:text-white!"
+              >
+                Start Your Chama
+                <ArrowRight className="size-4" />
+              </Link>
+              <Link
+                href="/onboard-chama"
+                className="inline-flex items-center justify-center rounded-xl border border-emerald-700/45 bg-white/70 px-7 py-3 text-sm font-bold uppercase tracking-[0.08em] text-emerald-900 transition-colors hover:bg-white dark:border-emerald-400/50 dark:bg-emerald-900/30 dark:text-emerald-100 dark:hover:bg-emerald-900/45"
+              >
+                Explore Onboarding
+              </Link>
+            </div>
+          </div>
+
+          <div className="relative lg:pl-4">
+            <div className="absolute -left-8 top-8 hidden h-28 w-28 rounded-full border border-emerald-600/20 bg-emerald-300/10 blur-xl lg:block" />
+            <div className="rounded-3xl border border-emerald-200/80 bg-white/85 p-6 shadow-[0_20px_70px_-30px_rgba(6,78,59,0.45)] backdrop-blur-sm dark:border-emerald-700/45 dark:bg-emerald-950/45">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700/90 dark:text-emerald-200/90">
+                Live Snapshot
+              </p>
+              <div className="mt-4 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+                <div className="rounded-2xl border border-emerald-200/80 bg-linear-to-br from-white to-emerald-50 p-4 dark:border-emerald-700/60 dark:from-emerald-900/55 dark:to-emerald-950/70">
+                  <p className="text-xs text-emerald-800/70 dark:text-emerald-200/70">
+                    Active Groups
+                  </p>
+                  <p className="mt-1 text-3xl font-extrabold">248</p>
+                </div>
+                <div className="rounded-2xl border border-emerald-200/80 bg-linear-to-br from-white to-emerald-50 p-4 dark:border-emerald-700/60 dark:from-emerald-900/55 dark:to-emerald-950/70">
+                  <p className="text-xs text-emerald-800/70 dark:text-emerald-200/70">
+                    Monthly Contributions
+                  </p>
+                  <p className="mt-1 text-3xl font-extrabold">KES 6.4M</p>
+                </div>
+                <div className="rounded-2xl border border-emerald-200/80 bg-linear-to-br from-white to-emerald-50 p-4 dark:border-emerald-700/60 dark:from-emerald-900/55 dark:to-emerald-950/70">
+                  <p className="text-xs text-emerald-800/70 dark:text-emerald-200/70">
+                    Loan Turnaround
+                  </p>
+                  <p className="mt-1 text-3xl font-extrabold">48h</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </motion.section>
 
-      {/* Features Section */}
       <motion.section
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionReveal}
-        className="bg-white dark:bg-zinc-900/50 py-16 sm:py-24"
+        className="py-16 sm:py-20"
       >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">
-            Why Choose ChamaConnect?
-          </h2>
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 flex flex-col gap-3 sm:mb-12">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-800/80 dark:text-emerald-200/90">
+              Why Teams Choose ChamaConnect
+            </p>
+            <h2 className="max-w-2xl text-3xl font-black tracking-tight sm:text-4xl">
+              The platform that removes friction from group finance.
+            </h2>
+          </div>
 
           <motion.div
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.25 }}
-            className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
+            className="grid gap-6 md:grid-cols-2 lg:grid-cols-4"
           >
-            {[
-              {
-                icon: Shield,
-                title: "Secure & Transparent",
-                description:
-                  "Blockchain-verified transactions with immutable records",
-              },
-              {
-                icon: Zap,
-                title: "Instant Setup",
-                description: "Create or join a chama in minutes, not hours",
-              },
-              {
-                icon: TrendingUp,
-                title: "Smart Analytics",
-                description: "Real-time dashboards and financial insights",
-              },
-              {
-                icon: Users,
-                title: "Easy Collaboration",
-                description: "Invite members and manage roles effortlessly",
-              },
-            ].map((feature, index) => {
+            {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
                 <motion.div
                   key={index}
                   variants={cardReveal}
-                  className="p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:border-zinc-900 dark:hover:border-zinc-50 transition-colors space-y-3"
+                  className="group h-full space-y-4 rounded-2xl border border-emerald-200/70 bg-white/88 p-6 shadow-[0_12px_40px_-30px_rgba(6,78,59,0.7)] transition-all hover:-translate-y-1 hover:border-emerald-400/60 dark:border-emerald-700/50 dark:bg-emerald-950/35"
                 >
                   <div className="inline-flex rounded-xl bg-emerald-100 p-2 text-emerald-800 transition-colors group-hover:bg-emerald-800 group-hover:text-emerald-50 dark:bg-emerald-900/40 dark:text-emerald-200 dark:group-hover:bg-emerald-100 dark:group-hover:text-emerald-900">
                     <Icon className="size-5" />
@@ -164,50 +205,41 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Supported Groups Section */}
       <motion.section
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionReveal}
-        className="py-16 sm:py-24"
+        className="border-y border-emerald-200/70 bg-linear-to-r from-white/60 via-emerald-50/75 to-white/70 py-16 dark:border-emerald-800/45 dark:from-emerald-950/20 dark:via-emerald-900/25 dark:to-emerald-950/20 sm:py-20"
       >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">
-            Supports All Group Types
-          </h2>
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 text-center sm:mb-12">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-800/80 dark:text-emerald-200/90">
+              Built For Every Chama Model
+            </p>
+            <h2 className="mt-2 text-3xl font-black tracking-tight sm:text-4xl">
+              One system, multiple group structures.
+            </h2>
+          </div>
 
           <motion.div
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.25 }}
-            className="grid md:grid-cols-3 gap-6"
+            className="grid gap-6 md:grid-cols-3"
           >
-            {[
-              {
-                title: "SACCO Groups",
-                description:
-                  "Perfect for structured savings, loans, and contributions",
-              },
-              {
-                title: "Table Banking",
-                description:
-                  "Great for regular meetings and community-driven savings",
-              },
-              {
-                title: "Merry-Go-Round",
-                description:
-                  "Ideal for rotating savings distribution and funds",
-              },
-            ].map((group, index) => (
+            {groupTypes.map((group, index) => (
               <motion.div
                 key={index}
                 variants={cardReveal}
-                className="p-6 rounded-xl bg-linear-to-br from-zinc-50 dark:from-zinc-900/50 to-zinc-100 dark:to-zinc-800/50 border border-zinc-200 dark:border-zinc-800 space-y-2"
+                className="space-y-3 rounded-2xl border border-emerald-200/70 bg-white/92 p-6 shadow-[0_8px_28px_-24px_rgba(6,78,59,0.8)] dark:border-emerald-700/45 dark:bg-emerald-950/35"
               >
-                <h3 className="font-semibold text-lg">{group.title}</h3>
-                <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                <p className="text-xs font-semibold uppercase tracking-[0.15em] text-emerald-700/85 dark:text-emerald-300/85">
+                  0{index + 1}
+                </p>
+                <h3 className="text-lg font-bold">{group.title}</h3>
+                <p className="text-sm leading-relaxed text-emerald-900/70 dark:text-emerald-200/75">
                   {group.description}
                 </p>
               </motion.div>
@@ -216,35 +248,32 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* CTA Section */}
       <motion.section
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionReveal}
-        className="bg-zinc-900 dark:bg-black text-zinc-50 py-16 sm:py-24"
+        className="relative overflow-hidden bg-[linear-gradient(135deg,#0a6a54_0%,#055541_42%,#044336_100%)] py-16 text-white sm:py-24"
       >
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6"
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold">
-            Ready to Transform Your Chama?
-          </h2>
-          <p className="text-lg text-zinc-300">
-            Join hundreds of groups already using ChamaConnect to manage their
-            finances with transparency and ease.
-          </p>
-          <Link
-            href="/register"
-            className="inline-block px-8 py-3 rounded-lg bg-zinc-50 text-zinc-900 font-bold hover:opacity-90 transition-opacity"
-          >
-            Start Your Free Trial
-          </Link>
-        </motion.div>
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_14%,rgba(110,231,183,0.35),transparent_34%),radial-gradient(circle_at_82%_84%,rgba(103,232,249,0.26),transparent_38%)]" />
+        <div className="mx-auto flex w-full max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="relative w-full rounded-3xl border border-emerald-300/45 bg-emerald-900/35 p-6 text-center shadow-xl shadow-emerald-950/20 backdrop-blur-sm sm:p-8 md:p-10">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-200/90">
+              Newsletter
+            </p>
+            <h2 className="mt-2 text-3xl font-black tracking-tight sm:text-4xl">
+              Stay updated with ChamaConnect releases
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-emerald-100/85">
+              Get product updates, hackathon progress highlights, and early
+              access invites delivered to your inbox.
+            </p>
+            <div className="mx-auto mt-5 max-w-xl text-left text-xs text-emerald-100/80">
+              Email <span className="text-red-300">*</span>
+            </div>
+            <NewsletterForm />
+          </div>
+        </div>
       </motion.section>
 
       <SiteFooter />
