@@ -1,80 +1,38 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { apiStore } from '@/lib/api-store';
 import type { ApiResponse, CreateChamaResponse } from '@/lib/types';
+import { createChamaRequestSchema } from '@/lib/validation';
+import { getSessionFromRequest } from '@/lib/auth';
 
 export async function POST(request: NextRequest): Promise<NextResponse<ApiResponse<CreateChamaResponse>>> {
     try {
-        const body = await request.json();
-        const { userId, chamaName, chamaType, members, description } = body;
-
-        // Validation
-        if (!userId || typeof userId !== 'string') {
+        const session = await getSessionFromRequest(request);
+        if (!session) {
             return NextResponse.json(
                 {
                     success: false,
-                    message: 'User ID is required',
+                    message: 'Unauthorized',
+                },
+                { status: 401 }
+            );
+        }
+
+        const parseResult = createChamaRequestSchema.safeParse(await request.json());
+        if (!parseResult.success) {
+            const issue = parseResult.error.issues[0];
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: issue?.message ?? 'Invalid chama payload',
                 },
                 { status: 400 }
             );
         }
 
-        // Verify user exists
-        const user = apiStore.getUserById(userId);
-        if (!user) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: 'User not found',
-                },
-                { status: 404 }
-            );
-        }
-
-        if (!chamaName || typeof chamaName !== 'string' || chamaName.trim().length < 2) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: 'Chama name is required and must be at least 2 characters',
-                },
-                { status: 400 }
-            );
-        }
-
-        const validTypes = ['SACCO', 'TableBanking', 'MerryGoRound'];
-        if (!chamaType || !validTypes.includes(chamaType)) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: 'Invalid chama type',
-                },
-                { status: 400 }
-            );
-        }
-
-        if (!Array.isArray(members) || members.length === 0) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: 'At least one member (admin) is required',
-                },
-                { status: 400 }
-            );
-        }
-
-        // Ensure admin exists in members
-        const hasAdmin = members.some(m => m.role === 'admin');
-        if (!hasAdmin) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: 'At least one member must be an admin',
-                },
-                { status: 400 }
-            );
-        }
+        const { chamaName, chamaType, members, description } = parseResult.data;
 
         // Create chama
-        const chama = apiStore.createChama(userId, chamaName, chamaType, members, description);
+        const chama = apiStore.createChama(session.userId, chamaName, chamaType, members, description);
 
         return NextResponse.json(
             {

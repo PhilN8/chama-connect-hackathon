@@ -1,52 +1,43 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { hash } from 'bcryptjs';
 import { apiStore } from '@/lib/api-store';
 import type { ApiResponse, RegisterResponse } from '@/lib/types';
+import { registerRequestSchema } from '@/lib/validation';
+import { createSessionToken, setSessionCookie } from '@/lib/auth';
+
+function deriveDisplayName(fullName: string | undefined, email: string): string {
+    if (fullName && fullName.trim().length > 0) {
+        return fullName.trim();
+    }
+
+    const localPart = email.split('@')[0] ?? 'Member';
+    const cleaned = localPart.replace(/[._-]+/g, ' ').trim();
+    if (!cleaned) {
+        return 'Member';
+    }
+
+    return cleaned
+        .split(' ')
+        .filter(Boolean)
+        .map((part) => part[0].toUpperCase() + part.slice(1))
+        .join(' ');
+}
 
 export async function POST(request: NextRequest): Promise<NextResponse<ApiResponse<RegisterResponse>>> {
     try {
-        const body = await request.json();
-        const { fullName, email, phone, password } = body;
-
-        // Validation
-        if (!fullName || typeof fullName !== 'string' || fullName.trim().length < 2) {
+        const parseResult = registerRequestSchema.safeParse(await request.json());
+        if (!parseResult.success) {
+            const issue = parseResult.error.issues[0];
             return NextResponse.json(
                 {
                     success: false,
-                    message: 'Full name is required and must be at least 2 characters',
+                    message: issue?.message ?? 'Invalid registration payload',
                 },
                 { status: 400 }
             );
         }
 
-        if (!email || typeof email !== 'string' || !email.includes('@')) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: 'Valid email address is required',
-                },
-                { status: 400 }
-            );
-        }
-
-        if (!phone || typeof phone !== 'string') {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: 'Phone number is required',
-                },
-                { status: 400 }
-            );
-        }
-
-        if (!password || typeof password !== 'string' || password.length < 8) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: 'Password must be at least 8 characters',
-                },
-                { status: 400 }
-            );
-        }
+        const { fullName, email, phone, password } = parseResult.data;
 
         // Check if email already registered
         if (apiStore.getUserByEmail(email)) {
@@ -59,11 +50,11 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
             );
         }
 
-        // In real app, hash password here with bcrypt
-        // For now, store plaintext (demo only!)
-        const user = apiStore.registerUser(fullName, email, phone, password);
+        const hashedPassword = await hash(password, 10);
+        const resolvedFullName = deriveDisplayName(fullName, email);
+        const user = apiStore.registerUser(resolvedFullName, email, phone, hashedPassword);
 
-        return NextResponse.json(
+        const response = NextResponse.json(
             {
                 success: true,
                 data: {
@@ -75,6 +66,16 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
             },
             { status: 201 }
         );
+
+        const sessionToken = await createSessionToken({
+            userId: user.id,
+            email: user.email,
+            fullName: user.fullName,
+        });
+
+        setSessionCookie(response, sessionToken);
+
+        return response;
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Registration failed';
 

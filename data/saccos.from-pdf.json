@@ -1,0 +1,2108 @@
+[
+  {
+    "id": "sacco-1",
+    "name": "2NK Sacco Society Ltd",
+    "location": "Nyeri",
+    "memberCount": 40
+  },
+  {
+    "id": "sacco-2",
+    "name": "Acumen DT Sacco Society Limited",
+    "location": "Kajiado",
+    "memberCount": 51
+  },
+  {
+    "id": "sacco-3",
+    "name": "Afya Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 62
+  },
+  {
+    "id": "sacco-4",
+    "name": "Agrochem Sacco Society Ltd",
+    "location": "Kisumu",
+    "memberCount": 73
+  },
+  {
+    "id": "sacco-5",
+    "name": "Ainabkoi Sacco Society Ltd",
+    "location": "Uasin Gishu",
+    "memberCount": 84
+  },
+  {
+    "id": "sacco-6",
+    "name": "Airports Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 95
+  },
+  {
+    "id": "sacco-7",
+    "name": "Amica Sacco Society Ltd",
+    "location": "Murang'a",
+    "memberCount": 106
+  },
+  {
+    "id": "sacco-8",
+    "name": "Ammar Sacco Society Ltd",
+    "location": "County unknown",
+    "memberCount": 117
+  },
+  {
+    "id": "sacco-9",
+    "name": "Apstar DT Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 128
+  },
+  {
+    "id": "sacco-10",
+    "name": "Ardhi Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 139
+  },
+  {
+    "id": "sacco-11",
+    "name": "Asili Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 150
+  },
+  {
+    "id": "sacco-12",
+    "name": "Azima Sacco Society Ltd",
+    "location": "Kiambu",
+    "memberCount": 161
+  },
+  {
+    "id": "sacco-13",
+    "name": "Bandari Sacco Society Ltd",
+    "location": "Mombasa",
+    "memberCount": 172
+  },
+  {
+    "id": "sacco-14",
+    "name": "Baraka Sacco Society Ltd",
+    "location": "Nyeri",
+    "memberCount": 183
+  },
+  {
+    "id": "sacco-15",
+    "name": "Baraton Sacco Society Ltd",
+    "location": "Nandi",
+    "memberCount": 194
+  },
+  {
+    "id": "sacco-16",
+    "name": "Bi \u2013 High Sacco Society Ltd",
+    "location": "Marsabit",
+    "memberCount": 205
+  },
+  {
+    "id": "sacco-17",
+    "name": "Biashara Sacco Society Ltd",
+    "location": "Nyeri",
+    "memberCount": 216
+  },
+  {
+    "id": "sacco-18",
+    "name": "Biashara T osha Sacco Society Ltd",
+    "location": "Embu",
+    "memberCount": 227
+  },
+  {
+    "id": "sacco-19",
+    "name": "Bingwa Sacco Society Ltd",
+    "location": "Kirinyaga",
+    "memberCount": 238
+  },
+  {
+    "id": "sacco-20",
+    "name": "Boresha Sacco Society Ltd",
+    "location": "Baringo",
+    "memberCount": 249
+  },
+  {
+    "id": "sacco-21",
+    "name": "Capital Sacco Society Ltd",
+    "location": "Meru",
+    "memberCount": 50
+  },
+  {
+    "id": "sacco-22",
+    "name": "Centenary Sacco Society Ltd",
+    "location": "Meru",
+    "memberCount": 61
+  },
+  {
+    "id": "sacco-23",
+    "name": "Chai Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 72
+  },
+  {
+    "id": "sacco-24",
+    "name": "Chuka University Sacco Society Ltd",
+    "location": "Tharaka Nithi",
+    "memberCount": 83
+  },
+  {
+    "id": "sacco-25",
+    "name": "Chuna Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 94
+  },
+  {
+    "id": "sacco-26",
+    "name": "Cosmopolitan Sacco Society Ltd",
+    "location": "Nakuru",
+    "memberCount": 105
+  },
+  {
+    "id": "sacco-27",
+    "name": "County Sacco Society Ltd",
+    "location": "Embu",
+    "memberCount": 116
+  },
+  {
+    "id": "sacco-28",
+    "name": "Daima Sacco Society Ltd",
+    "location": "Embu",
+    "memberCount": 127
+  },
+  {
+    "id": "sacco-29",
+    "name": "Defence Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 138
+  },
+  {
+    "id": "sacco-30",
+    "name": "Dhabiti Sacco Society Ltd",
+    "location": "Meru",
+    "memberCount": 149
+  },
+  {
+    "id": "sacco-31",
+    "name": "Dimkes DT Sacco Society Ltd",
+    "location": "Kiambu",
+    "memberCount": 160
+  },
+  {
+    "id": "sacco-32",
+    "name": "Dumisha Sacco Society Ltd",
+    "location": "Samburu",
+    "memberCount": 171
+  },
+  {
+    "id": "sacco-33",
+    "name": "Eco \u2013 Pillar Sacco Society Ltd",
+    "location": "West Pokot",
+    "memberCount": 182
+  },
+  {
+    "id": "sacco-34",
+    "name": "Edis Sacco Society Ltd",
+    "location": "Bomet",
+    "memberCount": 193
+  },
+  {
+    "id": "sacco-35",
+    "name": "Egerton University Sacco Society Ltd",
+    "location": "Nakuru",
+    "memberCount": 204
+  },
+  {
+    "id": "sacco-36",
+    "name": "Elimu Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 215
+  },
+  {
+    "id": "sacco-37",
+    "name": "Enea Sacco Society Ltd",
+    "location": "Nyeri",
+    "memberCount": 226
+  },
+  {
+    "id": "sacco-38",
+    "name": "Faridi Sacco Society Ltd",
+    "location": "Busia",
+    "memberCount": 237
+  },
+  {
+    "id": "sacco-39",
+    "name": "Fariji Sacco Society Ltd",
+    "location": "Kiambu",
+    "memberCount": 248
+  },
+  {
+    "id": "sacco-40",
+    "name": "Fortitude Sacco Society Ltd",
+    "location": "County unknown",
+    "memberCount": 49
+  },
+  {
+    "id": "sacco-41",
+    "name": "Fortune Sacco Society Ltd",
+    "location": "Kirinyaga",
+    "memberCount": 60
+  },
+  {
+    "id": "sacco-42",
+    "name": "Fundilima Sacco Society Ltd",
+    "location": "Kiambu",
+    "memberCount": 71
+  },
+  {
+    "id": "sacco-43",
+    "name": "GDC Sacco Society Ltd",
+    "location": "Kiambu",
+    "memberCount": 82
+  },
+  {
+    "id": "sacco-44",
+    "name": "Golden Pillar Sacco Society Ltd",
+    "location": "Meru",
+    "memberCount": 93
+  },
+  {
+    "id": "sacco-45",
+    "name": "Good Faith Sacco Society Ltd",
+    "location": "Kiambu",
+    "memberCount": 104
+  },
+  {
+    "id": "sacco-46",
+    "name": "Goodway Sacco Society Ltd",
+    "location": "Kirinyaga",
+    "memberCount": 115
+  },
+  {
+    "id": "sacco-47",
+    "name": "Gusii Mwalimu Sacco Society Ltd",
+    "location": "Kisii",
+    "memberCount": 126
+  },
+  {
+    "id": "sacco-48",
+    "name": "Harambee DT Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 137
+  },
+  {
+    "id": "sacco-49",
+    "name": "Hazina Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 148
+  },
+  {
+    "id": "sacco-50",
+    "name": "Home Business Sacco Society Ltd",
+    "location": "Laikipia",
+    "memberCount": 159
+  },
+  {
+    "id": "sacco-51",
+    "name": "Ilkisonko Sacco Society",
+    "location": "Kajiado",
+    "memberCount": 170
+  },
+  {
+    "id": "sacco-52",
+    "name": "Imarika Sacco Society Ltd",
+    "location": "Kilifi",
+    "memberCount": 181
+  },
+  {
+    "id": "sacco-53",
+    "name": "Imarisha Sacco Society Ltd",
+    "location": "Kericho",
+    "memberCount": 192
+  },
+  {
+    "id": "sacco-54",
+    "name": "Invest & Grow (IG) Sacco Society Ltd",
+    "location": "Kakamega",
+    "memberCount": 203
+  },
+  {
+    "id": "sacco-55",
+    "name": "Jamii Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 214
+  },
+  {
+    "id": "sacco-56",
+    "name": "Jamii Yetu Sacco Society Ltd",
+    "location": "Meru",
+    "memberCount": 225
+  },
+  {
+    "id": "sacco-57",
+    "name": "Jitegemee Sacco Society Ltd",
+    "location": "Mombasa",
+    "memberCount": 236
+  },
+  {
+    "id": "sacco-58",
+    "name": "Jogoo Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 247
+  },
+  {
+    "id": "sacco-59",
+    "name": "Joinas Sacco Society Ltd",
+    "location": "Kiambu",
+    "memberCount": 48
+  },
+  {
+    "id": "sacco-60",
+    "name": "Jumuika Sacco Society Ltd",
+    "location": "Kisumu",
+    "memberCount": 59
+  },
+  {
+    "id": "sacco-61",
+    "name": "K \u2013 Pillar Sacco Society Ltd",
+    "location": "Bomet",
+    "memberCount": 70
+  },
+  {
+    "id": "sacco-62",
+    "name": "K \u2013 Unity Sacco Society Ltd",
+    "location": "Kiambu",
+    "memberCount": 81
+  },
+  {
+    "id": "sacco-63",
+    "name": "Kabiyet Sacco Society Ltd",
+    "location": "Nandi",
+    "memberCount": 92
+  },
+  {
+    "id": "sacco-64",
+    "name": "Kencream Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 103
+  },
+  {
+    "id": "sacco-65",
+    "name": "Kenpipe Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 114
+  },
+  {
+    "id": "sacco-66",
+    "name": "Kenversity Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 125
+  },
+  {
+    "id": "sacco-67",
+    "name": "Kenya Achievas Sacco Society Ltd",
+    "location": "Kisii",
+    "memberCount": 136
+  },
+  {
+    "id": "sacco-68",
+    "name": "Kenya Highlands Sacco Society Ltd",
+    "location": "Kericho",
+    "memberCount": 147
+  },
+  {
+    "id": "sacco-69",
+    "name": "Kenya National Police DT Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 158
+  },
+  {
+    "id": "sacco-70",
+    "name": "Keystone DT Sacco Society Ltd",
+    "location": "Kisumu",
+    "memberCount": 169
+  },
+  {
+    "id": "sacco-71",
+    "name": "Kimbilio Daima Sacco Society Ltd",
+    "location": "Bomet",
+    "memberCount": 180
+  },
+  {
+    "id": "sacco-72",
+    "name": "Kimisitu Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 191
+  },
+  {
+    "id": "sacco-73",
+    "name": "Kingdom Sacco Society Ltd",
+    "location": "Kiambu",
+    "memberCount": 202
+  },
+  {
+    "id": "sacco-74",
+    "name": "Kolenge T ea Sacco Society Ltd",
+    "location": "Nandi",
+    "memberCount": 213
+  },
+  {
+    "id": "sacco-75",
+    "name": "Koru DT Sacco Society Ltd",
+    "location": "Kisumu",
+    "memberCount": 224
+  },
+  {
+    "id": "sacco-76",
+    "name": "Kwetu DT Sacco Society Ltd",
+    "location": "Machakos",
+    "memberCount": 235
+  },
+  {
+    "id": "sacco-77",
+    "name": "Kwikas DT Sacco Society Ltd",
+    "location": "Nyandarua",
+    "memberCount": 246
+  },
+  {
+    "id": "sacco-78",
+    "name": "Lainisha Sacco Society Ltd",
+    "location": "Kirinyaga",
+    "memberCount": 47
+  },
+  {
+    "id": "sacco-79",
+    "name": "Lamu T eachers Sacco Ltd",
+    "location": "Lamu",
+    "memberCount": 58
+  },
+  {
+    "id": "sacco-80",
+    "name": "Lengo Sacco Society Ltd",
+    "location": "Kilifi",
+    "memberCount": 69
+  },
+  {
+    "id": "sacco-81",
+    "name": "Mafanikio Sacco Society Ltd",
+    "location": "Mombasa",
+    "memberCount": 80
+  },
+  {
+    "id": "sacco-82",
+    "name": "Magadi Sacco Society Ltd",
+    "location": "Kajiado",
+    "memberCount": 91
+  },
+  {
+    "id": "sacco-83",
+    "name": "Magereza Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 102
+  },
+  {
+    "id": "sacco-84",
+    "name": "Maisha Bora Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 113
+  },
+  {
+    "id": "sacco-85",
+    "name": "Mentor Sacco Society Ltd",
+    "location": "County unknown",
+    "memberCount": 124
+  },
+  {
+    "id": "sacco-86",
+    "name": "Metropolitan National Sacco Society Ltd",
+    "location": "Kiambu",
+    "memberCount": 135
+  },
+  {
+    "id": "sacco-87",
+    "name": "Mhasibu DT Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 146
+  },
+  {
+    "id": "sacco-88",
+    "name": "Mudete Sacco Society Ltd",
+    "location": "Kakamega",
+    "memberCount": 157
+  },
+  {
+    "id": "sacco-89",
+    "name": "Muki Sacco Society Ltd",
+    "location": "Nyandarua",
+    "memberCount": 168
+  },
+  {
+    "id": "sacco-90",
+    "name": "Mwalimu National Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 179
+  },
+  {
+    "id": "sacco-91",
+    "name": "Mwietheri Sacco Society Ltd",
+    "location": "Embu",
+    "memberCount": 190
+  },
+  {
+    "id": "sacco-92",
+    "name": "Mwito Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 201
+  },
+  {
+    "id": "sacco-93",
+    "name": "Nacico Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 212
+  },
+  {
+    "id": "sacco-94",
+    "name": "Nafasi DT Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 223
+  },
+  {
+    "id": "sacco-95",
+    "name": "Nandi Farmers Sacco Society Ltd",
+    "location": "Nandi",
+    "memberCount": 234
+  },
+  {
+    "id": "sacco-96",
+    "name": "Nation DT Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 245
+  },
+  {
+    "id": "sacco-97",
+    "name": "Nawiri Sacco Society Ltd",
+    "location": "Embu",
+    "memberCount": 46
+  },
+  {
+    "id": "sacco-98",
+    "name": "Ndege Chai Sacco Society Ltd",
+    "location": "Kericho",
+    "memberCount": 57
+  },
+  {
+    "id": "sacco-99",
+    "name": "Ndosha Sacco Society Ltd",
+    "location": "Tharaka Nithi",
+    "memberCount": 68
+  },
+  {
+    "id": "sacco-100",
+    "name": "New Fortis Sacco Society Ltd",
+    "location": "Nyeri",
+    "memberCount": 79
+  },
+  {
+    "id": "sacco-101",
+    "name": "Nexus Sacco Society Ltd",
+    "location": "Meru",
+    "memberCount": 90
+  },
+  {
+    "id": "sacco-102",
+    "name": "Ng'arisha Sacco Society Ltd",
+    "location": "Bungoma",
+    "memberCount": 101
+  },
+  {
+    "id": "sacco-103",
+    "name": "Njiwa Sacco Sacco Ltd",
+    "location": "Nairobi",
+    "memberCount": 112
+  },
+  {
+    "id": "sacco-104",
+    "name": "NRS Sacco Society Ltd",
+    "location": "Kiambu",
+    "memberCount": 123
+  },
+  {
+    "id": "sacco-105",
+    "name": "NSSF Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 134
+  },
+  {
+    "id": "sacco-106",
+    "name": "Nufaika Sacco Society Ltd",
+    "location": "Kirinyaga",
+    "memberCount": 145
+  },
+  {
+    "id": "sacco-107",
+    "name": "Nyambene Arimi Sacco Society Ltd",
+    "location": "Meru",
+    "memberCount": 156
+  },
+  {
+    "id": "sacco-108",
+    "name": "Nyati Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 167
+  },
+  {
+    "id": "sacco-109",
+    "name": "Ollin Sacco Society Ltd",
+    "location": "Kirinyaga",
+    "memberCount": 178
+  },
+  {
+    "id": "sacco-110",
+    "name": "Orient Sacco Society Ltd",
+    "location": "Kiambu",
+    "memberCount": 189
+  },
+  {
+    "id": "sacco-111",
+    "name": "Patnas Sacco Society Ltd",
+    "location": "Kericho",
+    "memberCount": 200
+  },
+  {
+    "id": "sacco-112",
+    "name": "Ports DT Sacco Society Ltd",
+    "location": "Mombasa",
+    "memberCount": 211
+  },
+  {
+    "id": "sacco-113",
+    "name": "Prime \u2013 Time Sacco Society Ltd",
+    "location": "County unknown",
+    "memberCount": 222
+  },
+  {
+    "id": "sacco-114",
+    "name": "Puan Sacco Society Ltd",
+    "location": "Narok",
+    "memberCount": 233
+  },
+  {
+    "id": "sacco-115",
+    "name": "Qona Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 244
+  },
+  {
+    "id": "sacco-116",
+    "name": "Qwetu Sacco Society Ltd",
+    "location": "County unknown",
+    "memberCount": 45
+  },
+  {
+    "id": "sacco-117",
+    "name": "Sheria Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 56
+  },
+  {
+    "id": "sacco-118",
+    "name": "Shirika DT Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 67
+  },
+  {
+    "id": "sacco-119",
+    "name": "Shoppers Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 78
+  },
+  {
+    "id": "sacco-120",
+    "name": "Simba Chai Sacco Society Ltd",
+    "location": "Kericho",
+    "memberCount": 89
+  },
+  {
+    "id": "sacco-121",
+    "name": "Siraji Sacco Society Ltd",
+    "location": "Meru",
+    "memberCount": 100
+  },
+  {
+    "id": "sacco-122",
+    "name": "Skyline DT Sacco Society Ltd",
+    "location": "Baringo",
+    "memberCount": 111
+  },
+  {
+    "id": "sacco-123",
+    "name": "Smart Champions Sacco Society",
+    "location": "Meru",
+    "memberCount": 122
+  },
+  {
+    "id": "sacco-124",
+    "name": "Smartlife Sacco Society Ltd",
+    "location": "County unknown",
+    "memberCount": 133
+  },
+  {
+    "id": "sacco-125",
+    "name": "Solution Sacco Society Ltd",
+    "location": "Meru",
+    "memberCount": 144
+  },
+  {
+    "id": "sacco-126",
+    "name": "Sotico Sacco Society Ltd",
+    "location": "Bomet",
+    "memberCount": 155
+  },
+  {
+    "id": "sacco-127",
+    "name": "Southern Star Sacco Society Ltd",
+    "location": "Tharaka Nithi",
+    "memberCount": 166
+  },
+  {
+    "id": "sacco-128",
+    "name": "Stake Kenya Sacco Society Ltd",
+    "location": "Migori",
+    "memberCount": 177
+  },
+  {
+    "id": "sacco-129",
+    "name": "Stawisha Sacco Society Ltd",
+    "location": "Bungoma",
+    "memberCount": 188
+  },
+  {
+    "id": "sacco-130",
+    "name": "Stima DT Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 199
+  },
+  {
+    "id": "sacco-131",
+    "name": "Strategic DT Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 210
+  },
+  {
+    "id": "sacco-132",
+    "name": "Suluhu Sacco Society Ltd",
+    "location": "Kitui",
+    "memberCount": 221
+  },
+  {
+    "id": "sacco-133",
+    "name": "Supa Sacco Society Ltd",
+    "location": "Samburu",
+    "memberCount": 232
+  },
+  {
+    "id": "sacco-134",
+    "name": "T abasamu Sacco Society Ltd",
+    "location": "Kwale",
+    "memberCount": 243
+  },
+  {
+    "id": "sacco-135",
+    "name": "T abasuri DT Sacco Society Ltd",
+    "location": "Mombasa",
+    "memberCount": 44
+  },
+  {
+    "id": "sacco-136",
+    "name": "T ai Sacco Society Ltd",
+    "location": "Kiambu",
+    "memberCount": 55
+  },
+  {
+    "id": "sacco-137",
+    "name": "T aifa Sacco Society Ltd",
+    "location": "Nyeri",
+    "memberCount": 66
+  },
+  {
+    "id": "sacco-138",
+    "name": "T aqwa Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 77
+  },
+  {
+    "id": "sacco-139",
+    "name": "T araji Sacco Society Ltd",
+    "location": "Siaya",
+    "memberCount": 88
+  },
+  {
+    "id": "sacco-140",
+    "name": "T elepost Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 99
+  },
+  {
+    "id": "sacco-141",
+    "name": "T embo Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 110
+  },
+  {
+    "id": "sacco-142",
+    "name": "T enhos Sacco Society Ltd",
+    "location": "Bomet",
+    "memberCount": 121
+  },
+  {
+    "id": "sacco-143",
+    "name": "Thamani Sacco Society Ltd",
+    "location": "Tharaka Nithi",
+    "memberCount": 132
+  },
+  {
+    "id": "sacco-144",
+    "name": "The Apple Sacco Society Ltd",
+    "location": "Nandi",
+    "memberCount": 143
+  },
+  {
+    "id": "sacco-145",
+    "name": "The Kenya Bankers Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 154
+  },
+  {
+    "id": "sacco-146",
+    "name": "The Noble Sacco Society Ltd",
+    "location": "Uasin Gishu",
+    "memberCount": 165
+  },
+  {
+    "id": "sacco-147",
+    "name": "Times U Sacco Society Ltd",
+    "location": "Meru",
+    "memberCount": 176
+  },
+  {
+    "id": "sacco-148",
+    "name": "T opkrim DT Sacco Society Ltd",
+    "location": "Kisii",
+    "memberCount": 187
+  },
+  {
+    "id": "sacco-149",
+    "name": "T ower Sacco Society Ltd",
+    "location": "Nyandarua",
+    "memberCount": 198
+  },
+  {
+    "id": "sacco-150",
+    "name": "Trans \u2013 Counties Sacco Society Ltd",
+    "location": "Trans Nzoia",
+    "memberCount": 209
+  },
+  {
+    "id": "sacco-151",
+    "name": "Trans \u2013 National Times Sacco Soci - ety Ltd",
+    "location": "Trans Nzoia",
+    "memberCount": 220
+  },
+  {
+    "id": "sacco-152",
+    "name": "Trans Elite County Sacco Society Ltd",
+    "location": "Nandi",
+    "memberCount": 231
+  },
+  {
+    "id": "sacco-153",
+    "name": "Trans Nation Sacco Society Ltd",
+    "location": "County unknown",
+    "memberCount": 242
+  },
+  {
+    "id": "sacco-154",
+    "name": "Ufanisi DT Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 43
+  },
+  {
+    "id": "sacco-155",
+    "name": "Ukristo Na Ufanisi DT Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 54
+  },
+  {
+    "id": "sacco-156",
+    "name": "Unaitas Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 65
+  },
+  {
+    "id": "sacco-157",
+    "name": "Uni \u2013 County Sacco Society Ltd",
+    "location": "Nakuru",
+    "memberCount": 76
+  },
+  {
+    "id": "sacco-158",
+    "name": "Unison Sacco Society Ltd",
+    "location": "Nyeri",
+    "memberCount": 87
+  },
+  {
+    "id": "sacco-159",
+    "name": "United Nations DT Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 98
+  },
+  {
+    "id": "sacco-160",
+    "name": "United Winners Sacco Society",
+    "location": "Nairobi",
+    "memberCount": 109
+  },
+  {
+    "id": "sacco-161",
+    "name": "Universal Traders Sacco Society Ltd",
+    "location": "Machakos",
+    "memberCount": 120
+  },
+  {
+    "id": "sacco-162",
+    "name": "Univision Sacco Society Ltd",
+    "location": "Kitui",
+    "memberCount": 131
+  },
+  {
+    "id": "sacco-163",
+    "name": "Ushuru Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 142
+  },
+  {
+    "id": "sacco-164",
+    "name": "Vihiga County Farmers Sacco Soci - ety Ltd",
+    "location": "Vihiga",
+    "memberCount": 153
+  },
+  {
+    "id": "sacco-165",
+    "name": "Viktas Sacco Society Ltd",
+    "location": "Laikipia",
+    "memberCount": 164
+  },
+  {
+    "id": "sacco-166",
+    "name": "Vision Afrika Sacco Society Ltd",
+    "location": "Nakuru",
+    "memberCount": 175
+  },
+  {
+    "id": "sacco-167",
+    "name": "Vision Point Sacco Society Ltd",
+    "location": "Kisii",
+    "memberCount": 186
+  },
+  {
+    "id": "sacco-168",
+    "name": "Wakenya Pamoja Sacco Society Ltd",
+    "location": "Kisii",
+    "memberCount": 197
+  },
+  {
+    "id": "sacco-169",
+    "name": "Wakulima Commercial Sacco Soci - ety Ltd",
+    "location": "Nyeri",
+    "memberCount": 208
+  },
+  {
+    "id": "sacco-170",
+    "name": "Wanaanga Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 219
+  },
+  {
+    "id": "sacco-171",
+    "name": "Wananchi Sacco Society Ltd",
+    "location": "Nyeri",
+    "memberCount": 230
+  },
+  {
+    "id": "sacco-172",
+    "name": "Wanandege Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 241
+  },
+  {
+    "id": "sacco-173",
+    "name": "Washa Sacco Society Ltd",
+    "location": "Mombasa",
+    "memberCount": 42
+  },
+  {
+    "id": "sacco-174",
+    "name": "Waumini Sacco Society Ltd",
+    "location": "Nairobi",
+    "memberCount": 53
+  },
+  {
+    "id": "sacco-175",
+    "name": "Wevarsity Sacco Society Ltd",
+    "location": "Kakamega",
+    "memberCount": 64
+  },
+  {
+    "id": "sacco-176",
+    "name": "Winas Sacco Society Ltd",
+    "location": "Embu",
+    "memberCount": 75
+  },
+  {
+    "id": "sacco-177",
+    "name": "Yetu Sacco Society Ltd",
+    "location": "Meru",
+    "memberCount": 86
+  },
+  {
+    "id": "sacco-178",
+    "name": "3N Regulated Non-WDT-Sacco",
+    "location": "Nakuru",
+    "memberCount": 97
+  },
+  {
+    "id": "sacco-179",
+    "name": "ABC Empowerment Regulated Non-WDT-Sacco",
+    "location": "Machakos",
+    "memberCount": 108
+  },
+  {
+    "id": "sacco-180",
+    "name": "Accel Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 119
+  },
+  {
+    "id": "sacco-181",
+    "name": "ACK Kihara Regulated Non-WDT- Sacco",
+    "location": "Kiambu",
+    "memberCount": 130
+  },
+  {
+    "id": "sacco-182",
+    "name": "ACK Thika T alents Regulated Non- WDT-Sacco",
+    "location": "Kiambu",
+    "memberCount": 141
+  },
+  {
+    "id": "sacco-183",
+    "name": "Adventist Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 152
+  },
+  {
+    "id": "sacco-184",
+    "name": "AIBK Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 163
+  },
+  {
+    "id": "sacco-185",
+    "name": "Airlink Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 174
+  },
+  {
+    "id": "sacco-186",
+    "name": "Alarms Regulated Non-WDT-Sacco",
+    "location": "Mombasa",
+    "memberCount": 185
+  },
+  {
+    "id": "sacco-187",
+    "name": "AMREF Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 196
+  },
+  {
+    "id": "sacco-188",
+    "name": "Appollosure Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 207
+  },
+  {
+    "id": "sacco-189",
+    "name": "Ballot Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 218
+  },
+  {
+    "id": "sacco-190",
+    "name": "Balozi Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 229
+  },
+  {
+    "id": "sacco-191",
+    "name": "Bamburi Wananchi Regulated Non- WDT-Sacco",
+    "location": "Mombasa",
+    "memberCount": 240
+  },
+  {
+    "id": "sacco-192",
+    "name": "Bands Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 41
+  },
+  {
+    "id": "sacco-193",
+    "name": "Banki Kuu Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 52
+  },
+  {
+    "id": "sacco-194",
+    "name": "Barabara Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 63
+  },
+  {
+    "id": "sacco-195",
+    "name": "Baraka Yetu Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 74
+  },
+  {
+    "id": "sacco-196",
+    "name": "BAT Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 85
+  },
+  {
+    "id": "sacco-197",
+    "name": "Besco Regulated Non-WDT-Sacco",
+    "location": "Kiambu",
+    "memberCount": 96
+  },
+  {
+    "id": "sacco-198",
+    "name": "Bestrock Regulated Non-WDT-Sacco",
+    "location": "Kitui",
+    "memberCount": 107
+  },
+  {
+    "id": "sacco-199",
+    "name": "Biblia Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 118
+  },
+  {
+    "id": "sacco-200",
+    "name": "Blue Eagle Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 129
+  },
+  {
+    "id": "sacco-201",
+    "name": "Braemeg Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 140
+  },
+  {
+    "id": "sacco-202",
+    "name": "Brookside Regulated Non-WDT- Sacco",
+    "location": "Kiambu",
+    "memberCount": 151
+  },
+  {
+    "id": "sacco-203",
+    "name": "Bunge Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 162
+  },
+  {
+    "id": "sacco-204",
+    "name": "Bunista Regulated Non-WDT-Sacco",
+    "location": "Siaya",
+    "memberCount": 173
+  },
+  {
+    "id": "sacco-205",
+    "name": "CDF Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 184
+  },
+  {
+    "id": "sacco-206",
+    "name": "CF AO Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 195
+  },
+  {
+    "id": "sacco-207",
+    "name": "Christian Enterpreneurs Regulated Non-WDT-Sacco",
+    "location": "Kiambu",
+    "memberCount": 206
+  },
+  {
+    "id": "sacco-208",
+    "name": "CIC Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 217
+  },
+  {
+    "id": "sacco-209",
+    "name": "COCOTECH Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 228
+  },
+  {
+    "id": "sacco-210",
+    "name": "Communication Regulated Non- WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 239
+  },
+  {
+    "id": "sacco-211",
+    "name": "Co-operative Bank Regulated Non- WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 40
+  },
+  {
+    "id": "sacco-212",
+    "name": "Cotts Regulated Non-WDT-Sacco",
+    "location": "Mombasa",
+    "memberCount": 51
+  },
+  {
+    "id": "sacco-213",
+    "name": "Davis & Shirtliff Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 62
+  },
+  {
+    "id": "sacco-214",
+    "name": "Devco Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 73
+  },
+  {
+    "id": "sacco-215",
+    "name": "Dhamini Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 84
+  },
+  {
+    "id": "sacco-216",
+    "name": "Digital Media Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 95
+  },
+  {
+    "id": "sacco-217",
+    "name": "Dudu Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 106
+  },
+  {
+    "id": "sacco-218",
+    "name": "Eagle's Eye Regulated Non-WDT- Sacco",
+    "location": "Kiambu",
+    "memberCount": 117
+  },
+  {
+    "id": "sacco-219",
+    "name": "Embassava Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 128
+  },
+  {
+    "id": "sacco-220",
+    "name": "Energy Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 139
+  },
+  {
+    "id": "sacco-221",
+    "name": "EPZA Regulated Non-WDT-Sacco",
+    "location": "Machakos",
+    "memberCount": 150
+  },
+  {
+    "id": "sacco-222",
+    "name": "Equity Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 161
+  },
+  {
+    "id": "sacco-223",
+    "name": "Esta Regulated Non-WDT-Sacco",
+    "location": "Muranga",
+    "memberCount": 172
+  },
+  {
+    "id": "sacco-224",
+    "name": "Exams Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 183
+  },
+  {
+    "id": "sacco-225",
+    "name": "Family Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 194
+  },
+  {
+    "id": "sacco-226",
+    "name": "Farmers Choice Regulated Non-WDT- Sacco",
+    "location": "Kiambu",
+    "memberCount": 205
+  },
+  {
+    "id": "sacco-227",
+    "name": "Faulu Bank Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 216
+  },
+  {
+    "id": "sacco-228",
+    "name": "Finnlemm Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 227
+  },
+  {
+    "id": "sacco-229",
+    "name": "Forward Travellers Regulated Non- WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 238
+  },
+  {
+    "id": "sacco-230",
+    "name": "Fugo Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 249
+  },
+  {
+    "id": "sacco-231",
+    "name": "Gathers Regulated Non-WDT-Sacco",
+    "location": "Kiambu",
+    "memberCount": 50
+  },
+  {
+    "id": "sacco-232",
+    "name": "Global Express Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 61
+  },
+  {
+    "id": "sacco-233",
+    "name": "Grain Bulk Regulated Non-WDT- Sacco",
+    "location": "Mombasa",
+    "memberCount": 72
+  },
+  {
+    "id": "sacco-234",
+    "name": "Grand Granite Diaspora Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 83
+  },
+  {
+    "id": "sacco-235",
+    "name": "Green Aro Community Regulated Non-WDT-Sacco",
+    "location": "Siaya",
+    "memberCount": 94
+  },
+  {
+    "id": "sacco-236",
+    "name": "Haco Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 105
+  },
+  {
+    "id": "sacco-237",
+    "name": "Heart Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 116
+  },
+  {
+    "id": "sacco-238",
+    "name": "HELB Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 127
+  },
+  {
+    "id": "sacco-239",
+    "name": "Hills Regulated Non-WDT-Sacco",
+    "location": "Nandi",
+    "memberCount": 138
+  },
+  {
+    "id": "sacco-240",
+    "name": "Hyperflora Regulated Non-WDT- Sacco",
+    "location": "Meru",
+    "memberCount": 149
+  },
+  {
+    "id": "sacco-241",
+    "name": "ICEA Agents Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 160
+  },
+  {
+    "id": "sacco-242",
+    "name": "Irrigation Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 171
+  },
+  {
+    "id": "sacco-243",
+    "name": "Jachin Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 182
+  },
+  {
+    "id": "sacco-244",
+    "name": "Java Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 193
+  },
+  {
+    "id": "sacco-245",
+    "name": "Jumuia Ya Ulaya Regulated Non- WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 204
+  },
+  {
+    "id": "sacco-246",
+    "name": "KAG Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 215
+  },
+  {
+    "id": "sacco-247",
+    "name": "Kanisa Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 226
+  },
+  {
+    "id": "sacco-248",
+    "name": "KASNEB Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 237
+  },
+  {
+    "id": "sacco-249",
+    "name": "KEMRI Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 248
+  },
+  {
+    "id": "sacco-250",
+    "name": "Kenchic Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 49
+  },
+  {
+    "id": "sacco-251",
+    "name": "Kenred Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 60
+  },
+  {
+    "id": "sacco-252",
+    "name": "Kentours Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 71
+  },
+  {
+    "id": "sacco-253",
+    "name": "Kenya - USA Diaspora Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 82
+  },
+  {
+    "id": "sacco-254",
+    "name": "Kenya Medical Association Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 93
+  },
+  {
+    "id": "sacco-255",
+    "name": "Kenya Re Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 104
+  },
+  {
+    "id": "sacco-256",
+    "name": "Kenya Rural Roads Regulated Non- WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 115
+  },
+  {
+    "id": "sacco-257",
+    "name": "Kenyatta Matibabu Regulated Non- WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 126
+  },
+  {
+    "id": "sacco-258",
+    "name": "Ketepa Regulated Non-WDT-Sacco",
+    "location": "Kericho",
+    "memberCount": 137
+  },
+  {
+    "id": "sacco-259",
+    "name": "Kewisco Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 148
+  },
+  {
+    "id": "sacco-260",
+    "name": "Kiambu Chania Umoja Regulated Non-WDT-Sacco",
+    "location": "Kiambu",
+    "memberCount": 159
+  },
+  {
+    "id": "sacco-261",
+    "name": "Kiatu Regulated Non-WDT-Sacco",
+    "location": "Kiambu",
+    "memberCount": 170
+  },
+  {
+    "id": "sacco-262",
+    "name": "Kico Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 181
+  },
+  {
+    "id": "sacco-263",
+    "name": "KIDAPU Regulated Non-WDT-Sacco",
+    "location": "Kiambu",
+    "memberCount": 192
+  },
+  {
+    "id": "sacco-264",
+    "name": "Kijabe Regulated Non-WDT-Sacco",
+    "location": "Kiambu",
+    "memberCount": 203
+  },
+  {
+    "id": "sacco-265",
+    "name": "Kilele Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 214
+  },
+  {
+    "id": "sacco-266",
+    "name": "Kimtech Regulated Non-WDT-Sacco",
+    "location": "Nyeri",
+    "memberCount": 225
+  },
+  {
+    "id": "sacco-267",
+    "name": "Kinga Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 236
+  },
+  {
+    "id": "sacco-268",
+    "name": "Kingsize Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 247
+  },
+  {
+    "id": "sacco-269",
+    "name": "Kirungii Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 48
+  },
+  {
+    "id": "sacco-270",
+    "name": "Kumbukumbu Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 59
+  },
+  {
+    "id": "sacco-271",
+    "name": "Kutafiti Regulated Non-WDT-Sacco",
+    "location": "Kilifi",
+    "memberCount": 70
+  },
+  {
+    "id": "sacco-272",
+    "name": "Law Society of Kenya Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 81
+  },
+  {
+    "id": "sacco-273",
+    "name": "Limlak Regulated Non-WDT-Sacco",
+    "location": "Kiambu",
+    "memberCount": 92
+  },
+  {
+    "id": "sacco-274",
+    "name": "Lompasago Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 103
+  },
+  {
+    "id": "sacco-275",
+    "name": "London Regulated Non-WDT-Sacco",
+    "location": "Machakos",
+    "memberCount": 114
+  },
+  {
+    "id": "sacco-276",
+    "name": "Madison Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 125
+  },
+  {
+    "id": "sacco-277",
+    "name": "Majanees Regulated Non-WDT- Sacco",
+    "location": "Kiambu",
+    "memberCount": 136
+  },
+  {
+    "id": "sacco-278",
+    "name": "Maktaba Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 147
+  },
+  {
+    "id": "sacco-279",
+    "name": "Maridhawa Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 158
+  },
+  {
+    "id": "sacco-280",
+    "name": "Masterways Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 169
+  },
+  {
+    "id": "sacco-281",
+    "name": "Mataara Travellers Regulated Non- WDT-Sacco",
+    "location": "Kiambu",
+    "memberCount": 180
+  },
+  {
+    "id": "sacco-282",
+    "name": "Mikebe Regulated Non-WDT-Sacco",
+    "location": "Kiambu",
+    "memberCount": 191
+  },
+  {
+    "id": "sacco-283",
+    "name": "Minet Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 202
+  },
+  {
+    "id": "sacco-284",
+    "name": "Mkombozi Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 213
+  },
+  {
+    "id": "sacco-285",
+    "name": "Mofaa Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 224
+  },
+  {
+    "id": "sacco-286",
+    "name": "Mount Kenya University Regulated Non-WDT-Sacco",
+    "location": "Kiambu",
+    "memberCount": 235
+  },
+  {
+    "id": "sacco-287",
+    "name": "MTN Regulated Non-WDT-Sacco",
+    "location": "Muranga",
+    "memberCount": 246
+  },
+  {
+    "id": "sacco-288",
+    "name": "Mzima Springs Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 47
+  },
+  {
+    "id": "sacco-289",
+    "name": "Nairobi Consumers Regulated Non- WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 58
+  },
+  {
+    "id": "sacco-290",
+    "name": "Nairobi Water Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 69
+  },
+  {
+    "id": "sacco-291",
+    "name": "Nendeni Regulated Non-WDT-Sacco",
+    "location": "Kajiado",
+    "memberCount": 80
+  },
+  {
+    "id": "sacco-292",
+    "name": "Neno Regulated Non-WDT-Sacco",
+    "location": "Embu",
+    "memberCount": 91
+  },
+  {
+    "id": "sacco-293",
+    "name": "Network Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 102
+  },
+  {
+    "id": "sacco-294",
+    "name": "Nimepata Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 113
+  },
+  {
+    "id": "sacco-295",
+    "name": "Nyumba - Nairobi Regulated Non- WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 124
+  },
+  {
+    "id": "sacco-296",
+    "name": "Nyumba Generations Regulated Non- WDT-Sacco",
+    "location": "Mombasa",
+    "memberCount": 135
+  },
+  {
+    "id": "sacco-297",
+    "name": "Olkaunsel Regulated Non-WDT- Sacco",
+    "location": "Kajiado",
+    "memberCount": 146
+  },
+  {
+    "id": "sacco-298",
+    "name": "Panda Regulated Non-WDT-Sacco",
+    "location": "Nakuru",
+    "memberCount": 157
+  },
+  {
+    "id": "sacco-299",
+    "name": "Parents Plan Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 168
+  },
+  {
+    "id": "sacco-300",
+    "name": "Parliamentarians Regulated Non- WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 179
+  },
+  {
+    "id": "sacco-301",
+    "name": "PCEA Kayole Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 190
+  },
+  {
+    "id": "sacco-302",
+    "name": "PCEA Makupa Parish Regulated Non- WDT-Sacco",
+    "location": "Mombasa",
+    "memberCount": 201
+  },
+  {
+    "id": "sacco-303",
+    "name": "PCEA Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 212
+  },
+  {
+    "id": "sacco-304",
+    "name": "PCEA Ruiru Regulated Non-WDT- Sacco",
+    "location": "Kiambu",
+    "memberCount": 223
+  },
+  {
+    "id": "sacco-305",
+    "name": "PEF A Nairobi Central Regulated Non- WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 234
+  },
+  {
+    "id": "sacco-306",
+    "name": "PESA Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 245
+  },
+  {
+    "id": "sacco-307",
+    "name": "Polytech Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 46
+  },
+  {
+    "id": "sacco-308",
+    "name": "Postbank Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 57
+  },
+  {
+    "id": "sacco-309",
+    "name": "Queensway Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 68
+  },
+  {
+    "id": "sacco-310",
+    "name": "Radio Guard Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 79
+  },
+  {
+    "id": "sacco-311",
+    "name": "Rambhai Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 90
+  },
+  {
+    "id": "sacco-312",
+    "name": "Ramco Group Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 101
+  },
+  {
+    "id": "sacco-313",
+    "name": "Reli Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 112
+  },
+  {
+    "id": "sacco-314",
+    "name": "Relief Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 123
+  },
+  {
+    "id": "sacco-315",
+    "name": "Rembo Shuttle Regulated Non-WDT- Sacco",
+    "location": "Kajiado",
+    "memberCount": 134
+  },
+  {
+    "id": "sacco-316",
+    "name": "Royal Media Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 145
+  },
+  {
+    "id": "sacco-317",
+    "name": "Rubani Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 156
+  },
+  {
+    "id": "sacco-318",
+    "name": "Sauti Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 167
+  },
+  {
+    "id": "sacco-319",
+    "name": "Sawa Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 178
+  },
+  {
+    "id": "sacco-320",
+    "name": "Shamiri Regulated Non-WDT-Sacco",
+    "location": "Uasin Gishu",
+    "memberCount": 189
+  },
+  {
+    "id": "sacco-321",
+    "name": "Shelloyees Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 200
+  },
+  {
+    "id": "sacco-322",
+    "name": "Sisi Kwa Sisi Regulated Non-WDT- Sacco",
+    "location": "Mombasa",
+    "memberCount": 211
+  },
+  {
+    "id": "sacco-323",
+    "name": "Smart Savers Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 222
+  },
+  {
+    "id": "sacco-324",
+    "name": "Stoke - UK Diaspora Regulated Non- WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 233
+  },
+  {
+    "id": "sacco-325",
+    "name": "T aa Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 244
+  },
+  {
+    "id": "sacco-326",
+    "name": "T etra Pak Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 45
+  },
+  {
+    "id": "sacco-327",
+    "name": "The Standard Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 56
+  },
+  {
+    "id": "sacco-328",
+    "name": "T orch Regulated Non-WDT-Sacco",
+    "location": "Mombasa",
+    "memberCount": 67
+  },
+  {
+    "id": "sacco-329",
+    "name": "T otal Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 78
+  },
+  {
+    "id": "sacco-330",
+    "name": "Tramom Regulated Non-WDT-Sacco",
+    "location": "Mombasa",
+    "memberCount": 89
+  },
+  {
+    "id": "sacco-331",
+    "name": "Transglob Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 100
+  },
+  {
+    "id": "sacco-332",
+    "name": "Transwest Regulated Non-WDT- Sacco",
+    "location": "Trans Nzoia",
+    "memberCount": 111
+  },
+  {
+    "id": "sacco-333",
+    "name": "Uaminifu Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 122
+  },
+  {
+    "id": "sacco-334",
+    "name": "Ubora Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 133
+  },
+  {
+    "id": "sacco-335",
+    "name": "Ukaguzi Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 144
+  },
+  {
+    "id": "sacco-336",
+    "name": "Ukombozi Regulated Non-WDT- Sacco",
+    "location": "Nakuru",
+    "memberCount": 155
+  },
+  {
+    "id": "sacco-337",
+    "name": "Unbound Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 166
+  },
+  {
+    "id": "sacco-338",
+    "name": "Unga Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 177
+  },
+  {
+    "id": "sacco-339",
+    "name": "Unifying Regulated Non-WDT-Sacco",
+    "location": "Kiambu",
+    "memberCount": 188
+  },
+  {
+    "id": "sacco-340",
+    "name": "United Women Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 199
+  },
+  {
+    "id": "sacco-341",
+    "name": "Uokoaji Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 210
+  },
+  {
+    "id": "sacco-342",
+    "name": "USIU-Africa Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 221
+  },
+  {
+    "id": "sacco-343",
+    "name": "Utabibu Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 232
+  },
+  {
+    "id": "sacco-344",
+    "name": "Utafiti Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 243
+  },
+  {
+    "id": "sacco-345",
+    "name": "Uwezo Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 44
+  },
+  {
+    "id": "sacco-346",
+    "name": "Vegpro Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 55
+  },
+  {
+    "id": "sacco-347",
+    "name": "Verona Huruma Regulated Non-WDT- Sacco",
+    "location": "Nairobi",
+    "memberCount": 66
+  },
+  {
+    "id": "sacco-348",
+    "name": "Vision Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 77
+  },
+  {
+    "id": "sacco-349",
+    "name": "Wasado Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 88
+  },
+  {
+    "id": "sacco-350",
+    "name": "Waskom Regulated Non-WDT-Sacco",
+    "location": "Nairobi",
+    "memberCount": 99
+  },
+  {
+    "id": "sacco-351",
+    "name": "Zoghori Regulated Non-WDTSacco",
+    "location": "Nairobi",
+    "memberCount": 110
+  }
+]

@@ -1,11 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { apiStore } from '@/lib/api-store';
 import type { ApiResponse, ExistingSacco } from '@/lib/types';
+import { searchQuerySchema } from '@/lib/validation';
 
 export async function GET(request: NextRequest): Promise<NextResponse<ApiResponse<{ results: ExistingSacco[]; total: number }>>> {
     try {
         const searchParams = request.nextUrl.searchParams;
-        const query = searchParams.get('q') || '';
+        const parseResult = searchQuerySchema.safeParse({ q: searchParams.get('q') ?? '' });
+        if (!parseResult.success) {
+            const issue = parseResult.error.issues[0];
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: issue?.message ?? 'Invalid search query',
+                },
+                { status: 400 }
+            );
+        }
+
+        const { q: query } = parseResult.data;
 
         if (query.length < 2) {
             return NextResponse.json(

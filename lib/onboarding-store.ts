@@ -30,7 +30,7 @@ export const initialOnboardingState: OnboardingState = {
 
 export type OnboardingAction =
     | { type: 'SET_STEP'; payload: 1 | 2 | 3 | 4 }
-    | { type: 'SET_ACTION'; payload: 'search' | 'create' }
+    | { type: 'SET_ACTION'; payload: 'search' | 'create' | null }
     | { type: 'SET_SEARCH_QUERY'; payload: string }
     | { type: 'SET_SELECTED_SACCO'; payload: { id: string; name: string; location: string } | null }
     | { type: 'SET_CHAMA_NAME'; payload: string }

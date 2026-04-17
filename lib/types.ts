@@ -21,9 +21,26 @@ export interface Chama {
     createdAt: Date;
 }
 
+export interface ContributionRecord {
+    id: string;
+    chamaId: string;
+    contributorName: string;
+    contributorEmail: string;
+    amountKes: number;
+    contributedAt: string;
+    reference: string;
+}
+
+export type ChamaMemberRole = 'admin' | 'treasurer' | 'member';
+
 export interface ChamaMember {
+    id?: string;
+    fullName?: string;
     email: string;
-    role: 'admin' | 'member';
+    role: ChamaMemberRole;
+    contributionKes?: number;
+    joinedAt?: string;
+    status?: 'active' | 'invited';
 }
 
 export interface ExistingSacco {
@@ -41,7 +58,7 @@ export interface ApiResponse<T> {
 }
 
 export interface RegisterRequest {
-    fullName: string;
+    fullName?: string;
     email: string;
     phone: string;
     password: string;
@@ -53,8 +70,18 @@ export interface RegisterResponse {
     fullName: string;
 }
 
-export interface CreateChamaRequest {
+export interface LoginRequest {
+    email: string;
+    password: string;
+}
+
+export interface LoginResponse {
     userId: string;
+    email: string;
+    fullName: string;
+}
+
+export interface CreateChamaRequest {
     chamaName: string;
     chamaType: 'SACCO' | 'TableBanking' | 'MerryGoRound';
     description?: string;
@@ -65,4 +92,15 @@ export interface CreateChamaResponse {
     chamaId: string;
     chamaName: string;
     memberCount: number;
+}
+
+export interface ContactRequest {
+    fullName?: string;
+    email: string;
+    subject: string;
+    message: string;
+}
+
+export interface NewsletterSubscribeRequest {
+    email: string;
 }
