@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local source documents
+SASRA-LICENSED-AND-AUTHORISED-SACCO-SOCIETIES-IN-KENYA-2025.pdf
