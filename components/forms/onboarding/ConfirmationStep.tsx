@@ -21,7 +21,7 @@ export function ConfirmationStep({ state }: ConfirmationStepProps) {
       </div>
 
       <div className="space-y-4">
-        {state.action === "search" && state.selectedSacco ? (
+        {state.selectedSacco ? (
           <div className="p-4 rounded-xl border border-emerald-200 dark:border-emerald-900/30 bg-emerald-50 dark:bg-emerald-950/10">
             <div className="flex items-start gap-3">
               <CheckCircle className="size-5 text-emerald-600 dark:text-emerald-400 mt-0.5 shrink-0" />

@@ -4,6 +4,7 @@
  */
 
 import { User, Chama, ExistingSacco } from './types';
+import { getMockSaccos } from './mock-saccos';
 
 class ApiStore {
     private users: Map<string, User> = new Map();
@@ -11,17 +12,8 @@ class ApiStore {
     private userIdCounter: number = 1000;
     private chamaIdCounter: number = 1;
 
-    // Mock SACCO data (existing saccos for search)
-    private mockSaccos: ExistingSacco[] = [
-        { id: 'sacco-1', name: 'Stima SACCO', location: 'Nairobi', memberCount: 45 },
-        { id: 'sacco-2', name: 'Teachers SACCO', location: 'Nairobi', memberCount: 120 },
-        { id: 'sacco-3', name: 'Equity SACCO', location: 'Mombasa', memberCount: 200 },
-        { id: 'sacco-4', name: 'Kenya Power SACCO', location: 'Nairobi', memberCount: 180 },
-        { id: 'sacco-5', name: 'Vision SACCO', location: 'Kisumu', memberCount: 95 },
-        { id: 'sacco-6', name: 'Ushindi SACCO', location: 'Nakuru', memberCount: 67 },
-        { id: 'sacco-7', name: 'Jiamii SACCO', location: 'Eldoret', memberCount: 52 },
-        { id: 'sacco-8', name: 'Rafiki SACCO', location: 'Dar es Salaam', memberCount: 78 },
-    ];
+    // Parsed from MOCK_SACCO_LIST env var when provided; otherwise fallback set is used.
+    private mockSaccos: ExistingSacco[] = getMockSaccos();
 
     /**
      * Register a new user

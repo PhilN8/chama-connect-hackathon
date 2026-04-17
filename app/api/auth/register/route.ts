@@ -34,7 +34,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
         // For now, store plaintext (demo only!)
         const user = apiStore.registerUser(fullName, email, phone, password);
 
-        return NextResponse.json(
+        const response = NextResponse.json(
             {
                 success: true,
                 data: {
@@ -46,6 +46,16 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
             },
             { status: 201 }
         );
+
+        response.cookies.set('cc_user_id', user.id, {
+            httpOnly: true,
+            sameSite: 'lax',
+            secure: process.env.NODE_ENV === 'production',
+            path: '/',
+            maxAge: 60 * 60 * 24 * 7,
+        });
+
+        return response;
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Registration failed';
 

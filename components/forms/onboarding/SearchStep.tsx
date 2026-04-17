@@ -65,7 +65,13 @@ export function SearchStep({ state, dispatch, onNext }: SearchStepProps) {
       type: "SET_SELECTED_SACCO",
       payload: { id: sacco.id, name: sacco.name, location: sacco.location },
     });
-    dispatch({ type: "SET_ACTION", payload: "search" });
+    dispatch({ type: "SET_CHAMA_NAME", payload: sacco.name });
+    dispatch({ type: "SET_CHAMA_TYPE", payload: "SACCO" });
+    dispatch({
+      type: "SET_CHAMA_DESCRIPTION",
+      payload: `Linked SACCO record: ${sacco.name} (${sacco.location})`,
+    });
+    dispatch({ type: "SET_ACTION", payload: "create" });
     onNext();
   };
 
@@ -79,17 +85,13 @@ export function SearchStep({ state, dispatch, onNext }: SearchStepProps) {
       <div className="space-y-2 text-center">
         <h2 className="text-2xl font-bold tracking-tight">
           {state.action === null
-            ? "Find or Create Your Chama"
-            : state.action === "search"
-              ? "Join Existing SACCO"
-              : "Create New Chama"}
+            ? "Link a SACCO (Optional)"
+            : "Create New Chama"}
         </h2>
         <p className="text-zinc-500">
           {state.action === null
-            ? "Search for an existing SACCO or start a new group"
-            : state.action === "search"
-              ? "You're joining an existing group"
-              : "Setting up a new digital chama"}
+            ? "Select a SACCO to prefill profile fields, or continue with manual entry"
+            : "Setting up a new digital chama"}
         </p>
       </div>
 

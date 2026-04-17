@@ -20,7 +20,10 @@ export function NewChamaStep({ state, dispatch }: NewChamaStepProps) {
     >
       <div className="space-y-2 text-center">
         <h2 className="text-2xl font-bold tracking-tight">Create Your Chama</h2>
-        <p className="text-zinc-500">Set up the basics for your new group</p>
+        <p className="text-zinc-500">
+          Set up the basics for your new group
+          {state.selectedSacco ? " (prefilled from linked SACCO)" : ""}
+        </p>
       </div>
 
       <div className="space-y-4">

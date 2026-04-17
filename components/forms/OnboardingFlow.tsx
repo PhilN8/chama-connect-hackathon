@@ -13,7 +13,6 @@ import { SearchStep } from "./onboarding/SearchStep";
 import { NewChamaStep } from "./onboarding/NewChamaStep";
 import { AddMembersStep } from "./onboarding/AddMembersStep";
 import { ConfirmationStep } from "./onboarding/ConfirmationStep";
-import type { OnboardingState } from "@/lib/onboarding-store";
 
 export function OnboardingFlow() {
   const router = useRouter();
@@ -43,7 +42,7 @@ export function OnboardingFlow() {
     if (state.step === 1) {
       // Reset to initial search state
       if (state.action !== null) {
-        dispatch({ type: "SET_ACTION", payload: "search" });
+        dispatch({ type: "SET_ACTION", payload: null });
       }
     } else if (state.step > 1) {
       dispatch({
@@ -67,34 +66,21 @@ export function OnboardingFlow() {
     dispatch({ type: "SET_ERROR", payload: null });
 
     try {
-      const payload =
-        state.action === "search"
-          ? {
-              userId,
-              chamaName: state.selectedSacco?.name || "",
-              chamaType: "SACCO",
-              members: [
+      const payload = {
+        userId,
+        chamaName: state.chamaName,
+        chamaType: state.chamaType,
+        description: state.chamaDescription,
+        members:
+          state.members.length > 0
+            ? state.members
+            : [
                 {
                   email: localStorage.getItem("userEmail"),
-                  role: "member" as const,
+                  role: "admin" as const,
                 },
               ],
-            }
-          : {
-              userId,
-              chamaName: state.chamaName,
-              chamaType: state.chamaType,
-              description: state.chamaDescription,
-              members:
-                state.members.length > 0
-                  ? state.members
-                  : [
-                      {
-                        email: localStorage.getItem("userEmail"),
-                        role: "admin" as const,
-                      },
-                    ],
-            };
+      };
 
       const response = await fetch("/api/chama/create", {
         method: "POST",
@@ -118,7 +104,7 @@ export function OnboardingFlow() {
       localStorage.setItem("chamaType", state.chamaType);
 
       router.push(`/dashboard?chamaId=${result.data.chamaId}`);
-    } catch (error) {
+    } catch {
       dispatch({
         type: "SET_ERROR",
         payload: "Network error. Please try again.",
@@ -226,9 +212,10 @@ export function OnboardingFlow() {
       </div>
 
       {/* Help text */}
-      {state.action === "search" && state.step === 2 && (
+      {state.selectedSacco && state.step === 2 && (
         <p className="mt-4 text-xs text-zinc-500 text-center">
-          You'll be added as a member to {state.selectedSacco?.name}
+          Linked SACCO: {state.selectedSacco.name}. You can edit all profile
+          fields before continuing.
         </p>
       )}
     </div>
