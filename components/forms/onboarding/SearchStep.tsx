@@ -88,7 +88,7 @@ export function SearchStep({ state, dispatch, onNext }: SearchStepProps) {
             ? "Link a SACCO (Optional)"
             : "Create New Chama"}
         </h2>
-        <p className="text-zinc-500">
+        <p className="text-emerald-900/70 dark:text-emerald-200/70">
           {state.action === null
             ? "Select a SACCO to prefill profile fields, or continue with manual entry"
             : "Setting up a new digital chama"}
@@ -98,9 +98,9 @@ export function SearchStep({ state, dispatch, onNext }: SearchStepProps) {
       <div className="relative group">
         <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
           {searchLoading ? (
-            <Loader2 className="size-5 text-zinc-400 animate-spin" />
+            <Loader2 className="size-5 text-emerald-500 animate-spin" />
           ) : (
-            <Search className="size-5 text-zinc-400 group-focus-within:text-zinc-900 dark:group-focus-within:text-zinc-50 transition-colors" />
+            <Search className="size-5 text-emerald-500/70 group-focus-within:text-emerald-700 dark:group-focus-within:text-emerald-300 transition-colors" />
           )}
         </div>
         <input
@@ -109,7 +109,7 @@ export function SearchStep({ state, dispatch, onNext }: SearchStepProps) {
           onChange={(e) => handleSearch(e.target.value)}
           placeholder="Search for an existing SACCO record..."
           className={cn(
-            "w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 outline-none focus:border-zinc-900 dark:focus:border-zinc-50 transition-all text-lg shadow-sm",
+            "w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-emerald-100 dark:border-emerald-800/50 bg-white/90 dark:bg-emerald-950/25 outline-none focus:border-emerald-700 dark:focus:border-emerald-300 transition-all text-lg shadow-sm",
             state.action === "create" && "opacity-50 cursor-not-allowed",
           )}
         />
@@ -123,23 +123,23 @@ export function SearchStep({ state, dispatch, onNext }: SearchStepProps) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="p-8 rounded-2xl border-2 border-dashed border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-center space-y-4"
+            className="p-8 rounded-2xl border-2 border-dashed border-emerald-200 dark:border-emerald-800/50 bg-emerald-50/60 dark:bg-emerald-900/20 text-center space-y-4"
           >
-            <div className="size-12 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mx-auto">
-              <Plus className="size-6 text-zinc-600 dark:text-zinc-400" />
+            <div className="size-12 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center mx-auto">
+              <Plus className="size-6 text-emerald-700 dark:text-emerald-300" />
             </div>
             <div className="space-y-1">
               <h3 className="font-semibold text-lg">
                 No record found for "{state.searchQuery}"
               </h3>
-              <p className="text-zinc-500 text-sm">
+              <p className="text-emerald-900/70 dark:text-emerald-200/70 text-sm">
                 Don't worry! You can start fresh and create your digital Chama
                 in seconds.
               </p>
             </div>
             <button
               onClick={handleCreateNew}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-bold hover:scale-105 transition-transform shadow-lg"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-linear-to-r from-emerald-600 to-teal-500 text-white font-bold hover:scale-105 transition-transform shadow-lg shadow-emerald-700/30"
             >
               Create "{state.searchQuery}" Chama{" "}
               <ArrowRight className="size-4" />
@@ -151,28 +151,28 @@ export function SearchStep({ state, dispatch, onNext }: SearchStepProps) {
             animate={{ opacity: 1, y: 0 }}
             className="space-y-3"
           >
-            <p className="text-xs font-bold uppercase tracking-widest text-zinc-400 px-2">
+            <p className="text-xs font-bold uppercase tracking-widest text-emerald-700/70 dark:text-emerald-300/70 px-2">
               Matches Found ({searchResults.length})
             </p>
             {searchResults.map((sacco) => (
               <button
                 key={sacco.id}
                 onClick={() => handleSelectSacco(sacco)}
-                className="w-full p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex items-center justify-between hover:border-zinc-900 dark:hover:border-zinc-50 transition-colors group shadow-sm text-left"
+                className="w-full p-4 rounded-xl border border-emerald-100 dark:border-emerald-800/50 bg-white/95 dark:bg-emerald-950/25 flex items-center justify-between hover:border-emerald-500 transition-colors group shadow-sm text-left"
               >
                 <div className="flex items-center gap-4">
-                  <div className="size-10 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
-                    <Building2 className="size-5 text-zinc-600 dark:text-zinc-400" />
+                  <div className="size-10 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center">
+                    <Building2 className="size-5 text-emerald-700 dark:text-emerald-300" />
                   </div>
                   <div>
                     <h4 className="font-bold">{sacco.name}</h4>
-                    <div className="flex items-center gap-1 text-zinc-500 text-sm">
+                    <div className="flex items-center gap-1 text-emerald-900/70 dark:text-emerald-200/70 text-sm">
                       <MapPin className="size-3" /> {sacco.location} •{" "}
                       {sacco.memberCount} members
                     </div>
                   </div>
                 </div>
-                <ArrowRight className="size-5 text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-50 transition-colors" />
+                <ArrowRight className="size-5 text-emerald-500/70 group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors" />
               </button>
             ))}
           </motion.div>
@@ -184,16 +184,16 @@ export function SearchStep({ state, dispatch, onNext }: SearchStepProps) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           onClick={handleCreateNew}
-          className="w-full p-6 rounded-xl border-2 border-dashed border-zinc-200 dark:border-zinc-800 hover:border-zinc-900 dark:hover:border-zinc-50 transition-colors text-center space-y-2 group"
+          className="w-full p-6 rounded-xl border-2 border-dashed border-emerald-200 dark:border-emerald-800/50 hover:border-emerald-600 transition-colors text-center space-y-2 group"
         >
           <div className="flex justify-center">
-            <div className="size-10 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center group-hover:bg-zinc-900 dark:group-hover:bg-zinc-50 transition-colors">
-              <Plus className="size-5 text-zinc-600 dark:text-zinc-400 group-hover:text-zinc-50 dark:group-hover:text-zinc-900 transition-colors" />
+            <div className="size-10 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center group-hover:bg-emerald-600 transition-colors">
+              <Plus className="size-5 text-emerald-700 dark:text-emerald-300 group-hover:text-white transition-colors" />
             </div>
           </div>
           <div>
             <h4 className="font-semibold text-lg">Create New Chama</h4>
-            <p className="text-sm text-zinc-500">
+            <p className="text-sm text-emerald-900/70 dark:text-emerald-200/70">
               Start a fresh group with your own settings
             </p>
           </div>

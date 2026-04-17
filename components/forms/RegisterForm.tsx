@@ -7,6 +7,7 @@ import * as z from "zod";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { CheckCircle2, AlertCircle, CheckCircle } from "lucide-react";
+import Link from "next/link";
 
 const registerSchema = z
   .object({
@@ -94,7 +95,7 @@ export function RegisterForm() {
 
   if (showSuccess) {
     return (
-      <div className="flex flex-col gap-4 w-full max-w-md p-8 bg-white dark:bg-zinc-900 rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-800 text-center">
+      <div className="flex flex-col gap-4 w-full max-w-md p-8 bg-white/95 dark:bg-emerald-950/25 rounded-2xl shadow-xl border border-emerald-100 dark:border-emerald-800/40 text-center backdrop-blur-sm">
         <div className="flex justify-center">
           <CheckCircle className="size-16 text-emerald-500" />
         </div>
@@ -102,12 +103,12 @@ export function RegisterForm() {
           <h2 className="text-2xl font-bold tracking-tight">
             Welcome to ChamaConnect!
           </h2>
-          <p className="text-zinc-500 text-sm">
-            Your account has been created successfully. Let's onboard your
+          <p className="text-emerald-900/70 dark:text-emerald-200/70 text-sm">
+            Your account has been created successfully. Let&lsquo;s onboard your
             chama.
           </p>
         </div>
-        <div className="pt-2 text-xs text-zinc-400">
+        <div className="pt-2 text-xs text-emerald-800/60 dark:text-emerald-200/60">
           Redirecting to onboarding...
         </div>
       </div>
@@ -117,11 +118,11 @@ export function RegisterForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 w-full max-w-md p-8 bg-white dark:bg-zinc-900 rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-800"
+      className="flex flex-col gap-4 w-full max-w-md p-8 bg-white/95 dark:bg-emerald-950/25 rounded-2xl shadow-xl border border-emerald-100 dark:border-emerald-800/40 backdrop-blur-sm"
     >
       <div className="space-y-2">
         <h2 className="text-2xl font-bold tracking-tight">Create Account</h2>
-        <p className="text-zinc-500 text-sm">
+        <p className="text-emerald-900/70 dark:text-emerald-200/70 text-sm">
           Join the future of African savings groups.
         </p>
       </div>
@@ -188,12 +189,12 @@ export function RegisterForm() {
                     fieldError ? `${field.name}-error` : undefined
                   }
                   className={cn(
-                    "w-full px-4 py-2 rounded-lg border transition-all outline-none bg-zinc-50 dark:bg-zinc-800",
+                    "w-full px-4 py-2 rounded-lg border transition-all outline-none bg-emerald-50/60 dark:bg-emerald-900/20",
                     fieldError
                       ? "border-red-500 focus:ring-1 focus:ring-red-500"
                       : isTouched
                         ? "border-emerald-500 focus:ring-1 focus:ring-emerald-500"
-                        : "border-zinc-200 dark:border-zinc-700 focus:border-zinc-900 dark:focus:border-zinc-50",
+                        : "border-emerald-200 dark:border-emerald-800/50 focus:border-emerald-700 dark:focus:border-emerald-300",
                   )}
                 />
                 <div className="absolute right-3 top-1/2 -translate-y-1/2">
@@ -222,11 +223,21 @@ export function RegisterForm() {
       <button
         disabled={isSubmitting}
         type="submit"
-        className="w-full mt-2 py-2.5 rounded-lg bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-semibold transition-opacity hover:opacity-90 disabled:opacity-50"
+        className="w-full mt-2 py-2.5 rounded-xl bg-linear-to-r from-emerald-600 to-teal-500 text-white font-semibold transition-opacity hover:opacity-90 disabled:opacity-50 shadow-md shadow-emerald-700/30"
         aria-busy={isSubmitting}
       >
         {isSubmitting ? "Creating Account..." : "Register"}
       </button>
+
+      <p className="text-xs text-center text-emerald-900/70 dark:text-emerald-200/70">
+        Already have an account?{" "}
+        <Link
+          href="/register"
+          className="font-semibold underline-offset-2 hover:underline"
+        >
+          Sign in
+        </Link>
+      </p>
     </form>
   );
 }

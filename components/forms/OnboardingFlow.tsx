@@ -1,10 +1,11 @@
 "use client";
 
-import { useReducer, useEffect } from "react";
+import { useReducer } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, Loader2 } from "lucide-react";
+import { z } from "zod";
 import {
   initialOnboardingState,
   onboardingReducer,
@@ -14,20 +15,46 @@ import { NewChamaStep } from "./onboarding/NewChamaStep";
 import { AddMembersStep } from "./onboarding/AddMembersStep";
 import { ConfirmationStep } from "./onboarding/ConfirmationStep";
 
+const createChamaApiResponseSchema = z.object({
+  success: z.boolean(),
+  message: z.string(),
+  data: z
+    .object({
+      chamaId: z.string(),
+      chamaName: z.string(),
+      memberCount: z.number(),
+    })
+    .optional(),
+});
+
+function getOrCreateDemoUserId(): string {
+  const existing = localStorage.getItem("userId");
+  if (existing) {
+    return existing;
+  }
+
+  const generated = `demo_user_${Date.now()}`;
+  localStorage.setItem("userId", generated);
+  return generated;
+}
+
+function getUserEmailOrFallback(userId: string): string {
+  const existingEmail = localStorage.getItem("userEmail");
+  if (existingEmail) {
+    return existingEmail;
+  }
+
+  const fallbackEmail = `${userId}@demo.chamaconnect.local`;
+  localStorage.setItem("userEmail", fallbackEmail);
+  return fallbackEmail;
+}
+
 export function OnboardingFlow() {
   const router = useRouter();
   const [state, dispatch] = useReducer(
     onboardingReducer,
     initialOnboardingState,
   );
-
-  // Verify user is logged in
-  useEffect(() => {
-    const userId = localStorage.getItem("userId");
-    if (!userId) {
-      router.push("/register");
-    }
-  }, [router]);
 
   const handleNext = () => {
     if (state.step < 4) {
@@ -53,14 +80,8 @@ export function OnboardingFlow() {
   };
 
   const handleSubmit = async () => {
-    const userId = localStorage.getItem("userId");
-    if (!userId) {
-      dispatch({
-        type: "SET_ERROR",
-        payload: "User session expired. Please register again.",
-      });
-      return;
-    }
+    const userId = getOrCreateDemoUserId();
+    const userEmail = getUserEmailOrFallback(userId);
 
     dispatch({ type: "SET_SUBMITTING", payload: true });
     dispatch({ type: "SET_ERROR", payload: null });
@@ -76,7 +97,7 @@ export function OnboardingFlow() {
             ? state.members
             : [
                 {
-                  email: localStorage.getItem("userEmail"),
+                  email: userEmail,
                   role: "admin" as const,
                 },
               ],
@@ -88,9 +109,19 @@ export function OnboardingFlow() {
         body: JSON.stringify(payload),
       });
 
-      const result = await response.json();
+      const rawResult = await response.json();
+      const parsedResult = createChamaApiResponseSchema.safeParse(rawResult);
+      if (!parsedResult.success) {
+        dispatch({
+          type: "SET_ERROR",
+          payload: "Received an unexpected response from server.",
+        });
+        return;
+      }
 
-      if (!response.ok) {
+      const result = parsedResult.data;
+
+      if (!response.ok || !result.success || !result.data) {
         dispatch({
           type: "SET_ERROR",
           payload: result.message || "Failed to create chama",
@@ -128,16 +159,16 @@ export function OnboardingFlow() {
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
             Onboard Your Chama
           </h1>
-          <div className="text-sm font-medium text-zinc-500">
+          <div className="text-sm font-medium text-emerald-800/70 dark:text-emerald-200/70">
             Step {state.step} of 4
           </div>
         </div>
-        <div className="w-full bg-zinc-200 dark:bg-zinc-800 rounded-full h-2">
+        <div className="w-full bg-emerald-200/70 dark:bg-emerald-900/40 rounded-full h-2">
           <motion.div
             initial={{ width: "25%" }}
             animate={{ width: `${(state.step / 4) * 100}%` }}
             transition={{ duration: 0.3 }}
-            className="h-full bg-zinc-900 dark:bg-zinc-50 rounded-full"
+            className="h-full bg-linear-to-r from-emerald-600 to-teal-500 rounded-full"
           />
         </div>
       </div>
@@ -159,7 +190,7 @@ export function OnboardingFlow() {
       <AnimatePresence mode="wait">
         <div
           key={state.step}
-          className="bg-white dark:bg-zinc-900 rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-800 p-6 sm:p-8"
+          className="bg-white/95 dark:bg-emerald-950/25 rounded-2xl shadow-xl border border-emerald-100 dark:border-emerald-800/40 p-6 sm:p-8 backdrop-blur-sm"
         >
           {state.step === 1 && (
             <SearchStep state={state} dispatch={dispatch} onNext={handleNext} />
@@ -182,8 +213,8 @@ export function OnboardingFlow() {
           className={cn(
             "flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all",
             canGoBack && !state.isSubmitting
-              ? "bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 hover:opacity-90"
-              : "opacity-50 cursor-not-allowed bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50",
+              ? "bg-emerald-100 dark:bg-emerald-900/40 text-emerald-900 dark:text-emerald-100 hover:opacity-90"
+              : "opacity-50 cursor-not-allowed bg-emerald-100 dark:bg-emerald-900/40 text-emerald-900 dark:text-emerald-100",
           )}
         >
           <ChevronLeft className="size-4" /> Back
@@ -195,8 +226,8 @@ export function OnboardingFlow() {
           className={cn(
             "flex items-center gap-2 px-6 py-2 rounded-lg font-semibold transition-all",
             canGoNext && !state.isSubmitting
-              ? "bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 hover:opacity-90"
-              : "opacity-50 cursor-not-allowed bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900",
+              ? "bg-linear-to-r from-emerald-600 to-teal-500 text-white hover:opacity-90 shadow-md shadow-emerald-700/30"
+              : "opacity-50 cursor-not-allowed bg-linear-to-r from-emerald-600 to-teal-500 text-white",
           )}
           aria-busy={state.isSubmitting}
         >
@@ -213,7 +244,7 @@ export function OnboardingFlow() {
 
       {/* Help text */}
       {state.selectedSacco && state.step === 2 && (
-        <p className="mt-4 text-xs text-zinc-500 text-center">
+        <p className="mt-4 text-xs text-emerald-800/70 dark:text-emerald-200/70 text-center">
           Linked SACCO: {state.selectedSacco.name}. You can edit all profile
           fields before continuing.
         </p>

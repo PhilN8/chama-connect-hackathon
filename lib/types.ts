@@ -53,6 +53,17 @@ export interface RegisterResponse {
     fullName: string;
 }
 
+export interface LoginRequest {
+    email: string;
+    password: string;
+}
+
+export interface LoginResponse {
+    userId: string;
+    email: string;
+    fullName: string;
+}
+
 export interface CreateChamaRequest {
     userId: string;
     chamaName: string;

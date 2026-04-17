@@ -3,21 +3,23 @@ import { ArrowRight, Zap, Shield, TrendingUp, Users } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-zinc-50 to-zinc-100 dark:from-black dark:to-zinc-900">
+    <div className="min-h-screen bg-linear-to-br from-emerald-50 via-white to-cyan-50 text-emerald-950 dark:from-emerald-950 dark:via-zinc-950 dark:to-cyan-950 dark:text-emerald-100">
       {/* Navigation */}
-      <nav className="border-b border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-black/50 backdrop-blur-sm sticky top-0">
+      <nav className="border-b border-emerald-100/70 dark:border-emerald-900/40 bg-white/70 dark:bg-black/40 backdrop-blur-sm sticky top-0 z-30">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="text-xl font-bold">ChamaConnect</div>
+          <div className="text-xl font-extrabold tracking-tight">
+            ChamaConnect
+          </div>
           <div className="flex gap-4">
             <Link
-              href="/register"
-              className="px-4 py-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 transition-colors"
+              href="/login"
+              className="px-4 py-2 rounded-lg text-emerald-700 dark:text-emerald-300 hover:text-emerald-900 dark:hover:text-emerald-100 transition-colors"
             >
-              Sign In
+              Login
             </Link>
             <Link
               href="/register"
-              className="px-6 py-2 rounded-lg bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-semibold hover:opacity-90 transition-opacity"
+              className="px-6 py-2 rounded-lg bg-linear-to-r from-emerald-600 to-teal-500 text-white font-semibold hover:opacity-90 transition-opacity shadow-md shadow-emerald-600/30"
             >
               Get Started
             </Link>
@@ -27,11 +29,14 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center space-y-8">
+        <p className="inline-flex items-center rounded-full border border-emerald-200 bg-white/80 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700 dark:border-emerald-700/70 dark:bg-emerald-950/40 dark:text-emerald-300">
+          Secure • Transparent • Automated
+        </p>
         <div className="space-y-4">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
             The Future of African Savings Groups
           </h1>
-          <p className="text-lg sm:text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
+          <p className="text-lg sm:text-xl text-emerald-800/80 dark:text-emerald-200/80 max-w-2xl mx-auto">
             Digitize your chama with blockchain-powered transparency, automated
             contributions, and real-time financial insights.
           </p>
@@ -40,13 +45,13 @@ export default function Home() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
           <Link
             href="/register"
-            className="px-8 py-3 rounded-lg bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+            className="px-8 py-3 rounded-xl bg-linear-to-r from-emerald-600 to-teal-500 text-white font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-lg shadow-emerald-700/30"
           >
             Create Account <ArrowRight className="size-5" />
           </Link>
           <Link
             href="/onboard-chama"
-            className="px-8 py-3 rounded-lg border-2 border-zinc-900 dark:border-zinc-50 text-zinc-900 dark:text-zinc-50 font-bold hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+            className="px-8 py-3 rounded-xl border-2 border-emerald-700 text-emerald-800 dark:text-emerald-100 dark:border-emerald-400 font-bold hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors"
           >
             Onboard Chama
           </Link>
@@ -54,7 +59,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="bg-white dark:bg-zinc-900/50 py-16 sm:py-24">
+      <section className="bg-white/85 dark:bg-emerald-950/20 py-16 sm:py-24 border-y border-emerald-100 dark:border-emerald-900/40">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">
             Why Choose ChamaConnect?
@@ -88,11 +93,11 @@ export default function Home() {
               return (
                 <div
                   key={index}
-                  className="p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:border-zinc-900 dark:hover:border-zinc-50 transition-colors space-y-3"
+                  className="p-6 rounded-xl border border-emerald-100 dark:border-emerald-800/40 bg-white dark:bg-emerald-950/25 hover:-translate-y-0.5 transition-all space-y-3"
                 >
-                  <Icon className="size-8 text-zinc-900 dark:text-zinc-50" />
+                  <Icon className="size-8 text-emerald-700 dark:text-emerald-300" />
                   <h3 className="font-semibold text-lg">{feature.title}</h3>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                  <p className="text-sm text-emerald-900/70 dark:text-emerald-200/70">
                     {feature.description}
                   </p>
                 </div>
@@ -129,10 +134,10 @@ export default function Home() {
             ].map((group, index) => (
               <div
                 key={index}
-                className="p-6 rounded-xl bg-linear-to-br from-zinc-50 dark:from-zinc-900/50 to-zinc-100 dark:to-zinc-800/50 border border-zinc-200 dark:border-zinc-800 space-y-2"
+                className="p-6 rounded-xl bg-linear-to-br from-emerald-50 to-cyan-50 dark:from-emerald-900/30 dark:to-cyan-900/20 border border-emerald-100 dark:border-emerald-800/40 space-y-2"
               >
                 <h3 className="font-semibold text-lg">{group.title}</h3>
-                <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                <p className="text-sm text-emerald-900/70 dark:text-emerald-200/70">
                   {group.description}
                 </p>
               </div>
@@ -142,18 +147,18 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-zinc-900 dark:bg-black text-zinc-50 py-16 sm:py-24">
+      <section className="bg-linear-to-r from-emerald-700 via-emerald-800 to-teal-700 text-white py-16 sm:py-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
           <h2 className="text-3xl sm:text-4xl font-bold">
             Ready to Transform Your Chama?
           </h2>
-          <p className="text-lg text-zinc-300">
+          <p className="text-lg text-emerald-50/85">
             Join hundreds of groups already using ChamaConnect to manage their
             finances with transparency and ease.
           </p>
           <Link
             href="/register"
-            className="inline-block px-8 py-3 rounded-lg bg-zinc-50 text-zinc-900 font-bold hover:opacity-90 transition-opacity"
+            className="inline-block px-8 py-3 rounded-xl bg-emerald-800 text-emerald-900 dark:text-emerald-950 border border-emerald-100 font-bold hover:bg-emerald-900 transition-colors shadow-sm"
           >
             Start Your Free Trial
           </Link>
@@ -161,8 +166,8 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 py-8">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-zinc-600 dark:text-zinc-400">
+      <footer className="border-t border-emerald-100 dark:border-emerald-900/40 bg-white/80 dark:bg-emerald-950/25 py-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-emerald-800/70 dark:text-emerald-200/70">
           <p>© 2025 ChamaConnect. All rights reserved.</p>
         </div>
       </footer>

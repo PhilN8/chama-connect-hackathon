@@ -65,7 +65,7 @@ export function AddMembersStep({ state, dispatch }: AddMembersStepProps) {
     >
       <div className="space-y-2 text-center">
         <h2 className="text-2xl font-bold tracking-tight">Add Team Members</h2>
-        <p className="text-zinc-500">
+        <p className="text-emerald-900/70 dark:text-emerald-200/70">
           Invite members to your chama (minimum 1 admin required)
         </p>
       </div>
@@ -82,10 +82,10 @@ export function AddMembersStep({ state, dispatch }: AddMembersStepProps) {
               }}
               placeholder="member@example.com"
               className={cn(
-                "w-full px-4 py-2 rounded-lg border bg-zinc-50 dark:bg-zinc-800 outline-none focus:border-zinc-900 dark:focus:border-zinc-50 transition-all",
+                "w-full px-4 py-2 rounded-lg border bg-emerald-50/60 dark:bg-emerald-900/20 outline-none focus:border-emerald-700 dark:focus:border-emerald-300 transition-all",
                 inputError
                   ? "border-red-500"
-                  : "border-zinc-200 dark:border-zinc-700",
+                  : "border-emerald-200 dark:border-emerald-800/50",
               )}
               aria-invalid={inputError ? "true" : "false"}
               aria-describedby={inputError ? "member-error" : undefined}
@@ -105,14 +105,14 @@ export function AddMembersStep({ state, dispatch }: AddMembersStepProps) {
             onChange={(e) =>
               setNewMemberRole(e.target.value as "admin" | "member")
             }
-            className="px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 outline-none focus:border-zinc-900 dark:focus:border-zinc-50 transition-all"
+            className="px-4 py-2 rounded-lg border border-emerald-200 dark:border-emerald-800/50 bg-emerald-50/60 dark:bg-emerald-900/20 outline-none focus:border-emerald-700 dark:focus:border-emerald-300 transition-all"
           >
             <option value="member">Member</option>
             <option value="admin">Admin</option>
           </select>
           <button
             onClick={handleAddMember}
-            className="px-6 py-2 rounded-lg bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 whitespace-nowrap"
+            className="px-6 py-2 rounded-lg bg-linear-to-r from-emerald-600 to-teal-500 text-white font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 whitespace-nowrap shadow-md shadow-emerald-700/30"
           >
             <Plus className="size-4" /> Add
           </button>
@@ -120,14 +120,14 @@ export function AddMembersStep({ state, dispatch }: AddMembersStepProps) {
 
         <div className="space-y-2">
           {state.members.length === 0 ? (
-            <p className="text-sm text-zinc-500 text-center py-4">
+            <p className="text-sm text-emerald-900/70 dark:text-emerald-200/70 text-center py-4">
               No members added yet. Add at least one admin.
             </p>
           ) : (
             state.members.map((member) => (
               <div
                 key={member.email}
-                className="p-3 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex items-center justify-between"
+                className="p-3 rounded-lg border border-emerald-200 dark:border-emerald-800/50 bg-white/95 dark:bg-emerald-950/25 flex items-center justify-between"
               >
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium truncate">{member.email}</p>
@@ -139,7 +139,7 @@ export function AddMembersStep({ state, dispatch }: AddMembersStepProps) {
                         e.target.value as "admin" | "member",
                       )
                     }
-                    className="mt-1 text-xs px-2 py-1 rounded border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 outline-none focus:border-zinc-900 dark:focus:border-zinc-50 transition-all"
+                    className="mt-1 text-xs px-2 py-1 rounded border border-emerald-200 dark:border-emerald-800/50 bg-emerald-50/60 dark:bg-emerald-900/20 outline-none focus:border-emerald-700 dark:focus:border-emerald-300 transition-all"
                   >
                     <option value="member">Member</option>
                     <option value="admin">Admin</option>

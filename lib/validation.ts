@@ -12,6 +12,11 @@ export const registerRequestSchema = z.object({
     password: z.string().min(8, 'Password must be at least 8 characters'),
 });
 
+export const loginRequestSchema = z.object({
+    email: z.email('Valid email address is required').trim().toLowerCase(),
+    password: z.string().min(1, 'Password is required'),
+});
+
 export const chamaMemberSchema = z.object({
     email: z.email('Member email must be a valid email address').trim().toLowerCase(),
     role: z.enum(['admin', 'member']),
