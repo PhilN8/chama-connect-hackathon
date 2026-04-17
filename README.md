@@ -11,7 +11,7 @@ This project documents the technical proposal and implemented improvements deliv
 
 ### Problem Statement
 
-The primary issues targeted in this submission were UX quality in the authentication and form journeys:
+The original ChamaConnect visual design and core brand presentation were well thought out and excellently implemented. The primary issues targeted in this submission were specifically UX quality in forms and onboarding journeys:
 
 - Registration flow had sub-optimal UX and did not guide users clearly through completion.
 - Login flow had sub-optimal UX and needed a smoother, more explicit demo path.
@@ -42,6 +42,7 @@ We redesigned these core journeys to make them clearer, safer, and demo-ready:
 
 - Seeded a test user account for judge-friendly demo walkthroughs.
 - Seeded SACCO discovery data using the current SASRA SACCO list.
+- SACCO source document included in this repository: `SASRA-LICENSED-AND-AUTHORISED-SACCO-SOCIETIES-IN-KENYA-2025.pdf`.
 - Seeded a realistic chama with member roles and varied member contribution values.
 - Added 3-year contributions history with totals above KES 2,000,000 for analytics realism.
 - Added explicit empty states for non-demo users with no member data.
