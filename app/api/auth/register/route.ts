@@ -1,52 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { apiStore } from '@/lib/api-store';
 import type { ApiResponse, RegisterResponse } from '@/lib/types';
+import { registerRequestSchema } from '@/lib/validation';
 
 export async function POST(request: NextRequest): Promise<NextResponse<ApiResponse<RegisterResponse>>> {
     try {
-        const body = await request.json();
-        const { fullName, email, phone, password } = body;
-
-        // Validation
-        if (!fullName || typeof fullName !== 'string' || fullName.trim().length < 2) {
+        const parseResult = registerRequestSchema.safeParse(await request.json());
+        if (!parseResult.success) {
+            const issue = parseResult.error.issues[0];
             return NextResponse.json(
                 {
                     success: false,
-                    message: 'Full name is required and must be at least 2 characters',
+                    message: issue?.message ?? 'Invalid registration payload',
                 },
                 { status: 400 }
             );
         }
 
-        if (!email || typeof email !== 'string' || !email.includes('@')) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: 'Valid email address is required',
-                },
-                { status: 400 }
-            );
-        }
-
-        if (!phone || typeof phone !== 'string') {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: 'Phone number is required',
-                },
-                { status: 400 }
-            );
-        }
-
-        if (!password || typeof password !== 'string' || password.length < 8) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: 'Password must be at least 8 characters',
-                },
-                { status: 400 }
-            );
-        }
+        const { fullName, email, phone, password } = parseResult.data;
 
         // Check if email already registered
         if (apiStore.getUserByEmail(email)) {
