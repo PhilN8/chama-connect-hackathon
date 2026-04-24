@@ -13,6 +13,7 @@ export interface OnboardingState {
     members: Array<{ email: string; role: 'admin' | 'member' }>;
     isSubmitting: boolean;
     error: string | null;
+    invitationId: string | null;
 }
 
 export const initialOnboardingState: OnboardingState = {
@@ -26,6 +27,7 @@ export const initialOnboardingState: OnboardingState = {
     members: [],
     isSubmitting: false,
     error: null,
+    invitationId: null,
 };
 
 export type OnboardingAction =
@@ -42,6 +44,7 @@ export type OnboardingAction =
     | { type: 'SET_MEMBERS'; payload: Array<{ email: string; role: 'admin' | 'member' }> }
     | { type: 'SET_SUBMITTING'; payload: boolean }
     | { type: 'SET_ERROR'; payload: string | null }
+    | { type: 'SET_INVITATION_ID'; payload: string | null }
     | { type: 'RESET' };
 
 export function onboardingReducer(state: OnboardingState, action: OnboardingAction): OnboardingState {
@@ -85,6 +88,8 @@ export function onboardingReducer(state: OnboardingState, action: OnboardingActi
             return { ...state, isSubmitting: action.payload };
         case 'SET_ERROR':
             return { ...state, error: action.payload };
+        case 'SET_INVITATION_ID':
+            return { ...state, invitationId: action.payload };
         case 'RESET':
             return initialOnboardingState;
         default:

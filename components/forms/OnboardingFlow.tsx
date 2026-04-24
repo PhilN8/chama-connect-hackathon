@@ -7,6 +7,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, Loader2 } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   initialOnboardingState,
   onboardingReducer,
@@ -30,10 +32,20 @@ const createChamaApiResponseSchema = z.object({
 
 export function OnboardingFlow() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [state, dispatch] = useReducer(
     onboardingReducer,
     initialOnboardingState,
   );
+
+  useEffect(() => {
+    const inviteId = searchParams.get("inviteId");
+    if (inviteId) {
+      dispatch({ type: "SET_INVITATION_ID", payload: inviteId });
+      dispatch({ type: "SET_ACTION", payload: "create" });
+      dispatch({ type: "SET_STEP", payload: 2 });
+    }
+  }, [searchParams]);
 
   const handleNext = () => {
     if (state.step < 4) {

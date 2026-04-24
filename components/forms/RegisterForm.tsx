@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { CheckCircle2, AlertCircle, CheckCircle } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { signUp } from "@/lib/auth-client";
 
 const registerSchema = z
   .object({
@@ -48,32 +49,16 @@ export function RegisterForm() {
     setFieldErrors({});
 
     try {
-      const response = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          fullName: data.fullName?.trim() || undefined,
-          email: data.email,
-          phone: data.phone,
-          password: data.password,
-        }),
+      const { data, error } = await signUp.email({
+        email: data.email,
+        password: data.password,
+        name: data.fullName?.trim() || data.email.split("@")[0],
+        callbackURL: "/dashboard",
       });
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        // Handle specific API errors
-        if (response.status === 409) {
-          setFieldErrors({ email: "Email is already registered" });
-          toast.error("Email already registered");
-        } else {
-          setApiError(
-            result.message || "Registration failed. Please try again.",
-          );
-          toast.error(result.message || "Registration failed");
-        }
+      if (error) {
+        setApiError(error.message || "Registration failed. Please try again.");
+        toast.error(error.message || "Registration failed");
         return;
       }
 
