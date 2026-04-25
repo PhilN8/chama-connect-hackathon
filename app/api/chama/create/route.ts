@@ -2,11 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { apiStore } from '@/lib/api-store';
 import type { ApiResponse, CreateChamaResponse } from '@/lib/types';
 import { createChamaRequestSchema } from '@/lib/validation';
-import { getSessionFromRequest } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 
 export async function POST(request: NextRequest): Promise<NextResponse<ApiResponse<CreateChamaResponse>>> {
     try {
-        const session = await getSessionFromRequest(request);
+        const session = await auth.api.getSession({
+            headers: request.headers,
+        });
+
         if (!session) {
             return NextResponse.json(
                 {
@@ -31,8 +34,8 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
 
         const { chamaName, chamaType, members, description } = parseResult.data;
 
-        // Create chama
-        const chama = apiStore.createChama(session.userId, chamaName, chamaType, members, description);
+        // Create chama using in-memory store (for hackathon demo)
+        const chama = apiStore.createChama(session.user.id, chamaName, chamaType, members, description);
 
         return NextResponse.json(
             {

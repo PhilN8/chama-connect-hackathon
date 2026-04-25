@@ -44,15 +44,15 @@ export function RegisterForm() {
     mode: "onTouched",
   });
 
-  const onSubmit = async (data: RegisterValues) => {
+  const onSubmit = async (formData: RegisterValues) => {
     setApiError("");
     setFieldErrors({});
 
     try {
       const { data, error } = await signUp.email({
-        email: data.email,
-        password: data.password,
-        name: data.fullName?.trim() || data.email.split("@")[0],
+        email: formData.email,
+        password: formData.password,
+        name: formData.fullName?.trim() || formData.email.split("@")[0],
         callbackURL: "/dashboard",
       });
 
@@ -225,15 +225,15 @@ export function RegisterForm() {
         {isSubmitting ? "Creating Account..." : "Register"}
       </button>
 
-      <p className="text-xs text-center text-emerald-900/70 dark:text-emerald-200/70">
-        Already have an account?{" "}
-        <Link
-          href="/login"
-          className="font-semibold underline-offset-2 hover:underline"
-        >
-          Sign in
-        </Link>
-      </p>
+        <p className="text-xs text-center text-emerald-900/70 dark:text-emerald-200/70">
+          Already have an account?{" "}
+          <Link
+            href="/sign-in"
+            className="font-semibold underline-offset-2 hover:underline"
+          >
+            Sign in
+          </Link>
+        </p>
     </form>
   );
 }

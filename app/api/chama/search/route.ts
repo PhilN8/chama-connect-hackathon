@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { apiStore } from '@/lib/api-store';
 import type { ApiResponse, ExistingSacco } from '@/lib/types';
 import { searchQuerySchema } from '@/lib/validation';
+import { getMockSaccos } from '@/lib/mock-saccos';
+
+const mockSaccos = getMockSaccos();
 
 export async function GET(request: NextRequest): Promise<NextResponse<ApiResponse<{ results: ExistingSacco[]; total: number }>>> {
     try {
@@ -34,7 +36,10 @@ export async function GET(request: NextRequest): Promise<NextResponse<ApiRespons
             );
         }
 
-        const results = apiStore.searchSaccos(query);
+        const results = mockSaccos.filter(sacco =>
+            sacco.name.toLowerCase().includes(query.toLowerCase()) ||
+            sacco.location.toLowerCase().includes(query.toLowerCase())
+        );
 
         return NextResponse.json(
             {

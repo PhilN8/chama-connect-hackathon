@@ -10,7 +10,7 @@ import Link from "next/link";
 import { AlertCircle, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { DEMO_USER_EMAIL, DEMO_USER_PASSWORD } from "@/lib/demo-auth";
+import { signIn } from "@/lib/auth-client";
 
 const loginSchema = z.object({
   email: z.email("Invalid email address"),
@@ -28,43 +28,24 @@ export function LoginForm() {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, isSubmitting },
   } = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
     mode: "onTouched",
-    defaultValues: {
-      email: DEMO_USER_EMAIL,
-      password: DEMO_USER_PASSWORD,
-    },
   });
-
-  const handleUseDemoAccount = () => {
-    reset({
-      email: DEMO_USER_EMAIL,
-      password: DEMO_USER_PASSWORD,
-    });
-    setApiError("");
-    setIsSuccess(false);
-    toast.success("Demo credentials loaded");
-  };
 
   const onSubmit = async (values: LoginValues) => {
     setApiError("");
 
     try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
+      const { data, error } = await signIn.email({
+        email: values.email,
+        password: values.password,
       });
 
-      const result = await response.json();
-      if (!response.ok || !result.success) {
-        setApiError(result.message || "Login failed");
-        toast.error(result.message || "Login failed");
+      if (error) {
+        setApiError(error.message || "Login failed");
+        toast.error(error.message || "Login failed");
         return;
       }
 
@@ -94,20 +75,6 @@ export function LoginForm() {
         <p className="text-emerald-900/70 dark:text-emerald-200/70 text-sm">
           Sign in to continue managing your chama.
         </p>
-      </div>
-
-      <div className="rounded-lg border border-sky-200 bg-sky-50/80 p-3 text-sm text-sky-900 dark:border-sky-900/40 dark:bg-sky-950/25 dark:text-sky-100">
-        <p className="font-semibold">Demo Test User</p>
-        <p className="mt-1 text-xs text-sky-800/90 dark:text-sky-200/90">
-          Email: {DEMO_USER_EMAIL} | Password: {DEMO_USER_PASSWORD}
-        </p>
-        <button
-          type="button"
-          onClick={handleUseDemoAccount}
-          className="mt-2 inline-flex items-center rounded-md border border-sky-300 bg-white/80 px-2.5 py-1 text-xs font-semibold text-sky-900 transition-colors hover:bg-white dark:border-sky-800 dark:bg-sky-900/40 dark:text-sky-100 dark:hover:bg-sky-900/60"
-        >
-          Use Demo Account
-        </button>
       </div>
 
       {apiError && (
@@ -183,7 +150,7 @@ export function LoginForm() {
       <p className="text-xs text-center text-emerald-900/70 dark:text-emerald-200/70">
         New here?{" "}
         <Link
-          href="/register"
+          href="/sign-up"
           className="font-semibold underline-offset-2 hover:underline"
         >
           Create an account

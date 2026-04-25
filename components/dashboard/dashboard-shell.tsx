@@ -14,10 +14,11 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { signOut } from "@/lib/auth-client";
 
 interface DashboardShellProps {
   children: React.ReactNode;
-  fullName: string;
+  name: string;
   email: string;
 }
 
@@ -46,7 +47,7 @@ const navigationItems = [
 
 export function DashboardShell({
   children,
-  fullName,
+  name,
   email,
 }: DashboardShellProps) {
   const pathname = usePathname();
@@ -58,17 +59,15 @@ export function DashboardShell({
     setIsLoggingOut(true);
 
     try {
-      const response = await fetch("/api/auth/logout", { method: "POST" });
-      if (!response.ok) {
-        toast.error("Could not sign out", {
-          description: "Please try again.",
-        });
-      } else {
-        toast.success("Signed out successfully");
-      }
+      await signOut();
+      toast.success("Signed out successfully");
+      router.push("/sign-in");
+    } catch {
+      toast.error("Could not sign out", {
+        description: "Please try again.",
+      });
     } finally {
-      router.push("/login");
-      router.refresh();
+      setIsLoggingOut(false);
     }
   };
 
@@ -128,7 +127,7 @@ export function DashboardShell({
             <p className="text-xs font-semibold uppercase text-emerald-700 dark:text-emerald-200">
               Signed in as
             </p>
-            <p className="mt-2 text-sm font-semibold">{fullName}</p>
+            <p className="mt-2 text-sm font-semibold">{name}</p>
             <p className="truncate text-xs text-zinc-600 dark:text-zinc-400">
               {email}
             </p>
@@ -160,7 +159,7 @@ export function DashboardShell({
               </button>
               <div>
                 <p className="text-sm font-semibold">
-                  Hey, {fullName.split(" ")[0]}
+                  Hey, {name.split(" ")[0]}
                 </p>
                 <p className="text-xs text-zinc-600 dark:text-zinc-400">
                   Welcome back to your dashboard

@@ -19,7 +19,7 @@ export const loginRequestSchema = z.object({
 
 export const chamaMemberSchema = z.object({
     email: z.email('Member email must be a valid email address').trim().toLowerCase(),
-    role: z.enum(['admin', 'member']),
+    role: z.enum(['ADMIN', 'TREASURER', 'SECRETARY', 'MEMBER']),
 });
 
 export const createChamaRequestSchema = z
@@ -29,7 +29,7 @@ export const createChamaRequestSchema = z
         members: z.array(chamaMemberSchema).min(1, 'At least one member (admin) is required'),
         description: z.string().trim().max(500, 'Description is too long').optional(),
     })
-    .refine((value) => value.members.some((member) => member.role === 'admin'), {
+    .refine((value) => value.members.some((member) => member.role === 'ADMIN'), {
         message: 'At least one member must be an admin',
         path: ['members'],
     });

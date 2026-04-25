@@ -14,7 +14,7 @@ export default async function DashboardContributionsPage() {
     return null;
   }
 
-  const contributions = apiStore.getContributionsForUser(session.userId);
+  const contributions = apiStore.getContributionsForUser(session.id);
 
   return <DashboardContributionsTable contributions={contributions} />;
 }

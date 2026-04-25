@@ -4,36 +4,35 @@
  */
 
 import { hashSync } from 'bcryptjs';
-import { User, Chama, ExistingSacco, ContributionRecord } from './types';
+import { User, Chama, ExistingSacco, ContributionRecord, ChamaMember } from './types';
 import { getMockSaccos } from './mock-saccos';
-import { DEMO_USER_EMAIL, DEMO_USER_FULL_NAME, DEMO_USER_PASSWORD } from './demo-auth';
 
-const DEMO_MEMBERS = [
-    { fullName: 'Amina Wanjiru', email: 'amina.wanjiru@chamaconnect.io', role: 'admin', contributionKes: 42000, joinedAt: '2025-02-12', status: 'active' },
-    { fullName: 'Brian Otieno', email: 'brian.otieno@chamaconnect.io', role: 'treasurer', contributionKes: 39000, joinedAt: '2025-02-15', status: 'active' },
-    { fullName: 'Caroline Njeri', email: 'caroline.njeri@chamaconnect.io', role: 'member', contributionKes: 31000, joinedAt: '2025-02-20', status: 'active' },
-    { fullName: 'David Kiptoo', email: 'david.kiptoo@chamaconnect.io', role: 'member', contributionKes: 27500, joinedAt: '2025-02-27', status: 'active' },
-    { fullName: 'Esther Mwende', email: 'esther.mwende@chamaconnect.io', role: 'member', contributionKes: 33200, joinedAt: '2025-03-02', status: 'active' },
-    { fullName: 'Felix Ochieng', email: 'felix.ochieng@chamaconnect.io', role: 'member', contributionKes: 24800, joinedAt: '2025-03-08', status: 'active' },
-    { fullName: 'Grace Wambui', email: 'grace.wambui@chamaconnect.io', role: 'member', contributionKes: 28900, joinedAt: '2025-03-14', status: 'active' },
-    { fullName: 'Hassan Abdi', email: 'hassan.abdi@chamaconnect.io', role: 'member', contributionKes: 22100, joinedAt: '2025-03-18', status: 'active' },
-    { fullName: 'Irene Atieno', email: 'irene.atieno@chamaconnect.io', role: 'treasurer', contributionKes: 36400, joinedAt: '2025-03-24', status: 'active' },
-    { fullName: 'John Kamau', email: 'john.kamau@chamaconnect.io', role: 'member', contributionKes: 24500, joinedAt: '2025-03-30', status: 'active' },
-    { fullName: 'Kevin Maina', email: 'kevin.maina@chamaconnect.io', role: 'member', contributionKes: 25800, joinedAt: '2025-04-06', status: 'active' },
-    { fullName: 'Linet Chebet', email: 'linet.chebet@chamaconnect.io', role: 'member', contributionKes: 23400, joinedAt: '2025-04-13', status: 'active' },
-    { fullName: 'Mercy Akinyi', email: 'mercy.akinyi@chamaconnect.io', role: 'member', contributionKes: 30100, joinedAt: '2025-04-22', status: 'active' },
-    { fullName: 'Noah Kiplagat', email: 'noah.kiplagat@chamaconnect.io', role: 'member', contributionKes: 21900, joinedAt: '2025-05-01', status: 'active' },
-    { fullName: 'Olive Wanjala', email: 'olive.wanjala@chamaconnect.io', role: 'member', contributionKes: 19700, joinedAt: '2025-05-08', status: 'active' },
-    { fullName: 'Peter Mwangi', email: 'peter.mwangi@chamaconnect.io', role: 'member', contributionKes: 26600, joinedAt: '2025-05-14', status: 'active' },
-    { fullName: 'Queenter Auma', email: 'queenter.auma@chamaconnect.io', role: 'member', contributionKes: 23900, joinedAt: '2025-05-21', status: 'active' },
-    { fullName: 'Ruth Jepkoech', email: 'ruth.jepkoech@chamaconnect.io', role: 'member', contributionKes: 25100, joinedAt: '2025-05-28', status: 'active' },
-    { fullName: 'Samuel Ndegwa', email: 'samuel.ndegwa@chamaconnect.io', role: 'member', contributionKes: 18200, joinedAt: '2025-06-03', status: 'active' },
-    { fullName: 'Tabitha Naliaka', email: 'tabitha.naliaka@chamaconnect.io', role: 'member', contributionKes: 17400, joinedAt: '2025-06-10', status: 'active' },
-    { fullName: 'Umar Yusuf', email: 'umar.yusuf@chamaconnect.io', role: 'member', contributionKes: 16300, joinedAt: '2025-06-19', status: 'invited' },
-    { fullName: 'Valentine Moraa', email: 'valentine.moraa@chamaconnect.io', role: 'member', contributionKes: 15600, joinedAt: '2025-06-26', status: 'invited' },
-    { fullName: 'Wycliffe Mutua', email: 'wycliffe.mutua@chamaconnect.io', role: 'member', contributionKes: 20800, joinedAt: '2025-07-04', status: 'active' },
-    { fullName: 'Zainab Noor', email: 'zainab.noor@chamaconnect.io', role: 'member', contributionKes: 19100, joinedAt: '2025-07-12', status: 'active' },
-] as const;
+const DEMO_MEMBERS: ChamaMember[] = [
+    { fullName: 'Amina Wanjiru', email: 'amina.wanjiru@chamaconnect.io', role: 'ADMIN', contributionKes: 42000, joinedAt: '2025-02-12', status: 'active' },
+    { fullName: 'Brian Otieno', email: 'brian.otieno@chamaconnect.io', role: 'TREASURER', contributionKes: 39000, joinedAt: '2025-02-15', status: 'active' },
+    { fullName: 'Caroline Njeri', email: 'caroline.njeri@chamaconnect.io', role: 'MEMBER', contributionKes: 31000, joinedAt: '2025-02-20', status: 'active' },
+    { fullName: 'David Kiptoo', email: 'david.kiptoo@chamaconnect.io', role: 'MEMBER', contributionKes: 27500, joinedAt: '2025-02-27', status: 'active' },
+    { fullName: 'Esther Mwende', email: 'esther.mwende@chamaconnect.io', role: 'MEMBER', contributionKes: 33200, joinedAt: '2025-03-02', status: 'active' },
+    { fullName: 'Felix Ochieng', email: 'felix.ochieng@chamaconnect.io', role: 'MEMBER', contributionKes: 24800, joinedAt: '2025-03-08', status: 'active' },
+    { fullName: 'Grace Wambui', email: 'grace.wambui@chamaconnect.io', role: 'MEMBER', contributionKes: 28900, joinedAt: '2025-03-14', status: 'active' },
+    { fullName: 'Hassan Abdi', email: 'hassan.abdi@chamaconnect.io', role: 'MEMBER', contributionKes: 22100, joinedAt: '2025-03-18', status: 'active' },
+    { fullName: 'Irene Atieno', email: 'irene.atieno@chamaconnect.io', role: 'TREASURER', contributionKes: 36400, joinedAt: '2025-03-24', status: 'active' },
+    { fullName: 'John Kamau', email: 'john.kamau@chamaconnect.io', role: 'MEMBER', contributionKes: 24500, joinedAt: '2025-03-30', status: 'active' },
+    { fullName: 'Kevin Maina', email: 'kevin.maina@chamaconnect.io', role: 'MEMBER', contributionKes: 25800, joinedAt: '2025-04-06', status: 'active' },
+    { fullName: 'Linet Chebet', email: 'linet.chebet@chamaconnect.io', role: 'MEMBER', contributionKes: 23400, joinedAt: '2025-04-13', status: 'active' },
+    { fullName: 'Mercy Akinyi', email: 'mercy.akinyi@chamaconnect.io', role: 'MEMBER', contributionKes: 30100, joinedAt: '2025-04-22', status: 'active' },
+    { fullName: 'Noah Kiplagat', email: 'noah.kiplagat@chamaconnect.io', role: 'MEMBER', contributionKes: 21900, joinedAt: '2025-05-01', status: 'active' },
+    { fullName: 'Olive Wanjala', email: 'olive.wanjala@chamaconnect.io', role: 'MEMBER', contributionKes: 19700, joinedAt: '2025-05-08', status: 'active' },
+    { fullName: 'Peter Mwangi', email: 'peter.mwangi@chamaconnect.io', role: 'MEMBER', contributionKes: 26600, joinedAt: '2025-05-14', status: 'active' },
+    { fullName: 'Queenter Auma', email: 'queenter.auma@chamaconnect.io', role: 'MEMBER', contributionKes: 23900, joinedAt: '2025-05-21', status: 'active' },
+    { fullName: 'Ruth Jepkoech', email: 'ruth.jepkoech@chamaconnect.io', role: 'MEMBER', contributionKes: 25100, joinedAt: '2025-05-28', status: 'active' },
+    { fullName: 'Samuel Ndegwa', email: 'samuel.ndegwa@chamaconnect.io', role: 'MEMBER', contributionKes: 18200, joinedAt: '2025-06-03', status: 'active' },
+    { fullName: 'Tabitha Naliaka', email: 'tabitha.naliaka@chamaconnect.io', role: 'MEMBER', contributionKes: 17400, joinedAt: '2025-06-10', status: 'active' },
+    { fullName: 'Umar Yusuf', email: 'umar.yusuf@chamaconnect.io', role: 'MEMBER', contributionKes: 16300, joinedAt: '2025-06-19', status: 'invited' },
+    { fullName: 'Valentine Moraa', email: 'valentine.moraa@chamaconnect.io', role: 'MEMBER', contributionKes: 15600, joinedAt: '2025-06-26', status: 'invited' },
+    { fullName: 'Wycliffe Mutua', email: 'wycliffe.mutua@chamaconnect.io', role: 'MEMBER', contributionKes: 20800, joinedAt: '2025-07-04', status: 'active' },
+    { fullName: 'Zainab Noor', email: 'zainab.noor@chamaconnect.io', role: 'MEMBER', contributionKes: 19100, joinedAt: '2025-07-12', status: 'active' },
+];
 
 class ApiStore {
     private users: Map<string, User> = new Map();
@@ -66,10 +65,10 @@ class ApiStore {
 
         const demoUser: User = {
             id: demoUserId,
-            fullName: DEMO_USER_FULL_NAME,
-            email: DEMO_USER_EMAIL,
+            fullName: 'Demo Chama Lead',
+            email: 'demo@chamaconnect.io',
             phone: '0712345678',
-            password: hashSync(DEMO_USER_PASSWORD, 10),
+            password: hashSync('Demo@12345', 10),
             createdAt: new Date('2025-02-01T08:00:00.000Z'),
         };
 

@@ -31,7 +31,7 @@ export interface ContributionRecord {
     reference: string;
 }
 
-export type ChamaMemberRole = 'admin' | 'treasurer' | 'member';
+export type ChamaMemberRole = 'ADMIN' | 'TREASURER' | 'SECRETARY' | 'MEMBER';
 
 export interface ChamaMember {
     id?: string;

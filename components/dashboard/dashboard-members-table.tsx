@@ -13,9 +13,9 @@ import {
 } from "@tanstack/react-table";
 import type { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
-import type { ChamaMember } from "@/lib/types";
+import type { ChamaMember, ChamaMemberRole } from "@/lib/types";
 
-type MemberRole = "Admin" | "Treasurer" | "Member";
+type MemberRole = "ADMIN" | "TREASURER" | "MEMBER";
 
 interface MemberRow {
   id: string;
@@ -32,16 +32,16 @@ interface DashboardMembersTableProps {
   chamaName?: string;
 }
 
-function formatRole(role: ChamaMember["role"]): MemberRole {
-  if (role === "admin") {
-    return "Admin";
+function formatRole(role: ChamaMemberRole): MemberRole {
+  if (role === "ADMIN") {
+    return "ADMIN";
   }
 
-  if (role === "treasurer") {
-    return "Treasurer";
+  if (role === "TREASURER") {
+    return "TREASURER";
   }
 
-  return "Member";
+  return "MEMBER";
 }
 
 function deriveNameFromEmail(email: string): string {
@@ -218,9 +218,9 @@ export function DashboardMembersTable({
             className="rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm outline-none ring-emerald-500 transition focus:ring-2 dark:border-zinc-700 dark:bg-zinc-950"
           >
             <option value="All">All Roles</option>
-            <option value="Admin">Admins</option>
-            <option value="Treasurer">Treasurers</option>
-            <option value="Member">Members</option>
+            <option value="ADMIN">Admins</option>
+            <option value="TREASURER">Treasurers</option>
+            <option value="MEMBER">Members</option>
           </select>
         </div>
       </div>

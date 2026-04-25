@@ -14,9 +14,9 @@ export default async function DashboardPage() {
     return null;
   }
 
-  const chamas = apiStore.getChamasForUser(session.userId);
+  const chamas = apiStore.getChamasForUser(session.id);
   const primaryChama = chamas[0];
-  const contributions = apiStore.getContributionsForUser(session.userId);
+  const contributions = apiStore.getContributionsForUser(session.id);
   const memberCount = primaryChama?.members.length ?? 0;
   const totalContributions = contributions.reduce(
     (sum, contribution) => sum + contribution.amountKes,
@@ -26,7 +26,7 @@ export default async function DashboardPage() {
   return (
     <DashboardContent
       user={{
-        fullName: session.fullName,
+        fullName: session.name ?? session.email,
         email: session.email,
       }}
       chama={

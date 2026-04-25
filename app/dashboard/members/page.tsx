@@ -14,7 +14,7 @@ export default async function DashboardMembersPage() {
     return null;
   }
 
-  const chamas = apiStore.getChamasForUser(session.userId);
+  const chamas = apiStore.getChamasForUser(session.id);
   const primaryChama = chamas[0];
 
   return (

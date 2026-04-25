@@ -1,14 +1,11 @@
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
-import { getSessionFromCookiesStore } from "@/lib/auth-server";
 import { ContactForm } from "@/components/forms/ContactForm";
 
-export default async function ContactPage() {
-  const session = await getSessionFromCookiesStore();
-
+export default function ContactPage() {
   return (
     <div className="min-h-screen bg-linear-to-br from-emerald-50 via-white to-cyan-50 text-emerald-950 dark:from-emerald-950 dark:via-zinc-950 dark:to-cyan-950 dark:text-emerald-100">
-      <SiteHeader isAuthenticated={Boolean(session)} />
+      <SiteHeader isAuthenticated={false} />
 
       <main className="w-full px-4 py-10 sm:px-6 lg:px-8">
         <section className="mx-auto max-w-5xl space-y-8">
