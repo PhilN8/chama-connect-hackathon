@@ -4,14 +4,19 @@ import Link from "next/link";
 import { useSession } from "@/lib/auth-client";
 import { LoginForm } from "@/components/forms/LoginForm";
 import { useRouter } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 
 function SignInContent() {
   const { data } = useSession();
   const router = useRouter();
 
+  useEffect(() => {
+    if (data?.session) {
+      router.push("/dashboard");
+    }
+  }, [data?.session, router]);
+
   if (data?.session) {
-    router.push("/dashboard");
     return null;
   }
 
