@@ -1,14 +1,18 @@
 import { cookies } from 'next/headers';
-import { getSessionCookieName, verifySessionToken } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import type { SessionUser } from '@/lib/auth';
+import { cache } from 'react';
 
-export async function getSessionFromCookiesStore(): Promise<SessionUser | null> {
+export const getSessionFromCookiesStore = cache(async (): Promise<SessionUser | null> => {
     const cookieStore = await cookies();
-    const token = cookieStore.get(getSessionCookieName())?.value;
+    const headers = new Headers();
+    cookieStore.getAll().forEach(({ name, value }) => {
+        headers.append('cookie', `${name}=${value}`);
+    });
 
-    if (!token) {
-        return null;
-    }
+    const session = await auth.api.getSession({
+        headers,
+    });
 
-    return verifySessionToken(token);
-}
+    return session?.user as SessionUser | null;
+})

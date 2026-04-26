@@ -7,6 +7,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, Loader2 } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   initialOnboardingState,
   onboardingReducer,
@@ -30,10 +32,20 @@ const createChamaApiResponseSchema = z.object({
 
 export function OnboardingFlow() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [state, dispatch] = useReducer(
     onboardingReducer,
     initialOnboardingState,
   );
+
+  useEffect(() => {
+    const inviteId = searchParams.get("inviteId");
+    if (inviteId) {
+      dispatch({ type: "SET_INVITATION_ID", payload: inviteId });
+      dispatch({ type: "SET_ACTION", payload: "create" });
+      dispatch({ type: "SET_STEP", payload: 2 });
+    }
+  }, [searchParams]);
 
   const handleNext = () => {
     if (state.step < 4) {
@@ -67,15 +79,7 @@ export function OnboardingFlow() {
         chamaName: state.chamaName,
         chamaType: state.chamaType,
         description: state.chamaDescription,
-        members:
-          state.members.length > 0
-            ? state.members
-            : [
-                {
-                  email: "admin@demo.chamaconnect.local",
-                  role: "admin" as const,
-                },
-              ],
+        members: state.members,
       };
 
       const response = await fetch("/api/chama/create", {
@@ -135,7 +139,7 @@ export function OnboardingFlow() {
   const canGoNext =
     (state.step === 1 && state.action !== null) ||
     (state.step === 2 && state.chamaName.trim().length >= 2) ||
-    (state.step === 3 && state.members.some((m) => m.role === "admin"));
+    (state.step === 3 && state.members.length > 0);
 
   return (
     <div className="w-full max-w-2xl mx-auto p-4 sm:p-6">

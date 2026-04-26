@@ -8,11 +8,11 @@ export default async function DashboardLayout({
   const session = await getSessionFromCookiesStore();
 
   if (!session) {
-    redirect("/login?next=/dashboard");
+    redirect("/sign-in?next=/dashboard");
   }
 
   return (
-    <DashboardShell fullName={session.fullName} email={session.email}>
+    <DashboardShell name={session.name ?? session.email}>
       {children}
     </DashboardShell>
   );
