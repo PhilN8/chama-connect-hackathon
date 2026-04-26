@@ -5,6 +5,26 @@ Theme: Reimagining Digital Chamas for the Future
 Repository: https://github.com/PhilN8/chama-connect-hackathon
 Live Site: https://chama-connect-hackathon.vercel.app/
 
+## Local Development (Setup Instructions)
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run development server:
+
+```bash
+npm run dev
+```
+
+Run production build check:
+
+```bash
+npm run build
+```
+
 This project documents the technical proposal and implemented improvements delivered for the ChamaConnect virtual hackathon challenge.
 
 ## 1. Technical Proposal (Problem + Solution)
@@ -129,26 +149,6 @@ We redesigned these core journeys to make them clearer, safer, and demo-ready:
 - Framer Motion
 - JOSE (session signing)
 - bcryptjs (password hashing)
-
-## Local Development
-
-Install dependencies:
-
-```bash
-npm install
-```
-
-Run development server:
-
-```bash
-npm run dev
-```
-
-Run production build check:
-
-```bash
-npm run build
-```
 
 ## Notes for Judges
 

@@ -1,4 +1,4 @@
-import { users, chamaMemberships, contributions } from "./db/schema";
+import { chamaMemberships, contributions } from "./db/schema";
 
 export type Role = "ADMIN" | "TREASURER" | "SECRETARY" | "MEMBER";
 export type GlobalRole = "USER" | "SYSTEM_ADMIN";

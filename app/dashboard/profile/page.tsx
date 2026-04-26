@@ -35,7 +35,7 @@ interface SessionUser {
   image?: string;
   phoneNumber?: string;
   globalRole: "USER" | "SYSTEM_ADMIN";
-  createdAt: string;
+  createdAt: Date;
 }
 
 export default function ProfilePage() {

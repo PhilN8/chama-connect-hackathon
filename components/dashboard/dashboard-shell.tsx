@@ -172,15 +172,17 @@ export function DashboardShell({ children, name }: DashboardShellProps) {
         <div className="flex min-h-screen flex-1 flex-col overflow-hidden">
           <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-zinc-200/70 bg-white/80 px-4 backdrop-blur-sm dark:border-zinc-800 dark:bg-zinc-950/70 md:px-6">
             <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
-              <SheetTrigger asChild>
-                <button
-                  type="button"
-                  aria-label="Open menu"
-                  className="rounded-md p-2 text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-900 md:hidden"
-                >
-                  <Menu className="size-5" />
-                </button>
-              </SheetTrigger>
+              <SheetTrigger
+                render={
+                  <button
+                    type="button"
+                    aria-label="Open menu"
+                    className="rounded-md p-2 text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-900 md:hidden"
+                  >
+                    <Menu className="size-5" />
+                  </button>
+                }
+              />
               <SheetContent side="left" className="w-72 p-5">
                 <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                 <div className="flex h-full flex-col">

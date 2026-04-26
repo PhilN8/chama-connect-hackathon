@@ -1,10 +1,10 @@
-import { db } from "./lib/db";
+import { db } from "@/lib/db";
 import {
   users,
   chamas,
   chamaMemberships,
   contributions,
-} from "./lib/db/schema";
+} from "@/lib/db/schema";
 import { hashSync } from "bcryptjs";
 
 function generateId(prefix: string): string {
@@ -28,6 +28,7 @@ function randomPhone(): string {
 
 const CONTRIBUTION_STATUSES = ["VERIFIED", "VERIFIED", "VERIFIED", "VERIFIED", "PENDING", "SELF_VERIFIED"] as const;
 const PAYMENT_METHODS = ["MPESA", "MPESA", "MPESA", "CASH"] as const;
+const MEMBER_ROLES = ["ADMIN", "TREASURER", "SECRETARY", "MEMBER"] as const;
 
 interface SeedUser {
   id: string;
@@ -272,8 +273,8 @@ async function seed() {
         monthCount < maxMonths - 2
           ? "VERIFIED"
           : CONTRIBUTION_STATUSES[
-              Math.floor(Math.random() * CONTRIBUTION_STATUSES.length)
-            ];
+          Math.floor(Math.random() * CONTRIBUTION_STATUSES.length)
+          ];
 
       let verifiedById: string | null = null;
       if (status === "VERIFIED" && treasurerMember) {
@@ -294,7 +295,7 @@ async function seed() {
         amount,
         paymentMethod:
           PAYMENT_METHODS[
-            Math.floor(Math.random() * PAYMENT_METHODS.length)
+          Math.floor(Math.random() * PAYMENT_METHODS.length)
           ],
         status,
         description: `Monthly contribution ref: ${mpesaRef}`,

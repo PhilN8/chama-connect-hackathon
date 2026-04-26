@@ -95,12 +95,12 @@ export function ConfirmationStep({ state }: ConfirmationStepProps) {
                     <span>{member.email}</span>
                     <span
                       className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        member.role === "admin"
+                        member.role === "ADMIN"
                           ? "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
                           : "bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
                       }`}
                     >
-                      {member.role === "admin" ? "Admin" : "Member"}
+                      {member.role === "ADMIN" ? "Admin" : "Member"}
                     </span>
                   </div>
                 ))}

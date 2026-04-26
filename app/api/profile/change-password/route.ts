@@ -38,9 +38,9 @@ export async function PUT(
       },
     });
 
-    if (result.error) {
+    if (!result.user) {
       return NextResponse.json(
-        { success: false, message: result.error.message ?? "Failed to change password" },
+        { success: false, message: "Failed to change password" },
         { status: 400 }
       );
     }

@@ -139,7 +139,7 @@ export function OnboardingFlow() {
   const canGoNext =
     (state.step === 1 && state.action !== null) ||
     (state.step === 2 && state.chamaName.trim().length >= 2) ||
-    (state.step === 3 && state.members.some((m) => m.role === "admin"));
+    (state.step === 3 && state.members.length > 0);
 
   return (
     <div className="w-full max-w-2xl mx-auto p-4 sm:p-6">

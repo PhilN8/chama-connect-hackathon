@@ -38,15 +38,12 @@ export async function PUT(
 
     const result = await auth.api.sendVerificationEmail({
       headers: request.headers,
-      body: {
-        email: newEmail,
-        type: "email-change",
-      },
+      body: { email: newEmail },
     });
 
-    if (result.error) {
+    if (result.status) {
       return NextResponse.json(
-        { success: false, message: result.error.message ?? "Failed to send verification email" },
+        { success: false, message: "Failed to send verification email" },
         { status: 400 }
       );
     }
