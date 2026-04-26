@@ -18,7 +18,7 @@ export function SiteHeader({ isAuthenticated = false }: SiteHeaderProps) {
     { href: "/onboard-chama", label: "Onboard Chama" },
     isAuthenticated
       ? { href: "/dashboard", label: "Dashboard" }
-      : { href: "/login", label: "Login" },
+      : { href: "/sign-in", label: "Login" },
   ];
 
   return (
@@ -42,7 +42,7 @@ export function SiteHeader({ isAuthenticated = false }: SiteHeaderProps) {
 
             {!isAuthenticated && (
               <Link
-                href="/register"
+                href="/sign-up"
                 className="rounded-lg bg-linear-to-r from-emerald-600 to-teal-500 px-5 py-2 text-sm font-semibold text-white shadow-md shadow-emerald-600/30 transition-opacity hover:opacity-90"
               >
                 Get Started
@@ -80,7 +80,7 @@ export function SiteHeader({ isAuthenticated = false }: SiteHeaderProps) {
               ))}
               {!isAuthenticated && (
                 <Link
-                  href="/register"
+                  href="/sign-up"
                   onClick={() => setMenuOpen(false)}
                   className="rounded-lg bg-linear-to-r from-emerald-600 to-teal-500 px-4 py-2 text-sm font-semibold text-white"
                 >

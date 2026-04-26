@@ -1,46 +1,21 @@
-"use client";
+import { redirect } from "next/navigation";
+import { Suspense } from "react";
+import { getSessionFromCookiesStore } from "@/lib/auth-server";
+import { SignInForm } from "./sign-in-form";
 
-import Link from "next/link";
-import { useSession } from "@/lib/auth-client";
-import { LoginForm } from "@/components/forms/LoginForm";
-import { useRouter } from "next/navigation";
-import { Suspense, useEffect } from "react";
-
-function SignInContent() {
-  const { data } = useSession();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (data?.session) {
-      router.push("/dashboard");
-    }
-  }, [data?.session, router]);
-
-  if (data?.session) {
-    return null;
+export default async function SignInPage() {
+  const session = await getSessionFromCookiesStore();
+  if (session) {
+    redirect("/dashboard");
   }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-emerald-50 via-white to-cyan-50 dark:from-emerald-950 dark:via-zinc-950 dark:to-cyan-950 p-4">
       <div className="w-full max-w-md space-y-4">
-        <div className="flex items-center text-sm font-medium">
-          <Link
-            href="/"
-            className="text-emerald-800 dark:text-emerald-200 hover:underline"
-          >
-            ← Back to Home
-          </Link>
-        </div>
-        <LoginForm />
+        <Suspense>
+          <SignInForm />
+        </Suspense>
       </div>
     </div>
-  );
-}
-
-export default function SignInPage() {
-  return (
-    <Suspense>
-      <SignInContent />
-    </Suspense>
   );
 }

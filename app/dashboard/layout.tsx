@@ -12,7 +12,7 @@ export default async function DashboardLayout({
   }
 
   return (
-    <DashboardShell name={session.name ?? session.email} email={session.email}>
+    <DashboardShell name={session.name ?? session.email}>
       {children}
     </DashboardShell>
   );

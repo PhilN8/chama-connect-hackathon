@@ -65,9 +65,9 @@ export const chamaMemberships = sqliteTable("chama_membership", {
   status: text("status").$type<"ACTIVE" | "DEACTIVATED" | "PENDING">().notNull().default("PENDING"),
   joinedAt: integer("joined_at", { mode: "timestamp" }).notNull(),
   updatedAt: integer("updated_at", { mode: "timestamp" }).notNull(),
-}, (table) => ({
-  unq: uniqueIndex("membership_unq").on(table.chamaId, table.userId),
-}));
+}, (table) => ([
+  uniqueIndex("membership_unq").on(table.chamaId, table.userId),
+]));
 
 export const invitations = sqliteTable("invitation", {
   id: text("id").primaryKey(),

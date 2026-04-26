@@ -79,15 +79,7 @@ export function OnboardingFlow() {
         chamaName: state.chamaName,
         chamaType: state.chamaType,
         description: state.chamaDescription,
-        members:
-          state.members.length > 0
-            ? state.members
-            : [
-                {
-                  email: "admin@demo.chamaconnect.local",
-                  role: "admin" as const,
-                },
-              ],
+        members: state.members,
       };
 
       const response = await fetch("/api/chama/create", {

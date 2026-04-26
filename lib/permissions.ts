@@ -11,7 +11,7 @@ export type User = {
 
 export type ResourceMap = {
   contributions: typeof contributions.$inferSelect;
-  chamas: { id: string; minContributionAmount: number };
+  chamas: typeof chamaMemberships.$inferSelect;
 };
 
 type PermissionCheck<K extends keyof ResourceMap> =
@@ -52,7 +52,7 @@ export const POLICIES: Record<Role, RolePermissions> = {
       create: (user, data) => {
         // This is a placeholder for a more complex check
         // In reality, we'd check the chama's minContributionAmount
-        return true; 
+        return true;
       },
     },
   },
@@ -67,7 +67,7 @@ export function hasPermission<K extends keyof ResourceMap>(
   if (user.globalRole === "SYSTEM_ADMIN") return true;
 
   // Context required for non-global checks
-  const chamaId = (data as any)?.chamaId;
+  const chamaId = data?.chamaId;
   if (!chamaId) return false;
 
   const role = user.memberships[chamaId];

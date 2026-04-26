@@ -8,18 +8,25 @@ import {
   Home,
   PiggyBank,
   LogOut,
-  Menu,
   Users,
-  X,
+  UserCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { signOut } from "@/lib/auth-client";
+import { ChamaSwitcher } from "@/components/ChamaSwitcher";
+import { NotificationBell } from "@/components/notification-bell";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
 
 interface DashboardShellProps {
   children: React.ReactNode;
   name: string;
-  email: string;
 }
 
 const navigationItems = [
@@ -39,21 +46,102 @@ const navigationItems = [
     icon: PiggyBank,
   },
   {
-    href: "/onboard-chama",
+    href: "/dashboard/onboard-chama",
     label: "Onboarding",
     icon: ChartNoAxesCombined,
   },
+  {
+    href: "/dashboard/profile",
+    label: "Profile",
+    icon: UserCircle,
+  },
 ];
 
-export function DashboardShell({
-  children,
-  name,
-  email,
-}: DashboardShellProps) {
+function SidebarNav({
+  onItemClick,
+}: {
+  onItemClick?: () => void;
+}) {
   const pathname = usePathname();
+
+  return (
+    <nav className="flex flex-col gap-1">
+      {navigationItems.map((item) => {
+        const isActive =
+          item.href === "/dashboard"
+            ? pathname === "/dashboard"
+            : pathname.startsWith(item.href);
+
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            onClick={onItemClick}
+            className={cn(
+              "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors",
+              isActive
+                ? "bg-emerald-100 text-emerald-900 dark:bg-emerald-900/40 dark:text-emerald-100"
+                : "text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-900",
+            )}
+          >
+            <item.icon className="size-4" />
+            {item.label}
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}
+
+function SidebarContent({
+  onItemClick,
+  onLogout,
+  isLoggingOut,
+}: {
+  onItemClick?: () => void;
+  onLogout: () => void;
+  isLoggingOut: boolean;
+}) {
+  return (
+    <>
+      <div className="mb-10 flex items-start justify-between">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-300">
+            ChamaConnect
+          </p>
+          <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
+        </div>
+      </div>
+
+      <SidebarNav onItemClick={onItemClick} />
+
+      <div className="mt-auto flex flex-col gap-4 pt-4">
+        <div className="flex-1" />
+        <button
+          type="button"
+          onClick={onLogout}
+          disabled={isLoggingOut}
+          className="flex w-full items-center justify-between rounded-lg bg-red-50 px-3 py-2.5 text-sm font-semibold text-red-700 transition-colors hover:bg-red-100 disabled:opacity-50 dark:bg-red-950/20 dark:text-red-300"
+        >
+          <span>{isLoggingOut ? "Signing out..." : "Sign out"}</span>
+          <LogOut className="size-4" />
+        </button>
+      </div>
+    </>
+  );
+}
+
+export function DashboardShell({ children, name }: DashboardShellProps) {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [activeChama, setActiveChama] = useState<string | null>(null);
+
+  const handleChamaSelect = (chamaId: string) => {
+    setActiveChama(chamaId);
+    localStorage.setItem("activeChamaId", chamaId);
+    router.refresh();
+  };
 
   const handleLogout = async () => {
     setIsLoggingOut(true);
@@ -72,92 +160,45 @@ export function DashboardShell({
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-emerald-50 via-white to-cyan-50 dark:from-emerald-950 dark:via-zinc-950 dark:to-cyan-950">
+    <div className="min-h-screen bg-white dark:bg-zinc-950">
       <div className="flex h-screen w-full overflow-hidden">
-        <aside
-          className={cn(
-            "fixed inset-y-0 left-0 z-40 w-72 border-r border-zinc-200 bg-white/95 p-5 backdrop-blur-sm transition-transform dark:border-zinc-800 dark:bg-zinc-950/95 md:sticky md:top-0 md:h-screen md:shrink-0 md:translate-x-0 md:overflow-y-auto",
-            sidebarOpen ? "translate-x-0" : "-translate-x-full",
-          )}
-        >
-          <div className="mb-10 flex items-start justify-between">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-300">
-                ChamaConnect
-              </p>
-              <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
-            </div>
-            <button
-              type="button"
-              aria-label="Close menu"
-              className="rounded-md p-1 text-zinc-600 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-900 md:hidden"
-              onClick={() => setSidebarOpen(false)}
-            >
-              <X className="size-5" />
-            </button>
-          </div>
-
-          <nav className="flex flex-col gap-1">
-            {navigationItems.map((item) => {
-              const isActive =
-                item.href === "/dashboard"
-                  ? pathname === "/dashboard"
-                  : pathname.startsWith(item.href);
-
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setSidebarOpen(false)}
-                  className={cn(
-                    "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors",
-                    isActive
-                      ? "bg-emerald-100 text-emerald-900 dark:bg-emerald-900/40 dark:text-emerald-100"
-                      : "text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-900",
-                  )}
-                >
-                  <item.icon className="size-4" />
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
-
-          <div className="mt-8 rounded-xl border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-900/40 dark:bg-emerald-950/20">
-            <p className="text-xs font-semibold uppercase text-emerald-700 dark:text-emerald-200">
-              Signed in as
-            </p>
-            <p className="mt-2 text-sm font-semibold">{name}</p>
-            <p className="truncate text-xs text-zinc-600 dark:text-zinc-400">
-              {email}
-            </p>
-          </div>
-
-          <div className="mt-4">
-            <button
-              type="button"
-              onClick={handleLogout}
-              disabled={isLoggingOut}
-              className="flex w-full items-center justify-between rounded-lg bg-red-50 px-3 py-2.5 text-sm font-semibold text-red-700 transition-colors hover:bg-red-100 disabled:opacity-50 dark:bg-red-950/20 dark:text-red-300"
-            >
-              <span>{isLoggingOut ? "Signing out..." : "Sign out"}</span>
-              <LogOut className="size-4" />
-            </button>
-          </div>
+        <aside className="hidden md:flex md:w-72 md:flex-col md:border-r md:border-zinc-200 md:bg-white/95 md:p-5 md:dark:border-zinc-800 md:dark:bg-zinc-950/95">
+          <SidebarContent
+            onLogout={handleLogout}
+            isLoggingOut={isLoggingOut}
+          />
         </aside>
 
-        <div className="flex min-h-screen flex-1 flex-col overflow-hidden md:pl-0">
-          <header className="sticky top-0 z-30 border-b border-zinc-200/70 bg-white/80 backdrop-blur-sm dark:border-zinc-800 dark:bg-zinc-950/70">
-            <div className="flex h-16 items-center gap-3 px-4 md:px-6">
-              <button
-                type="button"
-                aria-label="Open menu"
-                className="rounded-md p-2 text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-900 md:hidden"
-                onClick={() => setSidebarOpen(true)}
-              >
-                <Menu className="size-5" />
-              </button>
-              <div>
+        <div className="flex min-h-screen flex-1 flex-col overflow-hidden">
+          <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-zinc-200/70 bg-white/80 px-4 backdrop-blur-sm dark:border-zinc-800 dark:bg-zinc-950/70 md:px-6">
+            <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
+              <SheetTrigger asChild>
+                <button
+                  type="button"
+                  aria-label="Open menu"
+                  className="rounded-md p-2 text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-900 md:hidden"
+                >
+                  <Menu className="size-5" />
+                </button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-72 p-5">
+                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+                <div className="flex h-full flex-col">
+                  <SidebarContent
+                    onItemClick={() => setSidebarOpen(false)}
+                    onLogout={handleLogout}
+                    isLoggingOut={isLoggingOut}
+                  />
+                </div>
+              </SheetContent>
+            </Sheet>
+
+            <div className="flex flex-1 items-center gap-4">
+              <ChamaSwitcher
+                activeChama={activeChama}
+                onChamaSelect={handleChamaSelect}
+              />
+              <div className="flex-1">
                 <p className="text-sm font-semibold">
                   Hey, {name.split(" ")[0]}
                 </p>
@@ -166,19 +207,11 @@ export function DashboardShell({
                 </p>
               </div>
             </div>
+            <NotificationBell />
           </header>
 
           <main className="flex-1 overflow-y-auto p-4 md:p-6">{children}</main>
         </div>
-
-        {sidebarOpen && (
-          <button
-            type="button"
-            aria-label="Close sidebar overlay"
-            className="fixed inset-0 z-30 bg-black/40 md:hidden"
-            onClick={() => setSidebarOpen(false)}
-          />
-        )}
       </div>
     </div>
   );

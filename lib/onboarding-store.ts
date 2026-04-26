@@ -2,6 +2,8 @@
  * Onboarding form state management
  */
 
+import type { ChamaMemberRole } from './types';
+
 export interface OnboardingState {
     step: 1 | 2 | 3 | 4;
     action: 'search' | 'create' | null;
@@ -10,7 +12,7 @@ export interface OnboardingState {
     chamaName: string;
     chamaType: 'SACCO' | 'TableBanking' | 'MerryGoRound';
     chamaDescription: string;
-    members: Array<{ email: string; role: 'admin' | 'member' }>;
+    members: Array<{ email: string; role: ChamaMemberRole }>;
     isSubmitting: boolean;
     error: string | null;
     invitationId: string | null;
@@ -38,10 +40,10 @@ export type OnboardingAction =
     | { type: 'SET_CHAMA_NAME'; payload: string }
     | { type: 'SET_CHAMA_TYPE'; payload: 'SACCO' | 'TableBanking' | 'MerryGoRound' }
     | { type: 'SET_CHAMA_DESCRIPTION'; payload: string }
-    | { type: 'ADD_MEMBER'; payload: { email: string; role: 'admin' | 'member' } }
+    | { type: 'ADD_MEMBER'; payload: { email: string; role: ChamaMemberRole } }
     | { type: 'REMOVE_MEMBER'; payload: string }
-    | { type: 'UPDATE_MEMBER_ROLE'; payload: { email: string; role: 'admin' | 'member' } }
-    | { type: 'SET_MEMBERS'; payload: Array<{ email: string; role: 'admin' | 'member' }> }
+    | { type: 'UPDATE_MEMBER_ROLE'; payload: { email: string; role: ChamaMemberRole } }
+    | { type: 'SET_MEMBERS'; payload: Array<{ email: string; role: ChamaMemberRole }> }
     | { type: 'SET_SUBMITTING'; payload: boolean }
     | { type: 'SET_ERROR'; payload: string | null }
     | { type: 'SET_INVITATION_ID'; payload: string | null }

@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "./db";
 import * as schema from "./db/schema";
+import { z } from "zod";
 
 export type SessionUser = {
   id: string;
@@ -51,5 +52,27 @@ export const auth = betterAuth({
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     httpOnly: true,
+  },
+  user: {
+    additionalFields: {
+      globalRole: {
+        type: "string",
+        defaultValue: "USER",
+        validator: {
+          input: z
+            .enum(["USER", "SYSTEM_ADMIN"], "Invalid user role"),
+        },
+      },
+      phoneNumber: {
+        type: "string",
+        unique: true,
+        validator: {
+          input: z
+            .string()
+            .regex(/^(?:254|\+254|0)?(7|1)\d{8}$/, "Invalid Kenyan phone number")
+            .optional(),
+        },
+      },
+    }
   },
 });

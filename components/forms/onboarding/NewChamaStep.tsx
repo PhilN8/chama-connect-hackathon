@@ -9,6 +9,14 @@ interface NewChamaStepProps {
   dispatch: React.Dispatch<OnboardingAction>;
 }
 
+type ChamaType = "SACCO" | "TableBanking" | "MerryGoRound";
+
+const CHAMA_TYPE_INFO: Record<ChamaType, { label: string; description: string }> = {
+  SACCO: { label: "SACCO (Savings & Credit)", description: "Best for structured savings and loans" },
+  TableBanking: { label: "Table Banking Group", description: "Great for regular meetings and contributions" },
+  MerryGoRound: { label: "Merry-Go-Round", description: "Perfect for rotating savings distribution" },
+};
+
 export function NewChamaStep({ state, dispatch }: NewChamaStepProps) {
   const isValid = state.chamaName.trim().length >= 2;
 
@@ -42,7 +50,7 @@ export function NewChamaStep({ state, dispatch }: NewChamaStepProps) {
               })
             }
             placeholder="e.g., Nairobi Tech Workers SACCO"
-            className="w-full px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 outline-none focus:border-zinc-900 dark:focus:border-zinc-50 transition-all"
+            className="w-full px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 outline-none focus:border-emerald-700 dark:focus:border-emerald-300 transition-all"
             aria-invalid={
               !isValid && state.chamaName.length > 0 ? "true" : "false"
             }
@@ -59,21 +67,19 @@ export function NewChamaStep({ state, dispatch }: NewChamaStepProps) {
             onChange={(e) =>
               dispatch({
                 type: "SET_CHAMA_TYPE",
-                payload: e.target.value as any,
+                payload: e.target.value as ChamaType,
               })
             }
-            className="w-full px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 outline-none focus:border-zinc-900 dark:focus:border-zinc-50 transition-all"
+            className="w-full px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 outline-none focus:border-emerald-700 dark:focus:border-emerald-300 transition-all"
           >
-            <option value="SACCO">SACCO (Savings & Credit)</option>
-            <option value="TableBanking">Table Banking Group</option>
-            <option value="MerryGoRound">Merry-Go-Round</option>
+            {(Object.keys(CHAMA_TYPE_INFO) as ChamaType[]).map((type) => (
+              <option key={type} value={type}>
+                {CHAMA_TYPE_INFO[type].label}
+              </option>
+            ))}
           </select>
           <p className="text-xs text-zinc-500">
-            {state.chamaType === "SACCO"
-              ? "Best for structured savings and loans"
-              : state.chamaType === "TableBanking"
-                ? "Great for regular meetings and contributions"
-                : "Perfect for rotating savings distribution"}
+            {CHAMA_TYPE_INFO[state.chamaType].description}
           </p>
         </div>
 
@@ -92,17 +98,17 @@ export function NewChamaStep({ state, dispatch }: NewChamaStepProps) {
             }
             placeholder="Tell us about your group..."
             rows={3}
-            className="w-full px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 outline-none focus:border-zinc-900 dark:focus:border-zinc-50 transition-all resize-none"
+            className="w-full px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 outline-none focus:border-emerald-700 dark:focus:border-emerald-300 transition-all resize-none"
           />
         </div>
       </div>
 
       <p
         className={cn(
-          "text-xs font-medium",
+          "text-xs font-medium rounded-lg p-3",
           isValid
-            ? "text-emerald-600 dark:text-emerald-400"
-            : "text-red-600 dark:text-red-400",
+            ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/20 dark:text-emerald-300"
+            : "bg-red-50 text-red-600 dark:bg-red-950/20 dark:text-red-400",
         )}
         role="status"
         aria-live="polite"

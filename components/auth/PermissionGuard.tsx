@@ -21,13 +21,13 @@ export function PermissionGuard<K extends keyof ResourceMap>({
 }: GuardProps<K>) {
   const { data: session } = useSession();
 
-  if (!session?.user) return fallback as any;
+  if (!session?.user) return fallback;
 
   // Transform Better-Auth user to ABAC User
   // In a real app, memberships would be fetched or included in session
   const abacUser: User = {
     id: session.user.id,
-    globalRole: (session.user as any).globalRole || "USER",
+    globalRole: session.user.globalRole || "USER",
     memberships: (session.user as any).memberships || {},
   };
 

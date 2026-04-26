@@ -53,6 +53,8 @@ export function RegisterForm() {
         email: formData.email,
         password: formData.password,
         name: formData.fullName?.trim() || formData.email.split("@")[0],
+        phoneNumber: formData.phone,
+        globalRole: "USER",
         callbackURL: "/dashboard",
       });
 
@@ -69,9 +71,9 @@ export function RegisterForm() {
       });
 
       // Redirect to dashboard after brief delay
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 1500);
+      // setTimeout(() => {
+      //   router.push("/dashboard");
+      // }, 1500);
     } catch {
       setApiError("Network error. Please check your connection and try again.");
       toast.error("Network error", {
@@ -91,12 +93,13 @@ export function RegisterForm() {
             Welcome to ChamaConnect!
           </h2>
           <p className="text-emerald-900/70 dark:text-emerald-200/70 text-sm">
-            Your account has been created successfully. Your dashboard is ready.
+            Your account has been created successfully. Please verify your
+            account by accessing the email sent to you.
           </p>
         </div>
-        <div className="pt-2 text-xs text-emerald-800/60 dark:text-emerald-200/60">
+        {/* <div className="pt-2 text-xs text-emerald-800/60 dark:text-emerald-200/60">
           Redirecting to dashboard...
-        </div>
+        </div> */}
       </div>
     );
   }
@@ -126,7 +129,7 @@ export function RegisterForm() {
             label: "Full Name",
             type: "text",
             placeholder: "John Doe",
-            required: false,
+            required: true,
           },
           {
             name: "email",
@@ -225,15 +228,15 @@ export function RegisterForm() {
         {isSubmitting ? "Creating Account..." : "Register"}
       </button>
 
-        <p className="text-xs text-center text-emerald-900/70 dark:text-emerald-200/70">
-          Already have an account?{" "}
-          <Link
-            href="/sign-in"
-            className="font-semibold underline-offset-2 hover:underline"
-          >
-            Sign in
-          </Link>
-        </p>
+      <p className="text-xs text-center text-emerald-900/70 dark:text-emerald-200/70">
+        Already have an account?{" "}
+        <Link
+          href="/sign-in"
+          className="font-semibold underline-offset-2 hover:underline"
+        >
+          Sign in
+        </Link>
+      </p>
     </form>
   );
 }
