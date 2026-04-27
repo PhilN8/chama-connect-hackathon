@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { getSessionFromCookiesStore } from "@/lib/auth-server";
-import { SignInForm } from "./sign-in-form";
+import { SignInForm } from "@/components/forms/LoginForm";
 
 export default async function SignInPage() {
   const session = await getSessionFromCookiesStore();
