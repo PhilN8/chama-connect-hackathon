@@ -7,10 +7,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import Link from "next/link";
-import { AlertCircle, CheckCircle } from "lucide-react";
+import { AlertCircle, CheckCircle, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { signIn } from "@/lib/auth-client";
+
+const DEMO_EMAIL = "demo@chamaconnect.io";
+const DEMO_PASSWORD = "Demo@12345";
 
 const loginSchema = z.object({
   email: z.email("Invalid email address"),
@@ -33,6 +36,36 @@ export function LoginForm() {
     resolver: zodResolver(loginSchema),
     mode: "onTouched",
   });
+
+  const handleDemoSignIn = async () => {
+    setApiError("");
+    try {
+      const { error } = await signIn.email({
+        email: DEMO_EMAIL,
+        password: DEMO_PASSWORD,
+      });
+
+      if (error) {
+        setApiError(error.message || "Demo login failed");
+        toast.error(error.message || "Demo login failed");
+        return;
+      }
+
+      setIsSuccess(true);
+      toast.success("Signed in as demo user", {
+        description: "Welcome back. Redirecting to your dashboard.",
+      });
+      setTimeout(() => {
+        const nextPath = searchParams.get("next") || "/dashboard";
+        router.push(nextPath);
+      }, 800);
+    } catch {
+      setApiError("Network error. Please try again.");
+      toast.error("Network error", {
+        description: "Please check your connection and try again.",
+      });
+    }
+  };
 
   const onSubmit = async (values: LoginValues) => {
     setApiError("");
@@ -75,6 +108,33 @@ export function LoginForm() {
         <p className="text-emerald-900/70 dark:text-emerald-200/70 text-sm">
           Sign in to continue managing your chama.
         </p>
+      </div>
+
+      <div className="rounded-lg border border-sky-200 bg-sky-50/80 p-3 dark:border-sky-900/40 dark:bg-sky-950/25">
+        <p className="text-xs font-semibold text-sky-900 dark:text-sky-100">
+          Demo Account
+        </p>
+        <p className="mt-1 text-xs text-sky-800/90 dark:text-sky-200/90">
+          Email: {DEMO_EMAIL}
+        </p>
+        <button
+          type="button"
+          onClick={handleDemoSignIn}
+          disabled={isSubmitting}
+          className="mt-2 inline-flex items-center gap-1.5 rounded-md border border-sky-300 bg-white/80 px-3 py-1.5 text-xs font-semibold text-sky-900 transition-colors hover:bg-white dark:border-sky-700 dark:bg-sky-900/40 dark:text-sky-100 dark:hover:bg-sky-900/60 disabled:opacity-50"
+        >
+          <User className="size-3" />
+          Sign in as Demo User
+        </button>
+      </div>
+
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-zinc-200 dark:border-zinc-700" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-white px-2 dark:bg-zinc-900">Or continue with</span>
+        </div>
       </div>
 
       {apiError && (

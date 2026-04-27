@@ -76,6 +76,13 @@ async function seed() {
       phone: "0723456789",
       password: hashSync("Password@456", 10),
     },
+    {
+      id: "demo_user_001",
+      name: "Demo User",
+      email: "demo@chamaconnect.io",
+      phone: "0712345678",
+      password: hashSync("Demo@12345", 10),
+    },
   ];
 
   await db.insert(users).values(
