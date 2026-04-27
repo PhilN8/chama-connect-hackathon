@@ -71,13 +71,13 @@ export function SignInForm() {
     setApiError("");
 
     try {
-      const { data, error } = await signIn.email({
+      const { error } = await signIn.email({
         email: values.email,
         password: values.password,
       });
 
       if (error) {
-        setApiError(error.message || "Login failed");
+        setApiError("Login failed");
         toast.error(error.message || "Login failed");
         return;
       }
@@ -133,7 +133,9 @@ export function SignInForm() {
           <div className="w-full border-t border-zinc-200 dark:border-zinc-700" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-white px-2 dark:bg-zinc-900">Or continue with</span>
+          <span className="bg-white px-2 dark:bg-zinc-900">
+            Or continue with
+          </span>
         </div>
       </div>
 
