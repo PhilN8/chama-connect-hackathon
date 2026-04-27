@@ -22,7 +22,7 @@ const loginSchema = z.object({
 
 type LoginValues = z.infer<typeof loginSchema>;
 
-export function LoginForm() {
+export function SignInForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [apiError, setApiError] = useState("");
