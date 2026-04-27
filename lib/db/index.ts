@@ -4,8 +4,8 @@ import * as schema from "./schema";
 
 function getDatabaseUrl(): string {
   // If in production (Vercel) and Turso credentials exist, use Turso
-  if (process.env.VERCEL && process.env.TURSO_URL) {
-    return process.env.TURSO_URL;
+  if (process.env.VERCEL && process.env.TURSO_CONNECTION_URL) {
+    return process.env.TURSO_CONNECTION_URL;
   }
   // Fallback to local SQLite for development
   return process.env.DATABASE_URL || "file:local.db";
