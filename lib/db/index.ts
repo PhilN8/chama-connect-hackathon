@@ -18,9 +18,9 @@ function getAuthToken(): string | undefined {
   return undefined;
 }
 
-const client = createClient({
-  url: getDatabaseUrl(),
-  authToken: getAuthToken(),
+export const db = drizzle({
+  connection: {
+    url: getDatabaseUrl(),
+    authToken: getAuthToken(),
+  }
 });
-
-export const db = drizzle(client, { schema });
