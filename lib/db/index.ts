@@ -19,6 +19,7 @@ function getAuthToken(): string | undefined {
 }
 
 export const db = drizzle({
+  schema,
   connection: {
     url: getDatabaseUrl(),
     authToken: getAuthToken(),
