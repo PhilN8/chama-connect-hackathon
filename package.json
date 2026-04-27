@@ -9,8 +9,7 @@
     "lint": "eslint",
     "db:push": "drizzle-kit push",
     "db:seed": "tsx scripts/seed.ts",
-    "db:setup": "pnpm run db:push && pnpm run db:seed",
-    "postinstall": "pnpm run db:push && pnpm run db:seed"
+    "db:setup": "pnpm run db:push && pnpm run db:seed"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.0",
