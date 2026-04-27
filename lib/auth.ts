@@ -3,6 +3,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "./db";
 import * as schema from "./db/schema";
 import { z } from "zod";
+import { compareSync, hashSync } from "bcryptjs";
 
 export type SessionUser = {
   id: string;
@@ -28,6 +29,14 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
+    password: {
+      async hash(password) {
+        return hashSync(password, 10)
+      },
+      async verify(data) {
+        return compareSync(data.password, data.hash)
+      },
+    }
   },
   emailVerification: {
     enabled: true,
