@@ -80,7 +80,7 @@ async function seed() {
       id: "demo_user_001",
       name: "Demo User",
       email: "demo@chamaconnect.io",
-      phone: "0712345678",
+      phone: "0712345601",
       password: hashSync("Demo@12345", 10),
     },
   ];
