@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { DashboardContent } from "@/components/dashboard/dashboard-content";
 import { getSessionFromCookiesStore } from "@/lib/auth-server";
-import { apiStore } from "@/lib/api-store";
+import { db } from "@/lib/db";
+import { chamas, chamaMemberships, contributions } from "@/lib/db/schema";
+import { eq, and, sql } from "drizzle-orm";
 
 export const metadata: Metadata = {
   title: "Dashboard | ChamaConnect",
@@ -14,14 +16,43 @@ export default async function DashboardPage() {
     return null;
   }
 
-  const chamas = apiStore.getChamasForUser(session.id);
-  const primaryChama = chamas[0];
-  const contributions = apiStore.getContributionsForUser(session.id);
-  const memberCount = primaryChama?.members.length ?? 0;
-  const totalContributions = contributions.reduce(
-    (sum, contribution) => sum + contribution.amountKes,
-    0,
-  );
+  // Get primary chama for user
+  const userChamas = await db
+    .select({
+      chama: chamas,
+    })
+    .from(chamaMemberships)
+    .innerJoin(chamas, eq(chamas.id, chamaMemberships.chamaId))
+    .where(
+      and(
+        eq(chamaMemberships.userId, session.id),
+        eq(chamaMemberships.status, "ACTIVE"),
+      ),
+    )
+    .limit(1);
+
+  const primaryChama = userChamas[0]?.chama;
+
+  let memberCount = 0;
+  let totalContributions = 0;
+
+  if (primaryChama) {
+    // Get member count
+    const [{ count }] = await db
+      .select({ count: sql<number>`count(*)` })
+      .from(chamaMemberships)
+      .where(eq(chamaMemberships.chamaId, primaryChama.id));
+
+    memberCount = Number(count);
+
+    // Get total contributions for the chama
+    const [{ total }] = await db
+      .select({ total: sql<number>`sum(${contributions.amount})` })
+      .from(contributions)
+      .where(eq(contributions.chamaId, primaryChama.id));
+
+    totalContributions = Number(total || 0);
+  }
 
   return (
     <DashboardContent
@@ -33,7 +64,7 @@ export default async function DashboardPage() {
         primaryChama
           ? {
               name: primaryChama.name,
-              type: primaryChama.type,
+              type: "TableBanking", // Defaulting to TableBanking as per schema lack of 'type'
               memberCount,
               totalContributions,
             }
