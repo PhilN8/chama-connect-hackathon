@@ -12,8 +12,8 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { signIn } from "@/lib/auth-client";
 
-const DEMO_EMAIL = "demo@chamaconnect.io";
-const DEMO_PASSWORD = "Demo@12345";
+const DEMO_EMAIL = "wanjiru.kamau@chamaconnect.io";
+const DEMO_PASSWORD = "Password@123";
 
 const loginSchema = z.object({
   email: z.email("Invalid email address"),

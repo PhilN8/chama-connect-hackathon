@@ -13,9 +13,6 @@ import {
 } from "@tanstack/react-table";
 import type { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
-import type { ChamaMember, ChamaMemberRole } from "@/lib/types";
-
-type MemberRole = "ADMIN" | "TREASURER" | "MEMBER";
 
 interface MemberRow {
   userId: string;

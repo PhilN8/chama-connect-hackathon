@@ -357,6 +357,7 @@ async function seed() {
   console.log(
     `✓ Total seeded: KES ${totalContributions.toLocaleString()} across ${seedChamas.length} chamas`
   );
+
   console.log("✓ Seed completed successfully!");
 }
 
