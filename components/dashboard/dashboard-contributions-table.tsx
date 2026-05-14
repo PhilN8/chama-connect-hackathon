@@ -13,29 +13,32 @@ import {
 } from "@tanstack/react-table";
 import type { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
-import type { ContributionRecord } from "@/lib/types";
 
 interface DashboardContributionsTableProps {
-  contributions: ContributionRecord[];
+  contributions: {
+    id: string;
+    amount: number;
+    status: "PENDING" | "VERIFIED" | "REJECTED" | "SELF_VERIFIED";
+    createdAt: Date;
+    paymentMethod: "CASH" | "MPESA";
+    chamaName: string;
+    memberName: string;
+  }[];
 }
 
 interface ContributionRow {
   id: string;
-  contributorName: string;
-  contributorEmail: string;
-  amountKes: number;
-  contributedAt: string;
-  reference: string;
+  memberName: string;
+  amount: number;
+  status: string;
+  createdAt: Date;
+  paymentMethod: string;
+  chamaName: string;
 }
 
-function formatDate(value: string): string {
-  if (!value) {
+function formatDate(date: Date): string {
+  if (!date) {
     return "-";
-  }
-
-  const date = new Date(`${value}T00:00:00`);
-  if (Number.isNaN(date.getTime())) {
-    return value;
   }
 
   return date.toLocaleDateString("en-KE", {
@@ -49,7 +52,7 @@ export function DashboardContributionsTable({
   contributions,
 }: DashboardContributionsTableProps) {
   const [sorting, setSorting] = useState<SortingState>([
-    { id: "contributedAt", desc: true },
+    { id: "createdAt", desc: true },
   ]);
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -65,11 +68,12 @@ export function DashboardContributionsTable({
     () =>
       contributions.map((item) => ({
         id: item.id,
-        contributorName: item.contributorName,
-        contributorEmail: item.contributorEmail,
-        amountKes: item.amountKes,
-        contributedAt: item.contributedAt,
-        reference: item.reference,
+        memberName: item.memberName,
+        amount: item.amount,
+        status: item.status,
+        createdAt: item.createdAt,
+        paymentMethod: item.paymentMethod,
+        chamaName: item.chamaName,
       })),
     [contributions],
   );
@@ -82,19 +86,17 @@ export function DashboardContributionsTable({
     return rows.filter((row) => {
       const matchesSearch =
         search.length === 0 ||
-        row.contributorName.toLowerCase().includes(search) ||
-        row.contributorEmail.toLowerCase().includes(search) ||
-        row.reference.toLowerCase().includes(search) ||
-        row.amountKes.toString().includes(search) ||
-        row.amountKes.toLocaleString().includes(search);
+        row.memberName.toLowerCase().includes(search) ||
+        row.chamaName.toLowerCase().includes(search) ||
+        row.amount.toString().includes(search);
 
       const matchesAmountRange =
-        (min === undefined || row.amountKes >= min) &&
-        (max === undefined || row.amountKes <= max);
+        (min === undefined || row.amount >= min) &&
+        (max === undefined || row.amount <= max);
 
       const matchesDateRange =
-        (!fromDate || row.contributedAt >= fromDate) &&
-        (!toDate || row.contributedAt <= toDate);
+        (!fromDate || row.createdAt >= new Date(fromDate)) &&
+        (!toDate || row.createdAt <= new Date(toDate));
 
       return matchesSearch && matchesAmountRange && matchesDateRange;
     });
@@ -105,35 +107,35 @@ export function DashboardContributionsTable({
   }, [searchQuery, minAmount, maxAmount, fromDate, toDate]);
 
   const filteredTotal = useMemo(
-    () => filteredRows.reduce((sum, row) => sum + row.amountKes, 0),
+    () => filteredRows.reduce((sum, row) => sum + row.amount, 0),
     [filteredRows],
   );
 
   const columns = useMemo<ColumnDef<ContributionRow>[]>(
     () => [
       {
-        accessorKey: "contributorName",
+        accessorKey: "memberName",
         header: ({ column }) => (
           <button
             type="button"
             className="inline-flex items-center gap-2 font-semibold"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Contributor
+            Member
             <ArrowUpDown className="size-4" />
           </button>
         ),
         cell: ({ row }) => (
           <div>
-            <p className="font-semibold">{row.original.contributorName}</p>
+            <p className="font-semibold">{row.original.memberName}</p>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
-              {row.original.contributorEmail}
+              {row.original.chamaName}
             </p>
           </div>
         ),
       },
       {
-        accessorKey: "amountKes",
+        accessorKey: "amount",
         header: ({ column }) => (
           <button
             type="button"
@@ -144,10 +146,27 @@ export function DashboardContributionsTable({
             <ArrowUpDown className="size-4" />
           </button>
         ),
-        cell: ({ row }) => `KES ${row.original.amountKes.toLocaleString()}`,
+        cell: ({ row }) => `KES ${row.original.amount.toLocaleString()}`,
       },
       {
-        accessorKey: "contributedAt",
+        accessorKey: "status",
+        header: "Status",
+        cell: ({ row }) => (
+          <span
+            className={`rounded-full px-2 py-1 text-xs font-medium ${
+              row.original.status === "VERIFIED"
+                ? "bg-green-100 text-green-700"
+                : row.original.status === "PENDING"
+                  ? "bg-yellow-100 text-yellow-700"
+                  : "bg-zinc-100 text-zinc-700"
+            }`}
+          >
+            {row.original.status}
+          </span>
+        ),
+      },
+      {
+        accessorKey: "createdAt",
         header: ({ column }) => (
           <button
             type="button"
@@ -158,16 +177,17 @@ export function DashboardContributionsTable({
             <ArrowUpDown className="size-4" />
           </button>
         ),
-        cell: ({ row }) => formatDate(row.original.contributedAt),
+        cell: ({ row }) => formatDate(row.original.createdAt),
       },
       {
-        accessorKey: "reference",
-        header: "Reference",
+        accessorKey: "paymentMethod",
+        header: "Method",
       },
     ],
     [],
   );
 
+  ("use no memo");
   const table = useReactTable({
     data: filteredRows,
     columns,

@@ -23,12 +23,12 @@ export interface Chama {
 
 export interface ContributionRecord {
     id: string;
-    chamaId: string;
-    contributorName: string;
-    contributorEmail: string;
-    amountKes: number;
-    contributedAt: string;
-    reference: string;
+    amount: number;
+    status: "PENDING" | "VERIFIED" | "REJECTED" | "SELF_VERIFIED";
+    createdAt: Date;
+    paymentMethod: "CASH" | "MPESA";
+    chamaName: string;
+    memberName: string;
 }
 
 export type ChamaMemberRole = 'ADMIN' | 'TREASURER' | 'SECRETARY' | 'MEMBER';

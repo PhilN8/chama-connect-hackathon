@@ -6,9 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "postbuild": "pnpm db:seed",
     "lint": "eslint",
     "db:push": "drizzle-kit push",
     "db:seed": "tsx scripts/seed.ts",
+    "db:clear": "tsx scripts/clear.ts",
+    "db:reset": "pnpm db:clear && pnpm db:seed",
     "db:setup": "pnpm run db:push && pnpm run db:seed"
   },
   "dependencies": {

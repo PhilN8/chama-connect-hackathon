@@ -18,41 +18,26 @@ import type { ChamaMember, ChamaMemberRole } from "@/lib/types";
 type MemberRole = "ADMIN" | "TREASURER" | "MEMBER";
 
 interface MemberRow {
-  id: string;
-  fullName: string;
+  userId: string;
+  name: string;
   email: string;
-  role: MemberRole;
-  contributionKes: number;
-  joinDate: string;
-  status: "Active" | "Invited";
+  role: "ADMIN" | "TREASURER" | "SECRETARY" | "MEMBER";
+  joinedAt: Date;
+  status: "ACTIVE" | "DEACTIVATED" | "PENDING";
 }
 
 interface DashboardMembersTableProps {
-  members: ChamaMember[];
+  members: MemberRow[];
   chamaName?: string;
 }
 
-function formatRole(role: ChamaMemberRole): MemberRole {
-  if (role === "ADMIN") {
-    return "ADMIN";
-  }
-
-  if (role === "TREASURER") {
-    return "TREASURER";
-  }
-
-  return "MEMBER";
-}
-
-function deriveNameFromEmail(email: string): string {
-  const localPart = email.split("@")[0] ?? "Member";
-  return localPart
-    .replace(/[._-]+/g, " ")
-    .trim()
-    .split(" ")
-    .filter(Boolean)
-    .map((part) => part[0].toUpperCase() + part.slice(1))
-    .join(" ");
+function formatDate(date: Date): string {
+  if (!date) return "-";
+  return date.toLocaleDateString("en-KE", {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+  });
 }
 
 export function DashboardMembersTable({
@@ -61,25 +46,13 @@ export function DashboardMembersTable({
 }: DashboardMembersTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedRole, setSelectedRole] = useState<"All" | MemberRole>("All");
+  const [selectedRole, setSelectedRole] = useState<string>("All");
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   });
 
-  const tableData = useMemo<MemberRow[]>(() => {
-    return members.map((member, index) => ({
-      id: member.id ?? `M-${String(index + 1).padStart(3, "0")}`,
-      fullName: member.fullName?.trim().length
-        ? member.fullName
-        : deriveNameFromEmail(member.email),
-      email: member.email,
-      role: formatRole(member.role),
-      contributionKes: member.contributionKes ?? 0,
-      joinDate: member.joinedAt ?? "-",
-      status: member.status === "invited" ? "Invited" : "Active",
-    }));
-  }, [members]);
+  const tableData = useMemo<MemberRow[]>(() => members, [members]);
 
   const filteredData = useMemo(() => {
     return tableData.filter((member) => {
@@ -92,18 +65,12 @@ export function DashboardMembersTable({
       }
 
       const matchesSearch =
-        member.fullName.toLowerCase().includes(search) ||
-        member.email.toLowerCase().includes(search) ||
-        member.id.toLowerCase().includes(search);
+        member.name.toLowerCase().includes(search) ||
+        member.email.toLowerCase().includes(search);
 
       return matchesRole && matchesSearch;
     });
   }, [searchQuery, selectedRole, tableData]);
-
-  const totalContributions = useMemo(
-    () => tableData.reduce((sum, member) => sum + member.contributionKes, 0),
-    [tableData],
-  );
 
   useEffect(() => {
     setPagination((previous) => ({ ...previous, pageIndex: 0 }));
@@ -112,7 +79,7 @@ export function DashboardMembersTable({
   const columns = useMemo<ColumnDef<MemberRow>[]>(
     () => [
       {
-        accessorKey: "fullName",
+        accessorKey: "name",
         header: ({ column }) => (
           <button
             type="button"
@@ -125,7 +92,7 @@ export function DashboardMembersTable({
         ),
         cell: ({ row }) => (
           <div>
-            <p className="font-semibold">{row.original.fullName}</p>
+            <p className="font-semibold">{row.original.name}</p>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
               {row.original.email}
             </p>
@@ -137,23 +104,18 @@ export function DashboardMembersTable({
         header: "Role",
       },
       {
-        accessorKey: "contributionKes",
+        accessorKey: "joinedAt",
         header: ({ column }) => (
           <button
             type="button"
             className="inline-flex items-center gap-2 font-semibold"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Contribution
+            Joined
             <ArrowUpDown className="size-4" />
           </button>
         ),
-        cell: ({ row }) =>
-          `KES ${row.original.contributionKes.toLocaleString()}`,
-      },
-      {
-        accessorKey: "joinDate",
-        header: "Joined",
+        cell: ({ row }) => formatDate(row.original.joinedAt),
       },
       {
         accessorKey: "status",
@@ -161,7 +123,7 @@ export function DashboardMembersTable({
         cell: ({ row }) => (
           <span
             className={
-              row.original.status === "Active"
+              row.original.status === "ACTIVE"
                 ? "rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-200"
                 : "rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-800 dark:bg-amber-900/40 dark:text-amber-200"
             }
@@ -197,29 +159,25 @@ export function DashboardMembersTable({
           <p className="text-sm text-zinc-600 dark:text-zinc-400">
             {tableData.length > 0
               ? `Manage admins, treasurers, and members in ${chamaName ?? "your chama"}.`
-              : "This account has no members yet. Login with the test user to view preloaded members."}
-          </p>
-          <p className="mt-1 text-xs font-medium text-zinc-500 dark:text-zinc-400">
-            Total contributions: KES {totalContributions.toLocaleString()}
+              : "This account has no members yet. Create your first chama to get started."}
           </p>
         </div>
         <div className="flex flex-col gap-2 sm:flex-row">
           <input
             value={searchQuery}
             onChange={(event) => setSearchQuery(event.target.value)}
-            placeholder="Search name, email, or member ID"
+            placeholder="Search name or email"
             className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm outline-none ring-emerald-500 transition focus:ring-2 dark:border-zinc-700 dark:bg-zinc-950"
           />
           <select
             value={selectedRole}
-            onChange={(event) =>
-              setSelectedRole(event.target.value as "All" | MemberRole)
-            }
+            onChange={(event) => setSelectedRole(event.target.value)}
             className="rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm outline-none ring-emerald-500 transition focus:ring-2 dark:border-zinc-700 dark:bg-zinc-950"
           >
             <option value="All">All Roles</option>
             <option value="ADMIN">Admins</option>
             <option value="TREASURER">Treasurers</option>
+            <option value="SECRETARY">Secretaries</option>
             <option value="MEMBER">Members</option>
           </select>
         </div>

@@ -1,11 +1,19 @@
 import { db } from "@/lib/db";
 import {
   users,
+  accounts,
   chamas,
   chamaMemberships,
   contributions,
 } from "@/lib/db/schema";
 import { hashSync } from "bcryptjs";
+import { count, InferInsertModel } from "drizzle-orm";
+
+type NewUser = InferInsertModel<typeof users>;
+type NewAccount = InferInsertModel<typeof accounts>;
+type NewChama = InferInsertModel<typeof chamas>;
+type NewMembership = InferInsertModel<typeof chamaMemberships>;
+type NewContribution = InferInsertModel<typeof contributions>;
 
 function generateId(prefix: string): string {
   return `${prefix}_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
@@ -54,12 +62,26 @@ interface SeedChama {
 }
 
 async function seed() {
+  console.log("Checking for existing data...");
+  const [userCount] = await db.select({ value: count() }).from(users);
+
+  if (userCount.value > 0) {
+    console.log(`⚠️ Database already has ${userCount.value} users. Skipping seed to prevent duplicates.`);
+    return;
+  }
+
   console.log("🌱 Starting seed...\n");
 
   const now = new Date();
   const threeYearsAgo = new Date(now.getFullYear() - 3, now.getMonth(), now.getDate());
 
-  console.log("Creating users...");
+  const usersToInsert: NewUser[] = [];
+  const accountsToInsert: NewAccount[] = [];
+  const chamasToInsert: NewChama[] = [];
+  const membershipsToInsert: NewMembership[] = [];
+  const contributionsToInsert: NewContribution[] = [];
+
+  console.log("Creating core users and accounts...");
 
   const seedUsers: SeedUser[] = [
     {
@@ -67,26 +89,26 @@ async function seed() {
       name: "Wanjiru Kamau",
       email: "wanjiru.kamau@chamaconnect.io",
       phone: "0712345678",
-      password: hashSync("Password@123", 10),
+      password: "Password@123",
     },
     {
       id: generateId("usr"),
       name: "Odhiambo Okoth",
       email: "odhiambo.okoth@chamaconnect.io",
       phone: "0723456789",
-      password: hashSync("Password@456", 10),
+      password: "Password@456",
     },
     {
       id: "demo_user_001",
       name: "Demo User",
       email: "demo@chamaconnect.io",
       phone: "0712345601",
-      password: hashSync("Demo@12345", 10),
+      password: "Demo@12345",
     },
   ];
 
-  await db.insert(users).values(
-    seedUsers.map((u) => ({
+  for (const u of seedUsers) {
+    usersToInsert.push({
       id: u.id,
       name: u.name,
       email: u.email,
@@ -95,12 +117,19 @@ async function seed() {
       globalRole: "USER" as const,
       createdAt: new Date(),
       updatedAt: new Date(),
-    }))
-  );
+    });
+    accountsToInsert.push({
+      id: generateId("acc"),
+      userId: u.id,
+      accountId: u.email,
+      providerId: "credential",
+      password: hashSync(u.password, 10),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+  }
 
-  console.log(`✓ Created ${seedUsers.length} users\n`);
-
-  console.log("Creating chamas and memberships...");
+  console.log("Preparing chamas and memberships...");
 
   const seedChamas: SeedChama[] = [
     {
@@ -200,10 +229,8 @@ async function seed() {
     },
   ];
 
-  const allMemberUsers: { id: string; name: string; email: string }[] = [];
-
   for (const chama of seedChamas) {
-    await db.insert(chamas).values({
+    chamasToInsert.push({
       id: chama.id,
       name: chama.name,
       description: chama.description,
@@ -217,7 +244,7 @@ async function seed() {
 
       if (!memberUserId) {
         memberUserId = generateId("usr");
-        const newUser = {
+        usersToInsert.push({
           id: memberUserId,
           name: member.name,
           email: member.email,
@@ -226,15 +253,19 @@ async function seed() {
           globalRole: "USER" as const,
           createdAt: new Date(),
           updatedAt: new Date(),
-        };
-
-        await db.insert(users).values(newUser);
-        allMemberUsers.push({ id: memberUserId, name: member.name, email: member.email });
-      } else {
-        allMemberUsers.push({ id: memberUserId, name: member.name, email: member.email });
+        });
+        accountsToInsert.push({
+          id: generateId("acc"),
+          userId: memberUserId,
+          accountId: member.email,
+          providerId: "credential",
+          password: hashSync("Chama@2026", 10),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        });
       }
 
-      await db.insert(chamaMemberships).values({
+      membershipsToInsert.push({
         id: generateId("mem"),
         chamaId: chama.id,
         userId: memberUserId,
@@ -244,15 +275,9 @@ async function seed() {
         updatedAt: new Date(),
       });
     }
-
-    console.log(
-      `  ✓ ${chama.name}: ${chama.members.length} members`
-    );
   }
 
-  console.log("");
-
-  console.log("Creating contributions (targeting 2M+ KES total)...");
+  console.log("Preparing contributions (targeting 2M+ KES total)...");
 
   let totalContributions = 0;
   const targetTotal = 2_000_000;
@@ -285,7 +310,7 @@ async function seed() {
 
       let verifiedById: string | null = null;
       if (status === "VERIFIED" && treasurerMember) {
-        verifiedById = treasurerMember.userId || null;
+        verifiedById = treasurerMember.userId || (usersToInsert.find(u => u.email === treasurerMember.email)?.id) || null;
       }
 
       const mpesaRef = `MPESA${contributionDate.getFullYear()}${String(
@@ -295,30 +320,38 @@ async function seed() {
         "0"
       )}`;
 
-      await db.insert(contributions).values({
-        id: generateId("ctr"),
-        chamaId: chama.id,
-        memberId: contributor.userId || allMemberUsers.find((u) => u.email === contributor.email)?.id || "",
-        amount,
-        paymentMethod:
-          PAYMENT_METHODS[
-          Math.floor(Math.random() * PAYMENT_METHODS.length)
-          ],
-        status,
-        description: `Monthly contribution ref: ${mpesaRef}`,
-        verifiedById,
-        createdAt: contributionDate,
-        updatedAt: contributionDate,
-      });
+      const memberUserId = contributor.userId || usersToInsert.find(u => u.email === contributor.email)?.id;
 
-      chamaTotal += amount;
+      if (memberUserId) {
+        contributionsToInsert.push({
+          id: generateId("ctr"),
+          chamaId: chama.id,
+          memberId: memberUserId,
+          amount,
+          paymentMethod:
+            PAYMENT_METHODS[
+            Math.floor(Math.random() * PAYMENT_METHODS.length)
+            ],
+          status,
+          description: `Monthly contribution ref: ${mpesaRef}`,
+          verifiedById,
+          createdAt: contributionDate,
+          updatedAt: contributionDate,
+        });
+        chamaTotal += amount;
+      }
     }
 
     totalContributions += chamaTotal;
-    console.log(
-      `  ✓ ${chama.name}: KES ${chamaTotal.toLocaleString()} (${monthCount} contributions)`
-    );
   }
+
+  console.log("Executing batch inserts...");
+
+  if (usersToInsert.length) await db.insert(users).values(usersToInsert);
+  if (accountsToInsert.length) await db.insert(accounts).values(accountsToInsert);
+  if (chamasToInsert.length) await db.insert(chamas).values(chamasToInsert);
+  if (membershipsToInsert.length) await db.insert(chamaMemberships).values(membershipsToInsert);
+  if (contributionsToInsert.length) await db.insert(contributions).values(contributionsToInsert);
 
   console.log("");
   console.log(
