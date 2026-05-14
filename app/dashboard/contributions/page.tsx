@@ -9,6 +9,7 @@ import {
   chamaMemberships,
 } from "@/lib/db/schema";
 import { eq, desc, and } from "drizzle-orm";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Contributions | ChamaConnect Dashboard",
@@ -21,6 +22,9 @@ export default async function DashboardContributionsPage() {
     return null;
   }
 
+  const cookieStore = await cookies();
+  const activeChamaId = cookieStore.get("activeChamaId")?.value;
+
   // Get user's active membership
   const [membership] = await db
     .select({
@@ -32,6 +36,7 @@ export default async function DashboardContributionsPage() {
       and(
         eq(chamaMemberships.userId, session.id),
         eq(chamaMemberships.status, "ACTIVE"),
+        activeChamaId ? eq(chamaMemberships.chamaId, activeChamaId) : undefined,
       ),
     )
     .limit(1);

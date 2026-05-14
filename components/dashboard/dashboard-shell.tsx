@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ChartNoAxesCombined,
   Home,
@@ -57,11 +57,7 @@ const navigationItems = [
   },
 ];
 
-function SidebarNav({
-  onItemClick,
-}: {
-  onItemClick?: () => void;
-}) {
+function SidebarNav({ onItemClick }: { onItemClick?: () => void }) {
   const pathname = usePathname();
 
   return (
@@ -137,9 +133,20 @@ export function DashboardShell({ children, name }: DashboardShellProps) {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [activeChama, setActiveChama] = useState<string | null>(null);
 
+  useEffect(() => {
+    // Sync activeChama from URL or localStorage
+    const stored = localStorage.getItem("activeChamaId");
+    if (stored) {
+      setActiveChama(stored);
+      // Set cookie for server-side persistence
+      document.cookie = `activeChamaId=${stored}; path=/; SameSite=Lax`;
+    }
+  }, []);
+
   const handleChamaSelect = (chamaId: string) => {
     setActiveChama(chamaId);
     localStorage.setItem("activeChamaId", chamaId);
+    document.cookie = `activeChamaId=${chamaId}; path=/; SameSite=Lax`;
     router.refresh();
   };
 
@@ -163,10 +170,7 @@ export function DashboardShell({ children, name }: DashboardShellProps) {
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       <div className="flex h-screen w-full overflow-hidden">
         <aside className="hidden md:flex md:w-72 md:flex-col md:border-r md:border-zinc-200 md:bg-white/95 md:p-5 md:dark:border-zinc-800 md:dark:bg-zinc-950/95">
-          <SidebarContent
-            onLogout={handleLogout}
-            isLoggingOut={isLoggingOut}
-          />
+          <SidebarContent onLogout={handleLogout} isLoggingOut={isLoggingOut} />
         </aside>
 
         <div className="flex min-h-screen flex-1 flex-col overflow-hidden">

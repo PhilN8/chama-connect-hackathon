@@ -13,7 +13,6 @@ import {
 } from "@tanstack/react-table";
 import type { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
-import type { ContributionRecord } from "@/lib/types";
 
 interface DashboardContributionsTableProps {
   contributions: {
@@ -188,6 +187,7 @@ export function DashboardContributionsTable({
     [],
   );
 
+  ("use no memo");
   const table = useReactTable({
     data: filteredRows,
     columns,

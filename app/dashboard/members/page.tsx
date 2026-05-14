@@ -4,6 +4,7 @@ import { getSessionFromCookiesStore } from "@/lib/auth-server";
 import { db } from "@/lib/db";
 import { chamas, chamaMemberships, users } from "@/lib/db/schema";
 import { eq, and } from "drizzle-orm";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Members | ChamaConnect Dashboard",
@@ -16,7 +17,10 @@ export default async function DashboardMembersPage() {
     return null;
   }
 
-  // Get primary chama for user
+  const cookieStore = await cookies();
+  const activeChamaId = cookieStore.get("activeChamaId")?.value;
+
+  // Get active chama for user
   const userChamas = await db
     .select({
       chama: chamas,
@@ -27,6 +31,7 @@ export default async function DashboardMembersPage() {
       and(
         eq(chamaMemberships.userId, session.id),
         eq(chamaMemberships.status, "ACTIVE"),
+        activeChamaId ? eq(chamas.id, activeChamaId) : undefined,
       ),
     )
     .limit(1);

@@ -16,13 +16,14 @@ import {
   UserPlus,
   Loader2,
 } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -43,7 +44,7 @@ export default function ProfilePage() {
 
   if (!session?.user) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
+      <div className="flex items-center justify-center min-h-100">
         <Loader2 className="size-8 animate-spin text-emerald-600" />
       </div>
     );
@@ -95,7 +96,9 @@ export default function ProfilePage() {
                   <User className="size-7" />
                 </div>
                 <div>
-                  <p className="font-semibold text-lg">{user.name || "No name set"}</p>
+                  <p className="font-semibold text-lg">
+                    {user.name || "No name set"}
+                  </p>
                   <p className="text-sm text-zinc-500">{user.email}</p>
                 </div>
               </div>
@@ -126,7 +129,9 @@ export default function ProfilePage() {
                     <p className="text-xs font-medium uppercase text-zinc-500 dark:text-zinc-400">
                       Phone
                     </p>
-                    <p className="font-medium">{user.phoneNumber || "Not set"}</p>
+                    <p className="font-medium">
+                      {user.phoneNumber || "Not set"}
+                    </p>
                   </div>
                 </div>
 
@@ -173,7 +178,8 @@ export default function ProfilePage() {
             <CardHeader>
               <CardTitle>Change Email</CardTitle>
               <CardDescription>
-                Update your email address. A verification link will be sent to the new email.
+                Update your email address. A verification link will be sent to
+                the new email.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -187,7 +193,8 @@ export default function ProfilePage() {
             <CardHeader>
               <CardTitle>Invite Members</CardTitle>
               <CardDescription>
-                Invite new members to your chama. They will receive an email with instructions to join.
+                Invite new members to your chama. They will receive an email
+                with instructions to join.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -269,7 +276,9 @@ function ChangePasswordForm() {
             id="currentPassword"
             type={showCurrent ? "text" : "password"}
             value={form.currentPassword}
-            onChange={(e) => setForm({ ...form, currentPassword: e.target.value })}
+            onChange={(e) =>
+              setForm({ ...form, currentPassword: e.target.value })
+            }
             placeholder="Enter current password"
             required
           />
@@ -278,7 +287,11 @@ function ChangePasswordForm() {
             onClick={() => setShowCurrent(!showCurrent)}
             className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600"
           >
-            {showCurrent ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+            {showCurrent ? (
+              <EyeOff className="size-4" />
+            ) : (
+              <Eye className="size-4" />
+            )}
           </button>
         </div>
       </div>
@@ -299,7 +312,11 @@ function ChangePasswordForm() {
             onClick={() => setShowNew(!showNew)}
             className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600"
           >
-            {showNew ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+            {showNew ? (
+              <EyeOff className="size-4" />
+            ) : (
+              <Eye className="size-4" />
+            )}
           </button>
         </div>
       </div>
@@ -310,7 +327,9 @@ function ChangePasswordForm() {
           id="confirmPassword"
           type="password"
           value={form.confirmPassword}
-          onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
+          onChange={(e) =>
+            setForm({ ...form, confirmPassword: e.target.value })
+          }
           placeholder="Confirm new password"
           required
         />
@@ -349,7 +368,9 @@ function ChangeEmailForm({ currentEmail }: { currentEmail: string }) {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        toast.error("Failed to send verification", { description: data.message });
+        toast.error("Failed to send verification", {
+          description: data.message,
+        });
         return;
       }
 
@@ -372,10 +393,15 @@ function ChangeEmailForm({ currentEmail }: { currentEmail: string }) {
         </div>
         <p className="font-medium">Verification email sent!</p>
         <p className="mt-1 text-sm text-zinc-500">
-          We sent a verification link to <span className="font-semibold">{newEmail}</span>.
-          Click the link to confirm your new email address.
+          We sent a verification link to{" "}
+          <span className="font-semibold">{newEmail}</span>. Click the link to
+          confirm your new email address.
         </p>
-        <Button variant="outline" className="mt-4" onClick={() => setSent(false)}>
+        <Button
+          variant="outline"
+          className="mt-4"
+          onClick={() => setSent(false)}
+        >
           Send to different email
         </Button>
       </div>
@@ -422,7 +448,10 @@ function InviteMemberForm() {
     email: "",
     role: "MEMBER",
   });
-  const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [message, setMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -461,7 +490,7 @@ function InviteMemberForm() {
             "p-3 rounded-lg text-sm",
             message.type === "success"
               ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/20 dark:text-emerald-300"
-              : "bg-red-50 text-red-700 dark:bg-red-950/20 dark:text-red-300"
+              : "bg-red-50 text-red-700 dark:bg-red-950/20 dark:text-red-300",
           )}
         >
           {message.text}

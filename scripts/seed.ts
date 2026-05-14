@@ -1,15 +1,13 @@
 import { db } from "@/lib/db";
 import {
   users,
-  sessions,
   accounts,
-  verifications,
   chamas,
   chamaMemberships,
   contributions,
 } from "@/lib/db/schema";
 import { hashSync } from "bcryptjs";
-import { InferInsertModel } from "drizzle-orm";
+import { count, InferInsertModel } from "drizzle-orm";
 
 type NewUser = InferInsertModel<typeof users>;
 type NewAccount = InferInsertModel<typeof accounts>;
@@ -64,6 +62,14 @@ interface SeedChama {
 }
 
 async function seed() {
+  console.log("Checking for existing data...");
+  const [userCount] = await db.select({ value: count() }).from(users);
+
+  if (userCount.value > 0) {
+    console.log(`⚠️ Database already has ${userCount.value} users. Skipping seed to prevent duplicates.`);
+    return;
+  }
+
   console.log("🌱 Starting seed...\n");
 
   const now = new Date();
