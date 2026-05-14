@@ -187,7 +187,7 @@ export function DashboardContent({ user, chama }: DashboardContentProps) {
             </Link>
 
             <Link
-              href="/onboard-chama"
+              href="/dashboard/onboard-chama"
               className={cn(
                 "flex w-full items-center justify-between rounded-lg p-3 text-center font-semibold transition-all",
                 "bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-700",
